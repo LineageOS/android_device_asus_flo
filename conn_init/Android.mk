@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-ifneq ($(filter msm8960 ,$(TARGET_DEVICE)),)
+ifneq ($(filter flo,$(TARGET_DEVICE)),)
 
 LOCAL_PATH:= $(call my-dir)
 
