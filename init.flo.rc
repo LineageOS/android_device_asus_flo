@@ -463,9 +463,7 @@ on property:ro.boot.baseband=mdm
     chown system system /dev/block/mmcblk0p19
     chmod 0660 /dev/block/mmcblk0p19
     start kickstart
-    setprop persist.sys.usb.config diag,mdm,adb
 
 on property:ro.boot.baseband=apq
     setprop ro.radio.noril yes
     stop ril-daemon
-    setprop persist.sys.usb.config diag,adb
