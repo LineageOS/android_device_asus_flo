@@ -19,7 +19,7 @@
 #
 # Everything in this directory will become public
 
-DEVICE_PACKAGE_OVERLAYS := device/qcom/flo/overlay
+DEVICE_PACKAGE_OVERLAYS := device/asus/flo/overlay
 
 LOCAL_KERNEL := device/asus/flo-kernel/kernel
 
