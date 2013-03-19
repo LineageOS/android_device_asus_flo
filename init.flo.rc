@@ -282,21 +282,6 @@ on property:bluetooth.hciattach=true
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off
 
-# Remount persist as rw if needed
-on property:ro.debuggable=1
-    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persist /persist rw remount nosuid nodev barrier=1 data=ordered nodelalloc
-    chown system system /persist
-    chmod 0771 /persist
-
-# create filesystems if necessary
-service setup_fs /system/bin/setup_fs \
-        /dev/block/platform/msm_sdcc.1/by-name/userdata \
-        /dev/block/platform/msm_sdcc.1/by-name/cache
-    class core
-    user root
-    group root
-    oneshot
-
 service bridgemgrd /system/bin/bridgemgrd
     class main
     user radio
