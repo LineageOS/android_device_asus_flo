@@ -332,6 +332,9 @@ service asus-dbug-d /data/data/com.asus.debugger/files/asus-debugger-d
 on property:persist.radio.kickstart=on
     start kickstart
 
+on property:persist.radio.kickstart=off
+    stop kickstart
+
 on property:ril.asus_debugger_running=1
     start asus-dbug-d
 
@@ -458,11 +461,6 @@ service diag_mdlog /system/bin/logwrapper /system/bin/diag_mdlog -s 100
 
 on property:ro.boot.baseband=mdm
     start qmuxd
-    chown system system /dev/block/mmcblk0p18
-    chmod 0660 /dev/block/mmcblk0p18
-    chown system system /dev/block/mmcblk0p19
-    chmod 0660 /dev/block/mmcblk0p19
-    start kickstart
 
 on property:ro.boot.baseband=apq
     setprop ro.radio.noril yes
