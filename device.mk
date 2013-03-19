@@ -242,7 +242,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     libnfc-nci \
     libnfc_nci_jni \
-    nfc_nci.msm8960 \
+    nfc_nci.flo \
     NfcNci \
     Tag \
     com.android.nfc_extras
