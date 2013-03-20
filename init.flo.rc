@@ -446,6 +446,7 @@ service diag_mdlog /system/bin/logwrapper /system/bin/diag_mdlog -s 100
 
 on property:ro.boot.baseband=mdm
     start qmuxd
+    start netmgrd
 
 on property:ro.boot.baseband=apq
     setprop ro.radio.noril yes

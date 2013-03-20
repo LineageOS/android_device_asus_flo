@@ -1,5 +1,0 @@
-#
-# system props for the data modules
-#
-ro.use_data_netmgrd=true
-
