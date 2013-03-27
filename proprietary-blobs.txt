@@ -37,7 +37,6 @@
 /system/bin/thermald
 /system/bin/usbhub
 /system/bin/usbhub_init
-/system/etc/diag.cfg
 /system/etc/firmware/vidc_1080p.fw
 /system/etc/firmware/wcd9310/wcd9310_anc.bin
 /system/etc/firmware/wcd9310/wcd9310_mbhc.bin
