@@ -43,6 +43,7 @@ on init
 on fs
     mount_all ./fstab.flo
     setprop ro.crypto.fuse_sdcard true
+    write /sys/kernel/boot_adsp/boot 1
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
