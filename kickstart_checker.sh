@@ -1,5 +1,5 @@
 #!/system/bin/sh
-setprop persist.radio.kickstart off
+setprop gsm.radio.kickstart off
 
 if [ $(getprop ro.boot.baseband) == "mdm" ]; then
 
@@ -18,5 +18,5 @@ if [ $(getprop ro.boot.baseband) == "mdm" ]; then
 
     echo 1 > /sys/module/rmnet_usb/parameters/rmnet_data_init
 
-    setprop persist.radio.kickstart on
+    setprop gsm.radio.kickstart on
 fi
