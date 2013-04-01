@@ -132,6 +132,11 @@
 /system/vendor/firmware/q6.b05
 /system/vendor/firmware/q6.b06
 /system/vendor/firmware/q6.mdt
+/system/vendor/firmware/tzapps.b00
+/system/vendor/firmware/tzapps.b01
+/system/vendor/firmware/tzapps.b02
+/system/vendor/firmware/tzapps.b03
+/system/vendor/firmware/tzapps.mdt
 /system/vendor/firmware/wcnss.b00
 /system/vendor/firmware/wcnss.b01
 /system/vendor/firmware/wcnss.b02
