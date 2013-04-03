@@ -261,9 +261,7 @@ PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
     frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-    device/asus/flo/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-    device/asus/flo/nfc/BCM20791B4_002.005.010.0031.0033.ncd:system/vendor/firmware/bcm2079x_pre_firmware.ncd \
-    device/asus/flo/nfc/BCM20791B4_002.005.010.0031.0034.ncd:system/vendor/firmware/bcm2079x_firmware.ncd
+    device/asus/flo/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
 
 PRODUCT_LOCALES := en_US es_US de_DE zh_CN
 
