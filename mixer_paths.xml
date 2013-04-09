@@ -305,13 +305,13 @@
     </path>
 
     <path name="voice-rec-mic">
-        <path name="adc1" />
-        <ctl name="ADC1 Volume" value="16" />
+        <path name="dmic1" />
+        <ctl name="DEC7 Volume" value="101" />
     </path>
 
     <path name="camcorder-mic">
-        <path name="adc1" />
-        <ctl name="DEC6 Volume" value="89" />
+        <path name="dmic1" />
+        <ctl name="DEC7 Volume" value="101" />
     </path>
 
     <path name="hdmi-mic">
