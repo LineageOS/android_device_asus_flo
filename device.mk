@@ -59,7 +59,8 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/audio_policy.conf:system/etc/audio_policy.conf
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/mixer_paths.xml:system/etc/mixer_paths.xml
+	device/asus/flo/mixer_paths.xml:system/etc/mixer_paths.xml \
+	device/asus/flo/sec_config:system/etc/sec_config
 
 PRODUCT_COPY_FILES += \
 	device/asus/flo/thermald-flo.conf:system/etc/thermald.conf
