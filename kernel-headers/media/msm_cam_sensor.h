@@ -276,8 +276,8 @@ enum camb_position_t {
 };
 enum camerab_mode_t {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- CAMERA_MODE_2D_B = (1<<0),
- CAMERA_MODE_3D_B = (1<<1)
+ CAMERA_MODE_2D_B = (1 << 0),
+ CAMERA_MODE_3D_B = (1 << 1)
 };
 struct msm_sensor_init_params {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -488,4 +488,3 @@ struct msm_camera_led_cfg_t {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MSM_V4L2_PIX_FMT_RESERVED_0 v4l2_fourcc('R', 'E', 'S', '0')
 #endif
-

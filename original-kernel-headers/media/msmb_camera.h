@@ -87,37 +87,37 @@
  * v4l2_event.u.data field.
  * should not exceed 16 elements */
 struct msm_v4l2_event_data {
-	/*word 0*/
+	/*word 0 */
 	unsigned int command;
-	/*word 1*/
+	/*word 1 */
 	unsigned int status;
-	/*word 2*/
+	/*word 2 */
 	unsigned int session_id;
-	/*word 3*/
+	/*word 3 */
 	unsigned int stream_id;
-	/*word 4*/
+	/*word 4 */
 	unsigned int map_op;
-	/*word 5*/
+	/*word 5 */
 	unsigned int map_buf_idx;
-	/*word 6*/
+	/*word 6 */
 	unsigned int notify;
-	/*word 7*/
-	unsigned int nop1;
-	/*word 8*/
-	unsigned int nop2;
-	/*word 9*/
+	/*word 7 */
+	unsigned int arg_value;
+	/*word 8 */
+	unsigned int ret_value;
+	/*word 9 */
 	unsigned int nop3;
-	/*word 10*/
+	/*word 10 */
 	unsigned int nop4;
-	/*word 11*/
+	/*word 11 */
 	unsigned int nop5;
-	/*word 12*/
+	/*word 12 */
 	unsigned int nop6;
-	/*word 13*/
+	/*word 13 */
 	unsigned int nop7;
-	/*word 14*/
+	/*word 14 */
 	unsigned int nop8;
-	/*word 15*/
+	/*word 15 */
 	unsigned int nop9;
 };
 
@@ -126,7 +126,7 @@ struct msm_v4l2_format_data {
 	enum v4l2_buf_type type;
 	unsigned int width;
 	unsigned int height;
-	unsigned int pixelformat; /* FOURCC */
+	unsigned int pixelformat;	/* FOURCC */
 	unsigned char num_planes;
 	unsigned int plane_sizes[VIDEO_MAX_PLANES];
 };
