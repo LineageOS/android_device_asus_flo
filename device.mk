@@ -191,6 +191,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.qualcomm.bt.hci_transport=smd
 
 PRODUCT_PACKAGES += \
+	camera.flo \
 	camera.msm8960 \
 	libmmcamera_interface2 \
 	libmmcamera_interface \
