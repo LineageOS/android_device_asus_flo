@@ -101,8 +101,8 @@ struct msm_v4l2_event_data {
  unsigned int map_buf_idx;
  unsigned int notify;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int nop1;
- unsigned int nop2;
+ unsigned int arg_value;
+ unsigned int ret_value;
  unsigned int nop3;
  unsigned int nop4;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -138,4 +138,3 @@ struct msm_v4l2_format_data {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MSM_V4L2_PIX_FMT_STATS_BHST v4l2_fourcc('B', 'H', 'S', 'T')
 #endif
-

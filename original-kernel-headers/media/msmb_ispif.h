@@ -20,6 +20,8 @@ enum msm_ispif_intftype {
 	RDI2,
 	INTF_MAX
 };
+#define MAX_PARAM_ENTRIES (INTF_MAX * 2)
+
 #define PIX0_MASK (1 << PIX0)
 #define PIX1_MASK (1 << PIX1)
 #define RDI0_MASK (1 << RDI0)
@@ -64,16 +66,30 @@ enum msm_ispif_csid {
 };
 
 struct msm_ispif_params_entry {
+	enum msm_ispif_vfe_intf vfe_intf;
 	enum msm_ispif_intftype intftype;
 	int num_cids;
 	enum msm_ispif_cid cids[3];
 	enum msm_ispif_csid csid;
+	int crop_enable;
+	uint16_t crop_start_pixel;
+	uint16_t crop_end_pixel;
 };
 
 struct msm_ispif_param_data {
-	enum msm_ispif_vfe_intf vfe_intf;
 	uint32_t num;
-	struct msm_ispif_params_entry entries[INTF_MAX];
+	struct msm_ispif_params_entry entries[MAX_PARAM_ENTRIES];
+};
+
+struct msm_isp_info {
+	uint32_t max_resolution;
+	uint32_t id;
+	uint32_t ver;
+};
+
+struct msm_ispif_vfe_info {
+	int num_vfe;
+	struct msm_isp_info info[VFE_MAX];
 };
 
 enum ispif_cfg_type_t {
@@ -86,14 +102,16 @@ enum ispif_cfg_type_t {
 	ISPIF_STOP_IMMEDIATELY,
 	ISPIF_RELEASE,
 	ISPIF_ENABLE_REG_DUMP,
+	ISPIF_SET_VFE_INFO,
 };
 
 struct ispif_cfg_data {
 	enum ispif_cfg_type_t cfg_type;
 	union {
-		int reg_dump;                        /* ISPIF_ENABLE_REG_DUMP */
-		uint32_t csid_version;               /* ISPIF_INIT */
-		struct msm_ispif_param_data params;  /* CFG, START, STOP */
+		int reg_dump;	/* ISPIF_ENABLE_REG_DUMP */
+		uint32_t csid_version;	/* ISPIF_INIT */
+		struct msm_ispif_vfe_info vfe_info;  /* ISPIF_SET_VFE_INFO */
+		struct msm_ispif_param_data params;	/* CFG, START, STOP */
 	};
 };
 
