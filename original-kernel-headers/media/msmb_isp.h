@@ -9,6 +9,8 @@
 #define ISP_VERSION_40        40
 #define ISP_VERSION_32        32
 #define ISP_NATIVE_BUF_BIT    0x10000
+#define ISP0_BIT              0x20000
+#define ISP1_BIT              0x40000
 #define ISP_STATS_STREAM_BIT  0x80000000
 
 enum ISP_START_PIXEL_PATTERN {
@@ -107,34 +109,35 @@ struct msm_vfe_input_cfg {
 		struct msm_vfe_rdi_cfg rdi_cfg;
 	} d;
 	enum msm_vfe_input_src input_src;
+	uint32_t input_pix_clk;
 };
 
 struct msm_vfe_axi_plane_cfg {
-	uint32_t output_width; /*Include padding*/
+	uint32_t output_width;	/*Include padding */
 	uint32_t output_height;
 	uint32_t output_stride;
 	uint32_t output_scan_lines;
-	uint32_t output_plane_format; /*Y/Cb/Cr/CbCr*/
-
-	uint8_t csid_src; /*RDI 0-2*/
-	uint8_t rdi_cid;/*CID 1-16*/
+	uint32_t output_plane_format;	/*Y/Cb/Cr/CbCr */
+	uint32_t plane_addr_offset;
+	uint8_t csid_src;	/*RDI 0-2 */
+	uint8_t rdi_cid;	/*CID 1-16 */
 };
 
 struct msm_vfe_axi_stream_request_cmd {
 	uint32_t session_id;
 	uint32_t stream_id;
-	uint32_t output_format;/*Planar/RAW/Misc*/
-	enum msm_vfe_axi_stream_src stream_src; /*CAMIF/IDEAL/RDIs*/
+	uint32_t output_format;	/*Planar/RAW/Misc */
+	enum msm_vfe_axi_stream_src stream_src;	/*CAMIF/IDEAL/RDIs */
 	struct msm_vfe_axi_plane_cfg plane_cfg[MAX_PLANES_PER_STREAM];
 
 	uint32_t burst_count;
 	uint32_t hfr_mode;
 	uint8_t frame_base;
 
-	uint32_t init_frame_drop; /*MAX 31 Frames*/
+	uint32_t init_frame_drop;	/*MAX 31 Frames */
 	enum msm_vfe_frame_skip_pattern frame_skip_pattern;
-	uint8_t buf_divert; /* if TRUE no vb2 buf done. */
-	/*Return values*/
+	uint8_t buf_divert;	/* if TRUE no vb2 buf done. */
+	/*Return values */
 	uint32_t axi_stream_handle;
 };
 
@@ -172,18 +175,18 @@ enum msm_vfe_stats_pipeline_policy {
 };
 
 enum msm_isp_stats_type {
-	MSM_ISP_STATS_AEC,   /* legacy based AEC */
-	MSM_ISP_STATS_AF,    /* legacy based AF */
-	MSM_ISP_STATS_AWB,   /* legacy based AWB */
-	MSM_ISP_STATS_RS,    /* legacy based RS */
-	MSM_ISP_STATS_CS,    /* legacy based CS */
-	MSM_ISP_STATS_IHIST, /* legacy based HIST */
-	MSM_ISP_STATS_SKIN,  /* legacy based SKIN */
-	MSM_ISP_STATS_BG,    /* Bayer Grids */
-	MSM_ISP_STATS_BF,    /* Bayer Focus */
-	MSM_ISP_STATS_BE,    /* Bayer Exposure*/
-	MSM_ISP_STATS_BHIST, /* Bayer Hist */
-	MSM_ISP_STATS_MAX    /* MAX */
+	MSM_ISP_STATS_AEC,	/* legacy based AEC */
+	MSM_ISP_STATS_AF,	/* legacy based AF */
+	MSM_ISP_STATS_AWB,	/* legacy based AWB */
+	MSM_ISP_STATS_RS,	/* legacy based RS */
+	MSM_ISP_STATS_CS,	/* legacy based CS */
+	MSM_ISP_STATS_IHIST,	/* legacy based HIST */
+	MSM_ISP_STATS_SKIN,	/* legacy based SKIN */
+	MSM_ISP_STATS_BG,	/* Bayer Grids */
+	MSM_ISP_STATS_BF,	/* Bayer Focus */
+	MSM_ISP_STATS_BE,	/* Bayer Exposure */
+	MSM_ISP_STATS_BHIST,	/* Bayer Hist */
+	MSM_ISP_STATS_MAX	/* MAX */
 };
 
 struct msm_vfe_stats_stream_request_cmd {
@@ -192,6 +195,7 @@ struct msm_vfe_stats_stream_request_cmd {
 	enum msm_isp_stats_type stats_type;
 	uint32_t framedrop_pattern;
 	uint32_t irq_subsample_pattern;
+	uint32_t buffer_offset;
 	uint32_t stream_handle;
 	uint8_t comp_flag;
 };
@@ -245,8 +249,8 @@ struct msm_vfe_reg_mask_info {
 };
 
 struct msm_vfe_reg_dmi_info {
-	uint32_t hi_tbl_offset; /*Optional*/
-	uint32_t lo_tbl_offset; /*Required*/
+	uint32_t hi_tbl_offset;	/*Optional */
+	uint32_t lo_tbl_offset;	/*Required */
 	uint32_t len;
 };
 
@@ -254,9 +258,15 @@ struct msm_vfe_reg_cfg_cmd {
 	union {
 		struct msm_vfe_reg_rw_info rw_info;
 		struct msm_vfe_reg_mask_info mask_info;
-	struct msm_vfe_reg_dmi_info dmi_info;
+		struct msm_vfe_reg_dmi_info dmi_info;
 	} u;
 	enum msm_vfe_reg_cfg_type cmd_type;
+};
+
+enum msm_isp_buf_type {
+	ISP_PRIVATE_BUF,
+	ISP_SHARE_BUF,
+	MAX_ISP_BUF_TYPE,
 };
 
 struct msm_isp_buf_request {
@@ -264,14 +274,15 @@ struct msm_isp_buf_request {
 	uint32_t stream_id;
 	uint8_t num_buf;
 	uint32_t handle;
+	enum msm_isp_buf_type buf_type;
 };
 
 struct msm_isp_qbuf_info {
 	uint32_t handle;
 	int buf_idx;
-	/*Only used for prepare buffer*/
+	/*Only used for prepare buffer */
 	struct v4l2_buffer buffer;
-	/*Only used for diverted buffer*/
+	/*Only used for diverted buffer */
 	uint32_t dirty_buf;
 };
 
@@ -281,16 +292,16 @@ struct msm_vfe_axi_src_state {
 };
 
 enum msm_isp_event_idx {
-	ISP_REG_UPDATE      = 0,
-	ISP_START_ACK       = 1,
-	ISP_STOP_ACK        = 2,
-	ISP_IRQ_VIOLATION   = 3,
+	ISP_REG_UPDATE = 0,
+	ISP_START_ACK = 1,
+	ISP_STOP_ACK = 2,
+	ISP_IRQ_VIOLATION = 3,
 	ISP_WM_BUS_OVERFLOW = 4,
-	ISP_STATS_OVERFLOW  = 5,
-	ISP_CAMIF_ERROR     = 6,
-	ISP_SOF             = 7,
-	ISP_EOF             = 8,
-	ISP_EVENT_MAX       = 9
+	ISP_STATS_OVERFLOW = 5,
+	ISP_CAMIF_ERROR = 6,
+	ISP_SOF = 7,
+	ISP_EOF = 8,
+	ISP_EVENT_MAX = 9
 };
 
 #define ISP_EVENT_OFFSET          8
@@ -320,8 +331,8 @@ struct msm_isp_buf_event {
 	int8_t buf_idx;
 };
 struct msm_isp_stats_event {
-	uint32_t stats_mask;                        /* 4 bytes */
-	uint8_t stats_buf_idxs[MSM_ISP_STATS_MAX];  /* 11 bytes */
+	uint32_t stats_mask;	/* 4 bytes */
+	uint8_t stats_buf_idxs[MSM_ISP_STATS_MAX];	/* 11 bytes */
 };
 
 struct msm_isp_stream_ack {
@@ -347,7 +358,7 @@ struct msm_isp_event_data {
 		/* IRQ_VIOLATION, STATS_OVER_FLOW, WM_OVER_FLOW */
 		uint32_t irq_status_mask;
 		struct msm_isp_buf_event buf_done;
-	} u; /* union can have max 52 bytes */
+	} u;			/* union can have max 52 bytes */
 };
 
 #define V4L2_PIX_FMT_QBGGR8  v4l2_fourcc('Q', 'B', 'G', '8')

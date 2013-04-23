@@ -27,9 +27,9 @@ struct msm_buf_mngr_info {
  uint32_t index;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 };
+struct v4l2_subdev *msm_buf_mngr_get_subdev(void);
 #define VIDIOC_MSM_BUF_MNGR_GET_BUF   _IOWR('V', BASE_VIDIOC_PRIVATE + 33, struct msm_buf_mngr_info)
 #define VIDIOC_MSM_BUF_MNGR_PUT_BUF   _IOWR('V', BASE_VIDIOC_PRIVATE + 34, struct msm_buf_mngr_info)
-#define VIDIOC_MSM_BUF_MNGR_BUF_DONE   _IOWR('V', BASE_VIDIOC_PRIVATE + 35, struct msm_buf_mngr_info)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define VIDIOC_MSM_BUF_MNGR_BUF_DONE   _IOWR('V', BASE_VIDIOC_PRIVATE + 35, struct msm_buf_mngr_info)
 #endif
-
