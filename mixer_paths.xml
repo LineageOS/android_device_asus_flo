@@ -21,6 +21,10 @@
     <ctl name="RX5 Digital Volume" value="84" />
     <ctl name="RX6 Digital Volume" value="84" />
     <ctl name="RX7 Digital Volume" value="84" />
+    <ctl name="RX3 HPF Switch" value="1" />
+    <ctl name="RX4 HPF Switch" value="1" />
+    <ctl name="RX3 HPF cut off" value="MIN_3DB_4Hz" />
+    <ctl name="RX4 HPF cut off" value="MIN_3DB_4Hz" />
     <ctl name="ADC1 Volume" value="25" />
     <ctl name="ADC2 Volume" value="25" />
     <ctl name="ADC3 Volume" value="25" />
@@ -224,6 +228,10 @@
 
     <path name="speaker">
         <ctl name="SLIM_0_RX Channels" value="Two" />
+        <ctl name="RX3 HPF cut off" value="MIN_3DB_150Hz" />
+        <ctl name="RX4 HPF cut off" value="MIN_3DB_150Hz" />
+        <ctl name="RX3 HPF Switch" value="0" />
+        <ctl name="RX4 HPF Switch" value="0" />
         <ctl name="RX3 MIX1 INP1" value="RX2" />
         <ctl name="RX4 MIX1 INP1" value="RX1" />
         <ctl name="SLIM TX3 MUX" value="RMIX4" />
@@ -284,6 +292,10 @@
         <ctl name="RX1 MIX1 INP1" value="RX1" />
         <ctl name="RX2 MIX1 INP1" value="RX2" />
         <ctl name="HPHL DAC Switch" value="1" />
+        <ctl name="RX3 HPF cut off" value="MIN_3DB_150Hz" />
+        <ctl name="RX4 HPF cut off" value="MIN_3DB_150Hz" />
+        <ctl name="RX3 HPF Switch" value="0" />
+        <ctl name="RX4 HPF Switch" value="0" />
         <ctl name="RX3 MIX1 INP1" value="RX2" />
         <ctl name="RX4 MIX1 INP1" value="RX1" />
         <ctl name="SLIM TX3 MUX" value="RMIX4" />
