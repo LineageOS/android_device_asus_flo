@@ -262,6 +262,11 @@ on charger
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
 
+service irsc_util /system/bin/logwrapper /system/bin/irsc_util "/etc/sec_config"
+    class main
+    user root
+    oneshot
+
 service rmt_storage /system/bin/rmt_storage
     class main
     user root
