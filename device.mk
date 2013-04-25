@@ -148,8 +148,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
         init.qcom.class_main.sh
 
-#Upto 3 layers can go through overlays
-PRODUCT_PROPERTY_OVERRIDES += debug.mdpcomp.maxlayer=3
+#Enable MDP composition by default
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.hwc.mdpcomp.enable=true
 
 PRODUCT_CHARACTERISTICS := nosdcard
 
