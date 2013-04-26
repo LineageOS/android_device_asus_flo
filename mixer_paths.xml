@@ -224,12 +224,10 @@
 
     <path name="speaker">
         <ctl name="SLIM_0_RX Channels" value="Two" />
-        <ctl name="RX3 MIX1 INP1" value="RX1" />
-        <ctl name="RX3 MIX1 INP2" value="RX6" />
-        <ctl name="RX4 MIX1 INP1" value="RX2" />
-        <ctl name="RX4 MIX1 INP2" value="RX7" />
-        <ctl name="SLIM TX3 MUX" value="RMIX3" />
-        <ctl name="SLIM TX5 MUX" value="RMIX4" />
+        <ctl name="RX3 MIX1 INP1" value="RX2" />
+        <ctl name="RX4 MIX1 INP1" value="RX1" />
+        <ctl name="SLIM TX3 MUX" value="RMIX4" />
+        <ctl name="SLIM TX5 MUX" value="RMIX3" />
     </path>
 
     <path name="speaker-mic">
@@ -238,12 +236,7 @@
     </path>
 
     <path name="handset">
-        <ctl name="SLIM_0_RX Channels" value="One" />
-        <ctl name="RX1 MIX1 INP1" value="RX1" />
-        <ctl name="RX1 MIX1 INP2" value="RX6" />
-        <ctl name="EAR PA Gain" value="POS_6_DB" />
-        <ctl name="DAC1 Switch" value="1" />
-        <ctl name="SLIM TX3 MUX" value="RMIX1" />
+        <path name="speaker" />
     </path>
 
     <path name="handset-mic">
@@ -254,12 +247,10 @@
     <path name="headphones">
         <ctl name="SLIM_0_RX Channels" value="Two" />
         <ctl name="RX1 MIX1 INP1" value="RX1" />
-        <ctl name="RX1 MIX1 INP2" value="RX6" />
         <ctl name="RX2 MIX1 INP1" value="RX2" />
-        <ctl name="RX2 MIX1 INP2" value="RX7" />
         <ctl name="HPHL DAC Switch" value="1" />
-        <ctl name="SLIM TX3 MUX" value="RMIX2" />
-        <ctl name="SLIM TX5 MUX" value="RMIX1" />
+        <ctl name="SLIM TX3 MUX" value="RMIX1" />
+        <ctl name="SLIM TX5 MUX" value="RMIX2" />
     </path>
 
     <path name="headset-mic">
@@ -289,13 +280,14 @@
     </path>
 
     <path name="speaker-and-headphones">
-        <path name="headphones" />
-        <ctl name="RX3 MIX1 INP1" value="RX1" />
-        <ctl name="RX3 MIX1 INP2" value="RX6" />
-        <ctl name="RX5 MIX1 INP1" value="RX2" />
-        <ctl name="RX5 MIX1 INP2" value="RX7" />
-        <ctl name="RX4 DSM MUX" value="DSM_INV" />
-        <ctl name="RX6 DSM MUX" value="DSM_INV" />
+        <ctl name="SLIM_0_RX Channels" value="Two" />
+        <ctl name="RX1 MIX1 INP1" value="RX1" />
+        <ctl name="RX2 MIX1 INP1" value="RX2" />
+        <ctl name="HPHL DAC Switch" value="1" />
+        <ctl name="RX3 MIX1 INP1" value="RX2" />
+        <ctl name="RX4 MIX1 INP1" value="RX1" />
+        <ctl name="SLIM TX3 MUX" value="RMIX4" />
+        <ctl name="SLIM TX5 MUX" value="RMIX3" />
     </path>
 
     <path name="hdmi">
