@@ -153,7 +153,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.hwc.mdpcomp.enable=true
 
-PRODUCT_CHARACTERISTICS := nosdcard
+PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 
