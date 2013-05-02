@@ -133,6 +133,9 @@ on post-fs-data
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
 
+    chown system system /dev/wcnss_wlan
+    write 1 /sys/module/wcnss_ssr_8960/parameters/enable_riva_ssr
+
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
     mkdir /tombstones/lpass 0771 system system
@@ -410,7 +413,8 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
 
 service wcnss_init /system/bin/sh /system/etc/init.flo.wifi.sh
     class main
-    user root
+    user system
+    group system wifi
     oneshot
 
 service bdAddrLoader /system/bin/bdAddrLoader -f /persist/bluetooth/.bdaddr -h -x
