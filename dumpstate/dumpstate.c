@@ -16,8 +16,20 @@
 
 #include <dumpstate.h>
 
+void dump_ks_bridges()
+{
+    int i;
+    for (i = 1; i <= 4; ++i) {
+        char path[64], title[32];
+        sprintf(path, "/sys/kernel/debug/ks_bridge/ks_bridge:%d", i);
+        sprintf(title, "KS BRIDGE LOG#%d", i);
+        dump_file(title, path);
+    }
+}
+
 void dumpstate_board()
 {
     dump_file("INTERRUPTS", "/proc/interrupts");
     run_command("MODEM TOMBSTONES", 5, SU_PATH, "root", "ls", "-l", "/data/tombstones/mdm", NULL);
+    dump_ks_bridges();
 };
