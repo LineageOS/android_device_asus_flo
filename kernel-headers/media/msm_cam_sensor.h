@@ -128,11 +128,12 @@ enum sensor_sub_module_t {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  SUB_MODULE_LED_FLASH,
  SUB_MODULE_STROBE_FLASH,
- SUB_MODULE_CSIPHY,
- SUB_MODULE_CSIPHY_3D,
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  SUB_MODULE_CSID,
  SUB_MODULE_CSID_3D,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ SUB_MODULE_CSIPHY,
+ SUB_MODULE_CSIPHY_3D,
+
  SUB_MODULE_MAX,
 };
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -276,8 +277,8 @@ enum camb_position_t {
 };
 enum camerab_mode_t {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- CAMERA_MODE_2D_B = (1 << 0),
- CAMERA_MODE_3D_B = (1 << 1)
+ CAMERA_MODE_2D_B = (1<<0),
+ CAMERA_MODE_3D_B = (1<<1)
 };
 struct msm_sensor_init_params {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -305,13 +306,42 @@ struct csid_cfg_data {
  } cfg;
 };
 struct csiphy_cfg_data {
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- enum csiphy_cfg_type_t cfgtype;
- union {
- struct msm_camera_csiphy_params *csiphy_params;
- struct msm_camera_csi_lane_params *csi_lane_params;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- } cfg;
+	enum csiphy_cfg_type_t cfgtype;
+	union {
+		struct msm_camera_csiphy_params *csiphy_params;
+		struct msm_camera_csi_lane_params *csi_lane_params;
+	} cfg;
+};
+
+enum eeprom_cfg_type_t {
+	CFG_EEPROM_GET_INFO,
+	CFG_EEPROM_GET_DATA,
+	CFG_EEPROM_READ_DATA,
+	CFG_EEPROM_WRITE_DATA,
+};
+struct eeprom_get_t {
+	uint16_t num_bytes;
+};
+
+struct eeprom_read_t {
+	uint8_t *dbuffer;
+	uint16_t num_bytes;
+};
+
+struct eeprom_write_t {
+	uint8_t *dbuffer;
+	uint16_t num_bytes;
+};
+
+struct msm_eeprom_cfg_data {
+	enum eeprom_cfg_type_t cfgtype;
+	uint8_t is_supported;
+	union {
+		char eeprom_name[MAX_SENSOR_NAME];
+		struct eeprom_get_t get_data;
+		struct eeprom_read_t read_data;
+		struct eeprom_write_t write_data;
+	} cfg;
 };
 enum msm_sensor_cfg_type_t {
  CFG_SET_SLAVE_INFO,
@@ -475,16 +505,32 @@ enum msm_camera_led_config_t {
 struct msm_camera_led_cfg_t {
  enum msm_camera_led_config_t cfgtype;
 };
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define VIDIOC_MSM_SENSOR_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 1, struct sensorb_cfg_data)
-#define VIDIOC_MSM_SENSOR_RELEASE   _IO('V', BASE_VIDIOC_PRIVATE + 2)
-#define VIDIOC_MSM_SENSOR_GET_SUBDEV_ID   _IOWR('V', BASE_VIDIOC_PRIVATE + 3, uint32_t)
-#define VIDIOC_MSM_CSIPHY_IO_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 4, struct csid_cfg_data)
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define VIDIOC_MSM_CSID_IO_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 5, struct csiphy_cfg_data)
-#define VIDIOC_MSM_ACTUATOR_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 6, struct msm_actuator_cfg_data)
-#define VIDIOC_MSM_FLASH_LED_DATA_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 7, struct msm_camera_led_cfg_t)
-#define MSM_V4L2_PIX_FMT_META v4l2_fourcc('M', 'E', 'T', 'A')
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+
+#define VIDIOC_MSM_SENSOR_CFG \
+	_IOWR('V', BASE_VIDIOC_PRIVATE + 1, struct sensorb_cfg_data)
+
+#define VIDIOC_MSM_SENSOR_RELEASE \
+	_IO('V', BASE_VIDIOC_PRIVATE + 2)
+
+#define VIDIOC_MSM_SENSOR_GET_SUBDEV_ID \
+	_IOWR('V', BASE_VIDIOC_PRIVATE + 3, uint32_t)
+
+#define VIDIOC_MSM_CSIPHY_IO_CFG \
+	_IOWR('V', BASE_VIDIOC_PRIVATE + 4, struct csid_cfg_data)
+
+#define VIDIOC_MSM_CSID_IO_CFG \
+	_IOWR('V', BASE_VIDIOC_PRIVATE + 5, struct csiphy_cfg_data)
+
+#define VIDIOC_MSM_ACTUATOR_CFG \
+	_IOWR('V', BASE_VIDIOC_PRIVATE + 6, struct msm_actuator_cfg_data)
+
+#define VIDIOC_MSM_FLASH_LED_DATA_CFG \
+	_IOWR('V', BASE_VIDIOC_PRIVATE + 7, struct msm_camera_led_cfg_t)
+
+#define VIDIOC_MSM_EEPROM_CFG \
+	_IOWR('V', BASE_VIDIOC_PRIVATE + 8, struct msm_eeprom_cfg_data)
+
+#define MSM_V4L2_PIX_FMT_META v4l2_fourcc('M', 'E', 'T', 'A') /* META */
+
 #define MSM_V4L2_PIX_FMT_RESERVED_0 v4l2_fourcc('R', 'E', 'S', '0')
 #endif
