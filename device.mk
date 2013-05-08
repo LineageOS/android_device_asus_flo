@@ -249,7 +249,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
         debug.egl.recordable.rgba8888=1
 
 # Configure libhwui
-PRODUCT_PROPERTY_OVERRIDES := \
+PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.texture_cache_size=48 \
 	ro.hwui.layer_cache_size=32 \
 	ro.hwui.r_buffer_cache_size=4 \
