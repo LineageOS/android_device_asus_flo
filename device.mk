@@ -196,7 +196,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PACKAGES += \
 	camera.flo \
-	camera.msm8960 \
 	libmmcamera_interface2 \
 	libmmcamera_interface \
 	libqomx_core
