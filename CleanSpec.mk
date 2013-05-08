@@ -45,3 +45,4 @@
 #$(call add-clean-step, rm -rf $(PRODUCT_OUT)/data/*)
 $(call add-clean-step, rm -rf out/target/product/flo/system/build.prop)
 $(call add-clean-step, find out/target/product/flo/obj/APPS -type f -name "*.apk" -print0 | xargs -0 rm -f)
+$(call add-clean-step, rm -rf out/target/product/flo/system/build.prop)
