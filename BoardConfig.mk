@@ -99,4 +99,6 @@ BOARD_PERSISTIMAGE_PARTITION_SIZE := 5242880
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/asus/flo
 
+USE_DEVICE_SPECIFIC_QCOM_PROPRIETARY:= true
+
 -include vendor/asus/flo/BoardConfigVendor.mk
