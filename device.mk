@@ -252,6 +252,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
         debug.egl.recordable.rgba8888=1
 
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.qc.sensors.wl_dis=true \
+        ro.qualcomm.sensors.smd=true
+
 # Configure libhwui
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.texture_cache_size=48 \
