@@ -48,3 +48,4 @@ $(call add-clean-step, find out/target/product/flo/obj/APPS -type f -name "*.apk
 $(call add-clean-step, rm -rf out/target/product/flo/system/build.prop)
 $(call add-clean-step, rm -f $(PRODUCT_OUT)/system/lib/hw/camera.msm8960.so)
 $(call add-clean-step, rm -rf out/target/product/flo/system/build.prop)
+$(call add-clean-step, rm -rf out/target/product/flo/system/build.prop)
