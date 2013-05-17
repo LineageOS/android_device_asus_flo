@@ -131,6 +131,7 @@
 /system/lib/lib_dlb_msd.so
 /system/vendor/firmware/a300_pfp.fw
 /system/vendor/firmware/a300_pm4.fw
+/system/vendor/firmware/bcm2079x-b5_firmware.ncd
 /system/vendor/firmware/discretix/dxhdcp2.b00
 /system/vendor/firmware/discretix/dxhdcp2.b01
 /system/vendor/firmware/discretix/dxhdcp2.b02
