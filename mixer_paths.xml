@@ -239,8 +239,8 @@
     </path>
 
     <path name="speaker-mic">
-        <path name="adc3" />
-        <ctl name="DEC4 Volume" value="99" />
+        <path name="dmic1" />
+        <ctl name="DEC7 Volume" value="101" />
     </path>
 
     <path name="handset">
@@ -275,8 +275,8 @@
     </path>
 
     <path name="voice-speaker-mic">
-        <path name="adc3" />
-        <ctl name="DEC4 Volume" value="87" />
+        <path name="dmic1" />
+        <ctl name="DEC7 Volume" value="101" />
     </path>
 
     <path name="voice-headphones">
@@ -438,7 +438,8 @@
     </path>
 
     <path name="voice-tty-vco-handset-mic">
-        <path name="adc1" />
+        <path name="dmic1" />
+        <ctl name="DEC7 Volume" value="101" />
     </path>
 
 </mixer>
