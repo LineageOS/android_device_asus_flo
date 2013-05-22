@@ -266,6 +266,9 @@ struct sensorb_cfg_data {
 		struct msm_sensor_info_t      sensor_info;
 		struct msm_sensor_init_params sensor_init_params;
 		void                         *setting;
+		int8_t effect;
+		uint8_t wb_val;
+		int8_t exp_compensation;
 	} cfg;
 };
 
@@ -329,6 +332,9 @@ enum msm_sensor_cfg_type_t {
 	CFG_SET_RESOLUTION,
 	CFG_SET_STOP_STREAM,
 	CFG_SET_START_STREAM,
+	CFG_SET_EFFECT,
+	CFG_SET_WB,
+	CFG_SET_EXPOSURE_COMPENSATION,
 };
 
 enum msm_actuator_cfg_type_t {
@@ -336,6 +342,7 @@ enum msm_actuator_cfg_type_t {
 	CFG_SET_ACTUATOR_INFO,
 	CFG_SET_DEFAULT_FOCUS,
 	CFG_MOVE_FOCUS,
+	CFG_ACTUATOR_POWERDOWN,
 };
 
 enum actuator_type {
@@ -431,6 +438,35 @@ enum af_camera_name {
 	ACTUATOR_WEB_CAM_1,
 	ACTUATOR_WEB_CAM_2,
 };
+
+#define CAMERA_EFFECT_OFF		0
+#define CAMERA_EFFECT_MONO		1
+#define CAMERA_EFFECT_NEGATIVE		2
+#define CAMERA_EFFECT_SOLARIZE		3
+#define CAMERA_EFFECT_SEPIA		4
+#define CAMERA_EFFECT_POSTERIZE		5
+#define CAMERA_EFFECT_WHITEBOARD	6
+#define CAMERA_EFFECT_BLACKBOARD	7
+#define CAMERA_EFFECT_AQUA		8
+#define CAMERA_EFFECT_EMBOSS		9
+#define CAMERA_EFFECT_SKETCH		10
+#define CAMERA_EFFECT_NEON		11
+#define CAMERA_EFFECT_MAX		12
+
+#define  YUV_CAMERA_WB_AUTO               0	/* This list must match aeecamera.h */
+#define  YUV_CAMERA_WB_CUSTOM             1
+#define  YUV_CAMERA_WB_INCANDESCENT       2
+#define  YUV_CAMERA_WB_FLUORESCENT        3
+#define  YUV_CAMERA_WB_DAYLIGHT           4
+#define  YUV_CAMERA_WB_CLOUDY_DAYLIGHT    5
+#define  YUV_CAMERA_WB_TWILIGHT           6
+#define  YUV_CAMERA_WB_SHADE              7
+
+#define CAMERA_EXPOSURE_COMPENSATION_LV0			12
+#define CAMERA_EXPOSURE_COMPENSATION_LV1			6
+#define CAMERA_EXPOSURE_COMPENSATION_LV2			0
+#define CAMERA_EXPOSURE_COMPENSATION_LV3			-6
+#define CAMERA_EXPOSURE_COMPENSATION_LV4			-12
 
 struct msm_actuator_cfg_data {
 	int cfgtype;
