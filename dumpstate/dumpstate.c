@@ -30,6 +30,5 @@ void dump_ks_bridges()
 void dumpstate_board()
 {
     dump_file("INTERRUPTS", "/proc/interrupts");
-    run_command("MODEM TOMBSTONES", 5, SU_PATH, "root", "ls", "-l", "/data/tombstones/mdm", NULL);
     dump_ks_bridges();
 };

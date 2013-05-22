@@ -34,10 +34,10 @@ const char* ITEMS[] = { "reboot system now",
                         "wipe cache partition",
                         NULL };
 
-class MakoUI : public ScreenRecoveryUI
+class FloUI : public ScreenRecoveryUI
 {
 public:
-    MakoUI() :
+    FloUI() :
         consecutive_power_keys(0) {
     }
 
@@ -60,11 +60,11 @@ private:
     int consecutive_power_keys;
 };
 
-class MakoDevice : public Device
+class FloDevice : public Device
 {
 public:
-    MakoDevice() :
-        ui(new MakoUI) {
+    FloDevice() :
+        ui(new FloUI) {
     }
 
     RecoveryUI* GetUI() { return ui; }
@@ -106,5 +106,5 @@ private:
 };
 
 Device* make_device() {
-    return new MakoDevice;
+    return new FloDevice;
 }

@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-ifneq ($(filter flo,$(TARGET_DEVICE)),)
+ifneq ($(filter flo deb,$(TARGET_DEVICE)),)
 
 LOCAL_PATH:= $(call my-dir)
 
