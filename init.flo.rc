@@ -418,7 +418,7 @@ service thermald /system/bin/thermald
 service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
     class main
 
-service ppd /system/bin/mm-pp-daemon
+service ppd /system/bin/mm-pp-daemon -s
     class late_start
     user system
     socket pps stream 0660 system system graphics
@@ -470,3 +470,6 @@ on property:ro.boot.baseband=mdm
 on property:ro.boot.baseband=apq
     setprop ro.radio.noril yes
     stop ril-daemon
+
+on property:init.svc.surfaceflinger=stopped
+    stop ppd
