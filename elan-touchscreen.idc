@@ -35,5 +35,4 @@ touch.pressure.scale = 0.0048
 
 # Orientation
 touch.orientation.calibration = none
-# for cluster report
-touch.coverage.calibration = box
+
