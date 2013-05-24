@@ -470,3 +470,6 @@ on property:ro.boot.baseband=mdm
 on property:ro.boot.baseband=apq
     setprop ro.radio.noril yes
     stop ril-daemon
+
+on property:init.svc.surfaceflinger=stopped
+    stop ppd
