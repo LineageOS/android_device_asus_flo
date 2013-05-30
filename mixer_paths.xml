@@ -238,6 +238,19 @@
         <ctl name="SLIM TX5 MUX" value="RMIX3" />
     </path>
 
+    <!-- same as speaker but with left and right swapped -->
+    <path name="speaker-reverse">
+        <ctl name="SLIM_0_RX Channels" value="Two" />
+        <ctl name="RX3 HPF cut off" value="MIN_3DB_150Hz" />
+        <ctl name="RX4 HPF cut off" value="MIN_3DB_150Hz" />
+        <ctl name="RX3 HPF Switch" value="0" />
+        <ctl name="RX4 HPF Switch" value="0" />
+        <ctl name="RX3 MIX1 INP1" value="RX1" />
+        <ctl name="RX4 MIX1 INP1" value="RX2" />
+        <ctl name="SLIM TX3 MUX" value="RMIX3" />
+        <ctl name="SLIM TX5 MUX" value="RMIX4" />
+    </path>
+
     <path name="speaker-mic">
         <path name="dmic1" />
         <ctl name="DEC7 Volume" value="101" />
