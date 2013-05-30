@@ -26,6 +26,9 @@ PRODUCT_COPY_FILES := \
     device/asus/flo/fstab.flo:root/fstab.flo \
     device/asus/flo/init.flo.rc:root/init.flo.rc
 
+PRODUCT_PACKAGES += \
+	camera.flo
+
 # the actual meat of the device-specific product definition
 $(call inherit-product, device/asus/flo/device-common.mk)
 
