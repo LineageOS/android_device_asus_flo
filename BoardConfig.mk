@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-TARGET_BOOTLOADER_BOARD_NAME := FLO
+TARGET_BOOTLOADER_BOARD_NAME := flo
 TARGET_BOOTLOADER_NAME := flo
 TARGET_BOARD_INFO_FILE := device/asus/flo/board-info.txt
 
