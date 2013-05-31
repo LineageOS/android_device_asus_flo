@@ -29,6 +29,10 @@ PRODUCT_COPY_FILES := \
 PRODUCT_PACKAGES += \
 	camera.flo
 
+# NFC
+PRODUCT_PACKAGES += \
+    nfc_nci.flo
+
 # the actual meat of the device-specific product definition
 $(call inherit-product, device/asus/flo/device-common.mk)
 
