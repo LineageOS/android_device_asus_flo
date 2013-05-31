@@ -121,8 +121,6 @@
 /system/lib/libqmi_encdec.so
 /system/lib/libqomx_core.so
 /system/lib/libQSEEComAPI.so
-/system/lib/libril-qc-qmi-1.so
-/system/lib/libril-qcril-hook-oem.so
 /system/lib/libsc-a3xx.so
 /system/lib/libsensor1.so
 /system/lib/libsensor_reg.so
