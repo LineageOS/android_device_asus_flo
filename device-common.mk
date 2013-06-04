@@ -182,6 +182,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/asus/flo/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
+# Monitor device rotation for speaker channel swap
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.audio.monitorRotation=true
+
 PRODUCT_PACKAGES += \
 	hci_qcomm_init
 
