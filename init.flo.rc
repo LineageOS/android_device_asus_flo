@@ -195,8 +195,12 @@ on post-fs-data
 
     rm /data/local/tmp/adreno_config.txt
 
-    # LED On/Off synchronization
-    chown system system /sys/class/leds/red/device/lock
+    # White LED
+    chown system system /sys/class/leds/white/device/lock
+    chown system system /sys/class/leds/white/brightness
+    chown system system /sys/class/leds/white/device/grpfreq
+    chown system system /sys/class/leds/white/device/grppwm
+    chown system system /sys/class/leds/white/device/blink
 
     # communicate with mpdecision and thermald
     mkdir /dev/socket/mpdecision 0770 system system
