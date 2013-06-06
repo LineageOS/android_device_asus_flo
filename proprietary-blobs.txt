@@ -24,7 +24,6 @@
 /system/bin/hci_qcomm_init
 /system/bin/irsc_util
 /system/bin/ks
-/system/bin/mm-audio-send-cal
 /system/bin/mm-pp-daemon
 /system/bin/mm-qcamera-app
 /system/bin/mm-qcamera-daemon
@@ -71,7 +70,6 @@
 /system/lib/libAKM.so
 /system/lib/libaudcal.so
 /system/lib/libaudioalsa.so
-/system/lib/libaudioparsers.so
 /system/lib/libC2D2.so
 /system/lib/libc2d2_a3xx.so
 /system/lib/libchromatix_ov5693_common.so
@@ -110,8 +108,6 @@
 /system/lib/libmmjpeg_interface.so
 /system/lib/libnetmgr.so
 /system/lib/liboemcrypto.so
-/system/lib/libOmxAacDec.so
-/system/lib/libOmxWmaDec.so
 /system/lib/libqcci_legacy.so
 /system/lib/libqdi.so
 /system/lib/libqdp.so
@@ -131,7 +127,6 @@
 /system/lib/libsensor_user_cal.so
 /system/lib/libstagefright_hdcp.so
 /system/lib/libxml.so
-/system/lib/lib_dlb_msd.so
 /system/vendor/firmware/a300_pfp.fw
 /system/vendor/firmware/a300_pm4.fw
 /system/vendor/firmware/bcm2079x-b5_firmware.ncd
