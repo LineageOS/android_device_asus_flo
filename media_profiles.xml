@@ -127,7 +127,7 @@
 
         <EncoderProfile quality="720p" fileFormat="mp4" duration="30">
             <Video codec="h264"
-                   bitRate="4000000"
+                   bitRate="8000000"
                    width="1280"
                    height="720"
                    frameRate="30" />
