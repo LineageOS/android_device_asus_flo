@@ -246,7 +246,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.qc.sensors.wl_dis=true \
         ro.qualcomm.sensors.smd=true
 
-# PRODUCT_PROPERTY_OVERRIDES += ro.qualcomm.cabl=1 hw.cabl.level=Auto
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.qualcomm.cabl=1 \
+	hw.cabl.level=Auto
 
 # Configure libhwui
 PRODUCT_PROPERTY_OVERRIDES += \
