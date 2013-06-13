@@ -62,7 +62,6 @@
 /system/lib/egl/libGLESv1_CM_adreno200.so
 /system/lib/egl/libGLESv2_adreno200.so
 /system/lib/egl/libq3dtools_adreno200.so
-/system/lib/hw/camera.flo.so
 /system/lib/hw/gps.msm8960.so
 /system/lib/hw/sensors.msm8960.so
 /system/lib/libacdbdata.so
@@ -102,10 +101,8 @@
 /system/lib/libmm-color-convertor.so
 /system/lib/libmmcamera2_stats_algorithm.so
 /system/lib/libmmcamera_image_stab.so
-/system/lib/libmmcamera_interface.so
 /system/lib/libmmcamera_mi1040.so
 /system/lib/libmmcamera_ov5693.so
-/system/lib/libmmjpeg_interface.so
 /system/lib/libnetmgr.so
 /system/lib/liboemcrypto.so
 /system/lib/libqcci_legacy.so
@@ -119,7 +116,6 @@
 /system/lib/libqmi_csi.so
 /system/lib/libqmi_csvt_srvc.so
 /system/lib/libqmi_encdec.so
-/system/lib/libqomx_core.so
 /system/lib/libQSEEComAPI.so
 /system/lib/libsc-a3xx.so
 /system/lib/libsensor1.so
