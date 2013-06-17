@@ -25,9 +25,9 @@ touch.deviceType = touchScreen
 touch.orientationAware = 1
 
 # Size
-touch.size.calibration = area
-touch.size.scale = 36
-touch.size.bias = 0
+touch.size.calibration = diameter
+touch.size.scale = 6.3284
+touch.size.bias = 39.9752
 
 # Pressure
 touch.pressure.calibration = amplitude
