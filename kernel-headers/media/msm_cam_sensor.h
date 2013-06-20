@@ -504,76 +504,76 @@ enum af_camera_name {
 #define YUV_CAMERA_WB_CUSTOM 1
 #define YUV_CAMERA_WB_INCANDESCENT 2
 #define YUV_CAMERA_WB_FLUORESCENT 3
-#define YUV_CAMERA_WB_DAYLIGHT 4
+#define YUV_CAMERA_WB_WARM_FLUORESCENT 4
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define YUV_CAMERA_WB_CLOUDY_DAYLIGHT 5
-#define YUV_CAMERA_WB_TWILIGHT 6
-#define YUV_CAMERA_WB_SHADE 7
+#define YUV_CAMERA_WB_DAYLIGHT 5
+#define YUV_CAMERA_WB_CLOUDY_DAYLIGHT 6
+#define YUV_CAMERA_WB_TWILIGHT 7
+#define YUV_CAMERA_WB_SHADE 8
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CAMERA_EXPOSURE_COMPENSATION_LV0 12
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CAMERA_EXPOSURE_COMPENSATION_LV1 6
 #define CAMERA_EXPOSURE_COMPENSATION_LV2 0
 #define CAMERA_EXPOSURE_COMPENSATION_LV3 -6
-#define CAMERA_EXPOSURE_COMPENSATION_LV4 -12
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define CAMERA_EXPOSURE_COMPENSATION_LV4 -12
 #define CAMERA_FPS_FIX_30 30
 #define CAMERA_FPS_FIX_25 25
 #define CAMERA_FPS_FIX_24 24
-#define CAMERA_FPS_FIX_20 20
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define CAMERA_FPS_FIX_20 20
 #define CAMERA_FPS_FIX_15 15
 #define CAMERA_FPS_AUTO_30 0
 struct msm_actuator_cfg_data {
- int cfgtype;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ int cfgtype;
  uint8_t is_af_supported;
  union {
  struct msm_actuator_move_params_t move;
- struct msm_actuator_set_info_t set_info;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct msm_actuator_set_info_t set_info;
  struct msm_actuator_get_info_t get_info;
  enum af_camera_name cam_name;
  } cfg;
-};
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
 enum msm_actuator_write_type {
  MSM_ACTUATOR_WRITE_HW_DAMP,
  MSM_ACTUATOR_WRITE_DAC,
-};
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
 struct msm_actuator_reg_params_t {
  enum msm_actuator_write_type reg_write_type;
  uint32_t hw_mask;
- uint16_t reg_addr;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint16_t reg_addr;
  uint16_t hw_shift;
  uint16_t data_shift;
 };
-enum msm_camera_led_config_t {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+enum msm_camera_led_config_t {
  MSM_CAMERA_LED_OFF,
  MSM_CAMERA_LED_LOW,
  MSM_CAMERA_LED_HIGH,
- MSM_CAMERA_LED_INIT,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MSM_CAMERA_LED_INIT,
  MSM_CAMERA_LED_RELEASE,
 };
 struct msm_camera_led_cfg_t {
- enum msm_camera_led_config_t cfgtype;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ enum msm_camera_led_config_t cfgtype;
 };
 #define VIDIOC_MSM_SENSOR_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 1, struct sensorb_cfg_data)
 #define VIDIOC_MSM_SENSOR_RELEASE   _IO('V', BASE_VIDIOC_PRIVATE + 2)
-#define VIDIOC_MSM_SENSOR_GET_SUBDEV_ID   _IOWR('V', BASE_VIDIOC_PRIVATE + 3, uint32_t)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define VIDIOC_MSM_SENSOR_GET_SUBDEV_ID   _IOWR('V', BASE_VIDIOC_PRIVATE + 3, uint32_t)
 #define VIDIOC_MSM_CSIPHY_IO_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 4, struct csid_cfg_data)
 #define VIDIOC_MSM_CSID_IO_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 5, struct csiphy_cfg_data)
 #define VIDIOC_MSM_ACTUATOR_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 6, struct msm_actuator_cfg_data)
-#define VIDIOC_MSM_FLASH_LED_DATA_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 7, struct msm_camera_led_cfg_t)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define VIDIOC_MSM_FLASH_LED_DATA_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 7, struct msm_camera_led_cfg_t)
 #define VIDIOC_MSM_EEPROM_CFG   _IOWR('V', BASE_VIDIOC_PRIVATE + 8, struct msm_eeprom_cfg_data)
 #define MSM_V4L2_PIX_FMT_META v4l2_fourcc('M', 'E', 'T', 'A')
 #define MSM_V4L2_PIX_FMT_RESERVED_0 v4l2_fourcc('R', 'E', 'S', '0')
-#endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-
+#endif
