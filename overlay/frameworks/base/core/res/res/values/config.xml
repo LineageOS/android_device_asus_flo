@@ -224,7 +224,6 @@
 
     <string-array name="config_usbHostBlacklist">
         <!--  /dev/bus/usb/001 is used for the modem -->
-        <item>/dev/bus/usb/001</item>
     </string-array>
 
     <!-- reference volume index for music stream to limit headphone volume and display warning -->
