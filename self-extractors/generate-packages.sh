@@ -164,6 +164,9 @@ do
             system/vendor/firmware/discretix/dxhdcp2.b00 \
             system/vendor/firmware/discretix/dxhdcp2.b01 \
             system/vendor/firmware/discretix/dxhdcp2.b02 \
+            system/vendor/firmware/discretix/dxhdcp2.b03 \
+            system/vendor/firmware/discretix/dxhdcp2.mdt \
+            system/vendor/firmware/dsps.b00 \
             system/vendor/firmware/dsps.b01 \
             system/vendor/firmware/dsps.b02 \
             system/vendor/firmware/dsps.b03 \
