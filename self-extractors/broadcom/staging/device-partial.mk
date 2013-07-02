@@ -15,4 +15,5 @@
 # Broadcom blob(s) necessary for Flo hardware
 PRODUCT_COPY_FILES := \
     vendor/broadcom/flo/proprietary/bcm2079x-b5_firmware.ncd:system/vendor/firmware/bcm2079x-b5_firmware.ncd:broadcom \
+    vendor/broadcom/flo/proprietary/bcm2079x-b5_pre_firmware.ncd:system/vendor/firmware/bcm2079x-b5_pre_firmware.ncd:broadcom \
 
