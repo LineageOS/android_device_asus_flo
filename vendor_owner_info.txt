@@ -1,7 +1,9 @@
 root/adb_keys:google
 system/bin/ATFWD-daemon:qcom
+system/app/AsusDebugger.apk:asus
 system/etc/DxHDCP.cfg:qcom
 system/vendor/firmware/bcm2079x-b5_firmware.ncd:broadcom
+system/vendor/firmware/bcm2079x-b5_pre_firmware.ncd:broadcom
 system/bin/bridgemgrd:qcom
 system/bin/btnvtool:qcom
 system/bin/diag_klog:qcom
@@ -146,12 +148,14 @@ system/vendor/firmware/wcnss.b05:qcom
 system/vendor/firmware/wcnss.mdt:qcom
 system/vendor/firmware/a300_pfp.fw:qcom
 system/vendor/firmware/a300_pm4.fw:qcom
+system/etc/debugger.conf:asus
 system/lib/egl/eglsubAndroid.so:qcom
 system/lib/libC2D2.so:qcom
 system/lib/egl/libEGL_adreno200.so:qcom
 system/lib/egl/libGLESv1_CM_adreno200.so:qcom
 system/lib/egl/libGLESv2_adreno200.so:qcom
 system/lib/libc2d2_a3xx.so:qcom
+system/lib/libdebugger_jni.so:asus
 system/lib/libgsl.so:qcom
 system/lib/libllvm-a3xx.so:qcom
 system/lib/egl/libq3dtools_adreno200.so:qcom
