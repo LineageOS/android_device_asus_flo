@@ -31,6 +31,7 @@
             <Quirk name="requires-allocate-on-output-ports"/>
             <Quirk name="requires-loaded-to-idle-after-allocation"/>
         </MediaCodec>
+        <MediaCodec name="OMX.google.vp8.encoder" type="video/x-vnd.on2.vp8" />
         <MediaCodec name="OMX.google.amrnb.encoder" type="audio/3gpp" />
         <MediaCodec name="OMX.google.aac.encoder" type="audio/mp4a-latm" />
         <MediaCodec name="OMX.google.amrwb.encoder" type="audio/amr-wb" />
