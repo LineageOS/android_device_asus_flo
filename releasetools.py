@@ -22,6 +22,12 @@ def FullOTA_InstallEnd(info):
   else:
     print "no radio.img in target_files; skipping install"
 
+  DDR_img = FindDDR(info.input_zip)
+  if DDR_img:
+    WriteDDR(info, DDR_img)
+  else:
+    print "no DDR.bin in target_files; skipping install"
+
 
 def IncrementalOTA_VerifyEnd(info):
   target_radio_img = FindRadio(info.target_zip)
@@ -50,6 +56,13 @@ def IncrementalOTA_InstallEnd(info):
       WriteBootloader(info, target_bootloader_img)
   except KeyError:
     print "no bootloader.img in target target_files; skipping install"
+
+  df = FindDDR(info.target_zip)
+  if not df:
+    print "no DDR.bin in target target_files; skipping install"
+  else:
+    df = common.File("DDR.bin", df)
+    WriteDDR(info, df.data)
 
   tf = FindRadio(info.target_zip)
   if not tf:
@@ -94,6 +107,18 @@ def WriteRadio(info, radio_img):
   info.script.AppendExtra(
       'package_extract_file("radio.img", "%s");' % (device,))
 
+def FindDDR(zipfile):
+  try:
+    return zipfile.read("RADIO/DDR.bin")
+  except KeyError:
+    return None
+
+
+def WriteDDR(info, DDR_img):
+  info.script.Print("Writing DDR...")
+  common.ZipWriteStr(info.output_zip, "DDR.bin", DDR_img)
+  info.script.AppendExtra(
+      'package_extract_file("DDR.bin", "/dev/block/platform/msm_sdcc.1/by-name/DDR");' )
 
 # /* msm8960 bootloader.img format */
 #
