@@ -72,5 +72,5 @@
         <value>239.7</value> <!-- 1512 MHz CPU speed -->
     </array>
     <!-- This is the battery capacity in mAh -->
-    <item name="battery.capacity">2100</item>
+    <item name="battery.capacity">3448</item>
 </device>
