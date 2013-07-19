@@ -18,14 +18,14 @@
 # 704765 = JSR72
 # 739313 = JSS11D
 # 741250 = JSS15
-# 746990 = JSS15H
+# 746990 = JSS16H
 # end jb-mr2-dev
 
 source ../../../common/clear-factory-images-variables.sh
 BUILD=746990
 DEVICE=flo
 PRODUCT=razor
-VERSION=jss15h
+VERSION=jss16h
 SRCPREFIX=signed-
 BOOTLOADER=flo-03.14
 source ../../../common/generate-factory-images-common.sh
