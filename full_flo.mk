@@ -16,3 +16,5 @@
 $(call inherit-product, device/asus/flo/aosp_flo.mk)
 
 PRODUCT_NAME := full_flo
+
+$(call inherit-product-if-exists, vendor/asus/flo/flo-vendor.mk)
