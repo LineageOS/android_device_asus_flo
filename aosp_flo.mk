@@ -26,7 +26,6 @@ PRODUCT_DEVICE := flo
 PRODUCT_BRAND := Android
 PRODUCT_MODEL := AOSP on Flo
 PRODUCT_MANUFACTURER := ASUS
-PRODUCT_RESTRICT_VENDOR_FILES := true
 
 # Inherit from hardware-specific part of the product configuration
 $(call inherit-product, device/asus/flo/device.mk)
