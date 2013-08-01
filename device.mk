@@ -18,11 +18,12 @@
 # are also specific to msm8960 devices
 #
 # Everything in this directory will become public
+$(call inherit-product-if-exists, vendor/asus/flo/flo-vendor.mk)
 
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.carrier=wifi-only
 
-PRODUCT_COPY_FILES := \
+PRODUCT_COPY_FILES += \
     device/asus/flo/fstab.flo:root/fstab.flo \
     device/asus/flo/init.flo.rc:root/init.flo.rc
 
