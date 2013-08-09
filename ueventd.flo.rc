@@ -41,3 +41,17 @@
 /dev/gss                  0660   system     gps
 /dev/ks_hsic_bridge       0660   system     system
 /dev/efs_hsic_bridge      0660   system     system
+
+#permissions for audio
+/dev/msm_qcelp            0660   system     audio
+/dev/msm_evrc             0660   system     audio
+/dev/msm_wma              0660   system     audio
+/dev/msm_wmapro           0660   system     audio
+/dev/msm_amrnb            0660   system     audio
+/dev/msm_amrwb            0660   system     audio
+/dev/msm_aac              0660   system     audio
+/dev/msm_multi_aac        0660   system     audio
+/dev/msm_aac_in           0660   system     audio
+/dev/msm_qcelp_in         0660   system     audio
+/dev/msm_evrc_in          0660   system     audio
+/dev/msm_amrnb_in         0640   system     audio

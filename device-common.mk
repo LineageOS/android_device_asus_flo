@@ -268,6 +268,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.text_large_cache_width=2048 \
 	ro.hwui.text_large_cache_height=1024
 
+# Additional tuning
+PRODUCT_PROPERTY_OVERRIDES += \
+    hwui.text_gamma_correction=shader \
+    hwui.use_gpu_pixel_buffers=true
+
+# Hardware codecs
+PRODUCT_PROPERTY_OVERRIDES += \
+    qcom.hw.aac.encoder=true
+
+PRODUCT_PACKAGES += \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxEvrcEnc \
+    libOmxQcelp13Enc
+
 # NFC packages
 PRODUCT_PACKAGES += \
     libnfc-nci \
