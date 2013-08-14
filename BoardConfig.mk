@@ -18,7 +18,7 @@ TARGET_BOOTLOADER_BOARD_NAME := flo
 TARGET_BOOTLOADER_NAME := flo
 TARGET_BOARD_INFO_FILE := device/asus/flo/board-info.txt
 
-BOARD_LIB_DUMPSTATE := libdumpstate.flo
+BOARD_HAL_STATIC_LIBRARIES := libdumpstate.flo
 
 # TARGET_RECOVERY_UI_LIB := librecovery_ui_flo
 
