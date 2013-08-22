@@ -113,10 +113,6 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
 	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml
 
-# GPS configuration
-PRODUCT_COPY_FILES += \
-	device/asus/flo/gps.conf:system/etc/gps.conf
-
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=196608
 
@@ -211,12 +207,19 @@ PRODUCT_PACKAGES += \
 	libstagefrighthw \
 	libc2dcolorconvert
 
+# GPS
 PRODUCT_PACKAGES += \
-	libloc_adapter \
-	libloc_eng \
-	libloc_api_v02 \
-	libgps.utils \
-	gps.msm8960
+        libloc_adapter \
+        libloc_eng \
+        libloc_api_v02 \
+        libloc_ds_api \
+        libloc_core \
+        libizat_core \
+        libgeofence \
+        libgps.utils \
+        gps.conf \
+        gps.msm8960 \
+        flp.msm8960
 
 PRODUCT_PACKAGES += \
 	bdAddrLoader \
