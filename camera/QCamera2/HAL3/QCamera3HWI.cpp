@@ -903,6 +903,7 @@ int QCamera3HardwareInterface::processCaptureRequest(
     pendingRequest.num_buffers = request->num_output_buffers;
     pendingRequest.request_id = request_id;
     pendingRequest.blob_request = blob_request;
+    pendingRequest.input_buffer_present = (request->input_buffer != NULL)? 1 : 0;
     pendingRequest.ae_trigger.trigger_id = mPrecaptureId;
     pendingRequest.ae_trigger.trigger = CAM_AEC_TRIGGER_IDLE;
 
@@ -941,7 +942,6 @@ int QCamera3HardwareInterface::processCaptureRequest(
         if (output.stream->format == HAL_PIXEL_FORMAT_BLOB) {
             QCamera3RegularChannel* inputChannel = NULL;
             if(request->input_buffer != NULL){
-
                 //Try to get the internal format
                 inputChannel = (QCamera3RegularChannel*)
                     request->input_buffer->stream->priv;
@@ -1154,14 +1154,21 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
                       }
                    }
                    if (!found_metadata) {
-                      //livesnapshot case
-                      if (i->blob_request) {
-                         mPictureChannel->queueMetadata(metadata_buf);
-                      } else {
-                         //return the metadata immediately
-                         mMetadataChannel->bufDone(metadata_buf);
-                         free(metadata_buf);
-                      }
+                       if (!i->input_buffer_present && i->blob_request) {
+                          //livesnapshot or fallback non-zsl snapshot case
+                          for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
+                                j != i->buffers.end(); j++){
+                              if (j->stream->stream_type == CAMERA3_STREAM_OUTPUT &&
+                                  j->stream->format == HAL_PIXEL_FORMAT_BLOB) {
+                                 mPictureChannel->queueMetadata(metadata_buf);
+                                 break;
+                              }
+                         }
+                       } else {
+                            //return the metadata immediately
+                            mMetadataChannel->bufDone(metadata_buf);
+                            free(metadata_buf);
+                       }
                    }
                } else if (!mIsZslMode && i->blob_request) {
                    //If it is a blob request then send the metadata to the picture channel
@@ -1374,22 +1381,19 @@ QCamera3HardwareInterface::translateCbMetadataToResultMetadata
     int32_t aeRegions[5];
     convertToRegions(hAeRegions->rect, aeRegions, hAeRegions->weight);
     camMetadata.update(ANDROID_CONTROL_AE_REGIONS, aeRegions, 5);
-    if(mIsZslMode) {
-        uint8_t ae_state = ANDROID_CONTROL_AE_STATE_CONVERGED;
-        camMetadata.update(ANDROID_CONTROL_AE_STATE, &ae_state, 1);
-    } else {
-        uint8_t ae_state =
-            *(uint8_t *)POINTER_OF(CAM_INTF_META_AEC_STATE, metadata);
-        //Override AE state for front(YUV) sensor if corresponding request
-        //contain a precapture trigger. This is to work around the precapture
-        //trigger timeout for YUV sensor.
-        if (gCamCapability[mCameraId]->position == CAM_POSITION_FRONT &&
-                aeTrigger.trigger_id > 0 && aeTrigger.trigger ==
-                ANDROID_CONTROL_AE_PRECAPTURE_TRIGGER_START) {
-            ae_state = ANDROID_CONTROL_AE_STATE_CONVERGED;
-        }
-        camMetadata.update(ANDROID_CONTROL_AE_STATE, &ae_state, 1);
+
+    uint8_t ae_state =
+        *(uint8_t *)POINTER_OF(CAM_INTF_META_AEC_STATE, metadata);
+    //Override AE state for front(YUV) sensor if corresponding request
+    //contain a precapture trigger. This is to work around the precapture
+    //trigger timeout for YUV sensor.
+    if (gCamCapability[mCameraId]->position == CAM_POSITION_FRONT &&
+            aeTrigger.trigger_id > 0 && aeTrigger.trigger ==
+            ANDROID_CONTROL_AE_PRECAPTURE_TRIGGER_START) {
+        ae_state = ANDROID_CONTROL_AE_STATE_CONVERGED;
     }
+    camMetadata.update(ANDROID_CONTROL_AE_STATE, &ae_state, 1);
+
     uint8_t  *focusMode =
         (uint8_t *)POINTER_OF(CAM_INTF_PARM_FOCUS_MODE, metadata);
     camMetadata.update(ANDROID_CONTROL_AF_MODE, focusMode, 1);

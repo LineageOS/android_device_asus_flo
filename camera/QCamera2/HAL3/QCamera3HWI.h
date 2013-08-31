@@ -200,6 +200,7 @@ private:
         int32_t request_id;
         List<RequestedBufferInfo> buffers;
         int blob_request;
+        int input_buffer_present;
         cam_trigger_t ae_trigger;
     } PendingRequestInfo;
     typedef KeyedVector<camera3_stream_t *, uint32_t> PendingBuffersMap;
