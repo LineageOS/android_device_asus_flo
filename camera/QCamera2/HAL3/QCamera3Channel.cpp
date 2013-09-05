@@ -772,7 +772,7 @@ int32_t QCamera3MetadataChannel::registerBuffers(uint32_t /*num_buffers*/,
 
 void QCamera3MetadataChannel::streamCbRoutine(
                         mm_camera_super_buf_t *super_frame,
-                        QCamera3Stream *stream __unused)
+                        QCamera3Stream * /*stream*/)
 {
     uint32_t requestNumber = 0;
     if (super_frame == NULL || super_frame->num_bufs != 1) {
@@ -1970,8 +1970,8 @@ QCamera3ReprocessChannel::QCamera3ReprocessChannel() :
  *
  * RETURN     : none
  *==========================================================================*/
-int32_t QCamera3ReprocessChannel::registerBuffers(uint32_t num_buffers __unused,
-                                                  buffer_handle_t **buffers __unused)
+int32_t QCamera3ReprocessChannel::registerBuffers(
+    uint32_t /*num_buffers*/, buffer_handle_t ** /*buffers*/)
 {
    return 0;
 }
