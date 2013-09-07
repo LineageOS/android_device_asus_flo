@@ -285,6 +285,9 @@ PRODUCT_PACKAGES += \
     NfcNci \
     Tag
 
+# QRNGD
+PRODUCT_PACKAGES += qrngd
+
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     device/asus/flo/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
