@@ -145,7 +145,7 @@ on post-fs-data
     mkdir /data/misc/dhcp 0770 dhcp dhcp
 
     chown system system /dev/wcnss_wlan
-    write 1 /sys/module/wcnss_ssr_8960/parameters/enable_riva_ssr
+    write /sys/module/wcnss_ssr_8960/parameters/enable_riva_ssr 1
 
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
