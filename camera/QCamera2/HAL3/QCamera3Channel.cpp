@@ -42,7 +42,7 @@
 
 using namespace android;
 
-#define MIN_STREAMING_BUFFER_NUM 7+11
+#define MIN_STREAMING_BUFFER_NUM 7
 
 namespace qcamera {
 static const char ExifAsciiPrefix[] =
@@ -771,7 +771,7 @@ int32_t QCamera3MetadataChannel::registerBuffers(uint32_t /*num_buffers*/,
 
 void QCamera3MetadataChannel::streamCbRoutine(
                         mm_camera_super_buf_t *super_frame,
-                        QCamera3Stream * /*stream*/)
+                        QCamera3Stream *stream)
 {
     uint32_t requestNumber = 0;
     if (super_frame == NULL || super_frame->num_bufs != 1) {
@@ -976,14 +976,23 @@ int32_t QCamera3PicChannel::request(buffer_handle_t *buffer,
     int32_t rc = NO_ERROR;
     int index;
     mJpegSettings = jpegSettings;
-    // Picture stream has already been started before any request comes in
-    if (!m_bIsActive) {
-        ALOGE("%s: Picture stream should have been started before any request",
-            __func__);
-        return -EINVAL;
-    }
-    if (pInputBuffer == NULL)
+    if(!m_bIsActive) {
+        ALOGD("%s: First request on this channel starting stream",__func__);
+        //Stream on for main image. YUV buffer is queued to the kernel at the end of this call.
+        if(!pInputBuffer)
+            rc = start();
+        else
+            ALOGD("%s: Current request has input buffer no need to start h/w stream", __func__);
+    } else {
         mStreams[0]->bufDone(0);
+        ALOGD("%s: Request on an existing stream",__func__);
+    }
+
+    if(rc != NO_ERROR) {
+        ALOGE("%s: Failed to start the stream on the request",__func__);
+        return rc;
+    }
+
 
     if(!mMemory) {
         if(pInputBuffer) {
@@ -1014,13 +1023,12 @@ int32_t QCamera3PicChannel::request(buffer_handle_t *buffer,
     //Start the postprocessor for jpeg encoding. Pass mMemory as destination buffer
     mCurrentBufIndex = index;
 
+    m_postprocessor.start(mMemory, index, this);
+
+    ALOGD("%s: Post-process started", __func__);
     if(pInputBuffer) {
-        m_postprocessor.start(mMemory, index, pInputChannel);
-        ALOGD("%s: Post-process started", __func__);
         ALOGD("%s: Issue call to reprocess", __func__);
         m_postprocessor.processAuxiliaryData(pInputBuffer,pInputChannel);
-    } else {
-        m_postprocessor.start(mMemory, index, this);
     }
     return rc;
 }
@@ -1185,7 +1193,7 @@ QCamera3Memory* QCamera3PicChannel::getStreamBufs(uint32_t len)
     }
 
     //Queue YUV buffers in the beginning mQueueAll = true
-    rc = mYuvMemory->allocate(1, len, false);
+    rc = mYuvMemory->allocate(1, len, true);
     if (rc < 0) {
         ALOGE("%s: unable to allocate metadata memory", __func__);
         delete mYuvMemory;
@@ -1625,7 +1633,7 @@ QCamera3Exif *QCamera3PicChannel::getExifData()
                        1,
                        (void *)&(sensorExpTime));
     } else {
-        ALOGE("%s: getExifExpTimeInfo failed", __func__);
+        ALOGE("now addEntry for EXIFTAGID_EXPOSURE_TIME is %d", sensorExpTime);
     }
 
     if (strlen(mJpegSettings->gps_processing_method) > 0) {
@@ -1732,7 +1740,7 @@ QCamera3Exif *QCamera3PicChannel::getExifData()
     return exif;
 }
 
-int QCamera3PicChannel::kMaxBuffers = 1;
+int QCamera3PicChannel::kMaxBuffers = 2;
 
 /*===========================================================================
  * FUNCTION   : QCamera3ReprocessChannel
@@ -1839,7 +1847,9 @@ void QCamera3ReprocessChannel::streamCbRoutine(mm_camera_super_buf_t *super_fram
     *frame = *super_frame;
     //queue back the metadata buffer
     if (m_metaFrame != NULL) {
-       metadataBufDone(m_metaFrame);
+       ((QCamera3MetadataChannel*)m_pMetaChannel)->bufDone(m_metaFrame);
+       free(m_metaFrame);
+       m_metaFrame = NULL;
     } else {
        ALOGE("%s: Meta frame was NULL", __func__);
     }
@@ -1872,8 +1882,7 @@ QCamera3ReprocessChannel::QCamera3ReprocessChannel() :
  *
  * RETURN     : none
  *==========================================================================*/
-int32_t QCamera3ReprocessChannel::registerBuffers(
-    uint32_t /*num_buffers*/, buffer_handle_t ** /*buffers*/)
+int32_t QCamera3ReprocessChannel::registerBuffers(uint32_t num_buffers, buffer_handle_t **buffers)
 {
    return 0;
 }
@@ -1958,25 +1967,6 @@ QCamera3Stream * QCamera3ReprocessChannel::getStreamBySourceHandle(uint32_t srcH
         }
     }
     return pStream;
-}
-
-/*===========================================================================
- * FUNCTION   : metadataBufDone
- *
- * DESCRIPTION: buf done method for a metadata buffer
- *
- * PARAMETERS :
- *   @recvd_frame : received metadata frame
- *
- * RETURN     :
- *==========================================================================*/
-int32_t QCamera3ReprocessChannel::metadataBufDone(mm_camera_super_buf_t *recvd_frame)
-{
-   int32_t rc;
-   rc = ((QCamera3MetadataChannel*)m_pMetaChannel)->bufDone(recvd_frame);
-   free(recvd_frame);
-   recvd_frame = NULL;
-   return rc;
 }
 
 /*===========================================================================
