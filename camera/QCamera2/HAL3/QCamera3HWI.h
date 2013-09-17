@@ -85,7 +85,6 @@ public:
     static void get_metadata_vendor_tag_ops(const struct camera3_device *,
                                                vendor_tag_query_ops_t* ops);
     static void dump(const struct camera3_device *, int fd);
-    static int flush(const struct camera3_device *);
     static int close_camera_device(struct hw_device_t* device);
 public:
     QCamera3HardwareInterface(int cameraId);
@@ -121,10 +120,9 @@ public:
     int processCaptureRequest(camera3_capture_request_t *request);
     void getMetadataVendorTagOps(vendor_tag_query_ops_t* ops);
     void dump(int fd);
-    int flush();
 
-    int setFrameParameters(camera3_capture_request_t *request, uint32_t streamTypeMask);
-    int translateMetadataToParameters(const camera3_capture_request_t *request);
+    int setFrameParameters(int frame_id, const camera_metadata_t *settings, uint32_t streamTypeMask);
+    int translateMetadataToParameters(const camera_metadata_t *settings);
     camera_metadata_t* translateCbMetadataToResultMetadata(metadata_buffer_t *metadata,
                             nsecs_t timestamp, int32_t request_id);
     int getJpegSettings(const camera_metadata_t *settings);
@@ -160,8 +158,6 @@ private:
 
     int validateCaptureRequest(camera3_capture_request_t *request);
 
-    void deriveMinFrameDuration();
-    int64_t getMinFrameDuration(const camera3_capture_request_t *request);
 public:
 
     bool needOnlineRotation();
@@ -201,17 +197,9 @@ private:
         int32_t request_id;
         List<RequestedBufferInfo> buffers;
         int blob_request;
-        int input_buffer_present;
     } PendingRequestInfo;
     typedef KeyedVector<camera3_stream_t *, uint32_t> PendingBuffersMap;
-    /*Data structure to store metadata information*/
-    typedef struct {
-       mm_camera_super_buf_t* meta_buf;
-       buffer_handle_t*       zsl_buf_hdl;
-       uint32_t               frame_number;
-    }MetadataBufferInfo;
 
-    List<MetadataBufferInfo> mStoredMetadataList;
     List<PendingRequestInfo> mPendingRequestsList;
     PendingBuffersMap mPendingBuffersMap;
     pthread_cond_t mRequestCond;
@@ -226,10 +214,6 @@ private:
     List<stream_info_t*> mStreamInfo;
     bool mIsZslMode;
 
-    int64_t mMinProcessedFrameDuration;
-    int64_t mMinJpegFrameDuration;
-    int64_t mMinRawFrameDuration;
-
     power_module_t *m_pPowerModule;   // power module
 
     static const QCameraMap EFFECT_MODES_MAP[];
@@ -239,7 +223,6 @@ private:
     static const QCameraMap ANTIBANDING_MODES_MAP[];
     static const QCameraMap AE_FLASH_MODE_MAP[];
     static const QCameraMap FLASH_MODES_MAP[];
-    static const QCameraMap FACEDETECT_MODES_MAP[];
 
     static pthread_mutex_t mCameraSessionLock;
     static unsigned int mCameraSessionActive;
