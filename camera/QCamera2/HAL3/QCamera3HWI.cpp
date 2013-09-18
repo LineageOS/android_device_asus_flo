@@ -225,6 +225,9 @@ QCamera3HardwareInterface::~QCamera3HardwareInterface()
     for (List<stream_info_t *>::iterator it = mStreamInfo.begin();
         it != mStreamInfo.end(); it++) {
         QCamera3Channel *channel = (QCamera3Channel *)(*it)->stream->priv;
+        if ((*it)->registered && (*it)->buffer_set.buffers) {
+             delete[] (buffer_handle_t*)(*it)->buffer_set.buffers;
+        }
         if (channel)
             delete channel;
         free (*it);
