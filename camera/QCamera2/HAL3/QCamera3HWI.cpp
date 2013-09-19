@@ -1745,7 +1745,7 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
     CameraMetadata staticInfo;
 
     /* android.info: hardware level */
-    uint8_t supportedHardwareLevel = ANDROID_INFO_SUPPORTED_HARDWARE_LEVEL_FULL;
+    uint8_t supportedHardwareLevel = ANDROID_INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED;
     staticInfo.update(ANDROID_INFO_SUPPORTED_HARDWARE_LEVEL,
         &supportedHardwareLevel, 1);
 
