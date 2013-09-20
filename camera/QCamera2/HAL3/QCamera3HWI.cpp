@@ -265,7 +265,7 @@ int QCamera3HardwareInterface::openCamera(struct hw_device_t **hw_device)
     if (mCameraSessionActive) {
         ALOGE("%s: multiple simultaneous camera instance not supported", __func__);
         pthread_mutex_unlock(&mCameraSessionLock);
-        return INVALID_OPERATION;
+        return -EDQUOT;;
     }
 
     if (mCameraOpened) {
@@ -1814,6 +1814,11 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
     staticInfo.update(ANDROID_SENSOR_INFO_MAX_FRAME_DURATION,
             &gCamCapability[cameraId]->max_frame_duration, 1);
 
+    camera_metadata_rational baseGainFactor = {
+            gCamCapability[cameraId]->base_gain_factor.numerator,
+            gCamCapability[cameraId]->base_gain_factor.denominator};
+    staticInfo.update(ANDROID_SENSOR_BASE_GAIN_FACTOR,
+            &baseGainFactor, 1);
 
     staticInfo.update(ANDROID_SENSOR_INFO_COLOR_FILTER_ARRANGEMENT,
                      (uint8_t*)&gCamCapability[cameraId]->color_arrangement, 1);
@@ -2532,6 +2537,14 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
 
     float default_focal_length = gCamCapability[mCameraId]->focal_length;
     settings.update(ANDROID_LENS_FOCAL_LENGTH, &default_focal_length, 1);
+
+    /* Exposure time(Update the Min Exposure Time)*/
+    int64_t default_exposure_time = gCamCapability[mCameraId]->exposure_time_range[0];
+    settings.update(ANDROID_SENSOR_EXPOSURE_TIME, &default_exposure_time, 1);
+
+    /* sensitivity */
+    static const int32_t default_sensitivity = 100;
+    settings.update(ANDROID_SENSOR_SENSITIVITY, &default_sensitivity, 1);
 
     mDefaultMetadata[type] = settings.release();
 
