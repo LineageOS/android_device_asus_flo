@@ -265,7 +265,7 @@ int QCamera3HardwareInterface::openCamera(struct hw_device_t **hw_device)
     if (mCameraSessionActive) {
         ALOGE("%s: multiple simultaneous camera instance not supported", __func__);
         pthread_mutex_unlock(&mCameraSessionLock);
-        return -EDQUOT;;
+        return -EUSERS;
     }
 
     if (mCameraOpened) {
