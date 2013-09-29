@@ -79,6 +79,7 @@ const QCamera3HardwareInterface::QCameraMap QCamera3HardwareInterface::WHITE_BAL
 };
 
 const QCamera3HardwareInterface::QCameraMap QCamera3HardwareInterface::SCENE_MODES_MAP[] = {
+    { ANDROID_CONTROL_SCENE_MODE_FACE_PRIORITY,  CAM_SCENE_MODE_OFF },
     { ANDROID_CONTROL_SCENE_MODE_ACTION,         CAM_SCENE_MODE_ACTION },
     { ANDROID_CONTROL_SCENE_MODE_PORTRAIT,       CAM_SCENE_MODE_PORTRAIT },
     { ANDROID_CONTROL_SCENE_MODE_LANDSCAPE,      CAM_SCENE_MODE_LANDSCAPE },
@@ -3442,11 +3443,11 @@ int QCamera3HardwareInterface::translateMetadataToParameters(
            rc = AddSetParmEntryToBatch(mParameters, CAM_INTF_PARM_BESTSHOT_MODE,
                 sizeof(sceneMode), &sceneMode);
         } else if (metaMode == ANDROID_CONTROL_MODE_OFF) {
-           uint8_t sceneMode = 0;//CAMERA_BESTSHOT_OFF;
+           uint8_t sceneMode = CAM_SCENE_MODE_OFF;
            rc = AddSetParmEntryToBatch(mParameters, CAM_INTF_PARM_BESTSHOT_MODE,
                 sizeof(sceneMode), &sceneMode);
         } else if (metaMode == ANDROID_CONTROL_MODE_AUTO) {
-           uint8_t sceneMode = 0;//CAMERA_BESTSHOT_OFF;
+           uint8_t sceneMode = CAM_SCENE_MODE_OFF;
            rc = AddSetParmEntryToBatch(mParameters, CAM_INTF_PARM_BESTSHOT_MODE,
                 sizeof(sceneMode), &sceneMode);
         }
