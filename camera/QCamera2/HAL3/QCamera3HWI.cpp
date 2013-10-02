@@ -1374,6 +1374,7 @@ QCamera3HardwareInterface::translateCbMetadataToResultMetadata
     mMetadataResponse.exposure_time = *sensorExpTime;
     camMetadata.update(ANDROID_SENSOR_EXPOSURE_TIME , sensorExpTime, 1);
 
+
     int64_t  *sensorFameDuration =
         (int64_t *)POINTER_OF(CAM_INTF_META_SENSOR_FRAME_DURATION, metadata);
     camMetadata.update(ANDROID_SENSOR_FRAME_DURATION, sensorFameDuration, 1);
@@ -3245,12 +3246,7 @@ int QCamera3HardwareInterface::getJpegSettings
         mJpegSettings->gps_processing_method[0] = '\0';
     }
 
-    if (jpeg_settings.exists(ANDROID_SENSOR_SENSITIVITY)) {
-        mJpegSettings->sensor_sensitivity =
-            jpeg_settings.find(ANDROID_SENSOR_SENSITIVITY).data.i32[0];
-    } else {
-        mJpegSettings->sensor_sensitivity = mMetadataResponse.iso_speed;
-    }
+    mJpegSettings->sensor_sensitivity = mMetadataResponse.iso_speed;
 
     mJpegSettings->sensor_exposure_time = mMetadataResponse.exposure_time;
 
