@@ -31,9 +31,11 @@
 
 #include <stdlib.h>
 #include <cstdlib>
+#include <cutils/properties.h>
 #include <stdio.h>
 #include <string.h>
 #include <hardware/camera3.h>
+#include <math.h>
 #include <system/camera_metadata.h>
 #include <gralloc_priv.h>
 #include <utils/Log.h>
@@ -1299,6 +1301,31 @@ int32_t getRational(rat_t *rat, int num, int denom)
 }
 
 /*===========================================================================
+ * FUNCTION   : getRational
+ *
+ * DESCRIPTION: compose rational struct
+ *
+ * PARAMETERS :
+ *   @rat     : ptr to struct to store rational info
+ *   @num     :num of the rational
+ *   @denom   : denom of the rational
+ *
+ * RETURN     : int32_t type of status
+ *              NO_ERROR  -- success
+ *              none-zero failure code
+ *==========================================================================*/
+int32_t getRationalExposureTime(rat_t *rat, double num, double denom)
+{
+    if (NULL == rat) {
+        ALOGE("%s: NULL rat input", __func__);
+        return BAD_VALUE;
+    }
+    rat->num = num;
+    rat->denom = round(1.0 / denom);
+    return NO_ERROR;
+}
+
+/*===========================================================================
  * FUNCTION   : parseGPSCoordinate
  *
  * DESCRIPTION: parse GPS coordinate string
@@ -1394,13 +1421,12 @@ int32_t getExifFocalLength(rat_t *focalLength, float value)
 int32_t getExifExpTimeInfo(rat_t *expoTimeInfo, int64_t value)
 {
 
-    int cal_exposureTime;
+    float cal_exposureTime;
     if (value != 0)
-        cal_exposureTime = value;
+        cal_exposureTime = (double)(value / 1000000000.0);
     else
-        cal_exposureTime = 60;
-
-    return getRational(expoTimeInfo, 1, cal_exposureTime);
+        cal_exposureTime = 60.00;
+    return getRationalExposureTime(expoTimeInfo, 1, cal_exposureTime);
 }
 
 /*===========================================================================
@@ -1636,7 +1662,6 @@ QCamera3Exif *QCamera3PicChannel::getExifData()
     } else {
         ALOGE("now addEntry for EXIFTAGID_EXPOSURE_TIME is %d", sensorExpTime);
     }
-
     if (strlen(mJpegSettings->gps_processing_method) > 0) {
         char gpsProcessingMethod[EXIF_ASCII_PREFIX_SIZE + GPS_PROCESSING_METHOD_SIZE];
         count = 0;
