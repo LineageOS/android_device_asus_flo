@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a41bdd9_bf13170d",
+        "filename": "init.flo.cm.rc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-10-04T18:06:54Z",
+      "side": 1,
+      "message": "Copyright 2013 The CyanogenMod Project",
+      "revId": "e80e5100a1e4f429872d28023cb14e149580066e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a41bdd9_5ff9abc7",
+        "filename": "init.flo.cm.rc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-10-04T18:06:54Z",
+      "side": 1,
+      "message": "I think this hint is unneeded",
+      "revId": "e80e5100a1e4f429872d28023cb14e149580066e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
