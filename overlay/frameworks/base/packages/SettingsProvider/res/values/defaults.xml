@@ -23,4 +23,8 @@
     <bool name="def_screen_brightness_automatic_mode">true</bool>
     <!-- Default screen brightness, from 0 to 255. 87 is 34%. -->
     <integer name="def_screen_brightness">87</integer>
+
+    <!-- Value for Settings.Global.LOW_BATTERY_SOUND_TIMEOUT:
+         Mute battery sounds on tablets after one hour with screen off -->
+    <integer name="def_low_battery_sound_timeout">3600000</integer>
 </resources>
