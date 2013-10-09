@@ -28,5 +28,5 @@
 #define BTIF_HF_SERVICE_NAMES  { BTIF_HSAG_SERVICE_NAME, NULL }
 
 #define BTA_DISABLE_DELAY 1000 /* in milliseconds */
-
+#define BTA_HOST_INTERLEAVE_SEARCH TRUE
 #endif
