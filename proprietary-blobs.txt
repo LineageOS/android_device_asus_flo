@@ -48,8 +48,8 @@
 /system/etc/firmware/vidc.b02
 /system/etc/firmware/vidc.b03
 /system/etc/firmware/vidc.mdt
-/system/etc/firmware/vidcfw.elf
 /system/etc/firmware/vidc_1080p.fw
+/system/etc/firmware/vidcfw.elf
 /system/etc/firmware/wcd9310/wcd9310_anc.bin
 /system/etc/firmware/wcd9310/wcd9310_mbhc.bin
 /system/lib/egl/eglsubAndroid.so
@@ -107,13 +107,13 @@
 /system/lib/libqdi.so
 /system/lib/libqdp.so
 /system/lib/libqmi.so
-/system/lib/libqmiservices.so
 /system/lib/libqmi_cci.so
 /system/lib/libqmi_client_qmux.so
 /system/lib/libqmi_common_so.so
 /system/lib/libqmi_csi.so
 /system/lib/libqmi_csvt_srvc.so
 /system/lib/libqmi_encdec.so
+/system/lib/libqmiservices.so
 /system/lib/libqomx_core.so
 /system/lib/libQSEEComAPI.so
 /system/lib/libsc-a3xx.so
@@ -152,6 +152,11 @@
 /system/vendor/firmware/gss.b10
 /system/vendor/firmware/gss.b11
 /system/vendor/firmware/gss.mdt
+/system/vendor/firmware/keymaster/keymaster.b00
+/system/vendor/firmware/keymaster/keymaster.b01
+/system/vendor/firmware/keymaster/keymaster.b02
+/system/vendor/firmware/keymaster/keymaster.b03
+/system/vendor/firmware/keymaster/keymaster.mdt
 /system/vendor/firmware/q6.b00
 /system/vendor/firmware/q6.b01
 /system/vendor/firmware/q6.b03
