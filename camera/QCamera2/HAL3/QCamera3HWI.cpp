@@ -459,7 +459,7 @@ int QCamera3HardwareInterface::configureStreams(
 
     for (size_t i = 0; i < streamList->num_streams; i++) {
         camera3_stream_t *newStream = streamList->streams[i];
-        ALOGV("%s: newStream type = %d, stream format = %d stream size : %d x %d",
+        ALOGD("%s: newStream type = %d, stream format = %d stream size : %d x %d",
                 __func__, newStream->stream_type, newStream->format,
                  newStream->width, newStream->height);
         //if the stream is in the mStreamList validate it
