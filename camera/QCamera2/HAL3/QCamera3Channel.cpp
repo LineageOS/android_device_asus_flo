@@ -45,7 +45,7 @@
 
 using namespace android;
 
-#define MIN_STREAMING_BUFFER_NUM 18
+#define MIN_STREAMING_BUFFER_NUM 7
 
 namespace qcamera {
 static const char ExifAsciiPrefix[] =

@@ -390,6 +390,8 @@ int QCamera3HardwareInterface::initialize(
     rc = mMetadataChannel->initialize();
     if (rc < 0) {
         ALOGE("%s: metadata channel initialization failed", __func__);
+        delete mMetadataChannel;
+        mMetadataChannel = NULL;
         goto err3;
     }
 
@@ -1025,10 +1027,12 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
             POINTER_OF(CAM_INTF_META_SENSOR_TIMESTAMP, metadata);
         nsecs_t capture_time = (nsecs_t)tv->tv_sec * NSEC_PER_SEC +
             tv->tv_usec * NSEC_PER_USEC;
+        bool frame_number_exists = FALSE;
 
         if (!frame_number_valid) {
             ALOGV("%s: Not a valid frame number, used as SOF only", __func__);
             mMetadataChannel->bufDone(metadata_buf);
+            free(metadata_buf);
             goto done_metadata;
         }
         ALOGV("%s: valid frame_number = %d, capture_time = %lld", __func__,
@@ -1040,7 +1044,7 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
             camera3_capture_result_t result;
             camera3_notify_msg_t notify_msg;
             ALOGV("%s: frame_number in the list is %d", __func__, i->frame_number);
-
+            frame_number_exists = TRUE; // This frame number exists in Pending list
             // Flush out all entries with less or equal frame numbers.
 
             //TODO: Make sure shutter timestamp really reflects shutter timestamp.
@@ -1127,7 +1131,13 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
             // erase the element from the list
             i = mPendingRequestsList.erase(i);
         }
-
+        if (!frame_number_exists) {
+            ALOGD("%s: Frame number# %d not in the Pending Request list", __func__,
+                    frame_number);
+            // Race condition where in Metadata Frame# is valid but its not in Pending list
+            mMetadataChannel->bufDone(metadata_buf);
+            free(metadata_buf);
+        }
 
 done_metadata:
         bool max_buffers_dequeued = false;
