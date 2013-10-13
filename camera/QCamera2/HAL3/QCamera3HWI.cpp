@@ -777,6 +777,294 @@ int QCamera3HardwareInterface::validateCaptureRequest(
 }
 
 /*===========================================================================
+ * FUNCTION   : handleMetadataWithLock
+ *
+ * DESCRIPTION: Handles metadata buffer callback with mMutex lock held.
+ *
+ * PARAMETERS : @metadata_buf: metadata buffer
+ *
+ * RETURN     :
+ *
+ *==========================================================================*/
+void QCamera3HardwareInterface::handleMetadataWithLock(
+    mm_camera_super_buf_t *metadata_buf)
+{
+    metadata_buffer_t *metadata = (metadata_buffer_t *)metadata_buf->bufs[0]->buffer;
+    int32_t frame_number_valid = *(int32_t *)
+        POINTER_OF(CAM_INTF_META_FRAME_NUMBER_VALID, metadata);
+    uint32_t pending_requests = *(uint32_t *)POINTER_OF(
+        CAM_INTF_META_PENDING_REQUESTS, metadata);
+    uint32_t frame_number = *(uint32_t *)
+        POINTER_OF(CAM_INTF_META_FRAME_NUMBER, metadata);
+    const struct timeval *tv = (const struct timeval *)
+        POINTER_OF(CAM_INTF_META_SENSOR_TIMESTAMP, metadata);
+    nsecs_t capture_time = (nsecs_t)tv->tv_sec * NSEC_PER_SEC +
+        tv->tv_usec * NSEC_PER_USEC;
+    bool frame_number_exists = FALSE;
+
+    if (!frame_number_valid) {
+        ALOGV("%s: Not a valid frame number, used as SOF only", __func__);
+        mMetadataChannel->bufDone(metadata_buf);
+        free(metadata_buf);
+        goto done_metadata;
+    }
+    ALOGV("%s: valid frame_number = %d, capture_time = %lld", __func__,
+            frame_number, capture_time);
+
+    // Go through the pending requests info and send shutter/results to frameworks
+    for (List<PendingRequestInfo>::iterator i = mPendingRequestsList.begin();
+        i != mPendingRequestsList.end() && i->frame_number <= frame_number;) {
+        camera3_capture_result_t result;
+        camera3_notify_msg_t notify_msg;
+        ALOGV("%s: frame_number in the list is %d", __func__, i->frame_number);
+        frame_number_exists = TRUE; // This frame number exists in Pending list
+        // Flush out all entries with less or equal frame numbers.
+
+        //TODO: Make sure shutter timestamp really reflects shutter timestamp.
+        //Right now it's the same as metadata timestamp
+
+        //TODO: When there is metadata drop, how do we derive the timestamp of
+        //dropped frames? For now, we fake the dropped timestamp by substracting
+        //from the reported timestamp
+        nsecs_t current_capture_time = capture_time -
+            (frame_number - i->frame_number) * NSEC_PER_33MSEC;
+
+        // Send shutter notify to frameworks
+        notify_msg.type = CAMERA3_MSG_SHUTTER;
+        notify_msg.message.shutter.frame_number = i->frame_number;
+        notify_msg.message.shutter.timestamp = current_capture_time;
+        mCallbackOps->notify(mCallbackOps, &notify_msg);
+        ALOGV("%s: notify frame_number = %d, capture_time = %lld", __func__,
+                i->frame_number, capture_time);
+
+        // Send empty metadata with already filled buffers for dropped metadata
+        // and send valid metadata with already filled buffers for current metadata
+        if (i->frame_number < frame_number) {
+            CameraMetadata dummyMetadata;
+            dummyMetadata.update(ANDROID_SENSOR_TIMESTAMP,
+                    &current_capture_time, 1);
+            dummyMetadata.update(ANDROID_REQUEST_ID,
+                    &(i->request_id), 1);
+            result.result = dummyMetadata.release();
+        } else {
+            result.result = translateCbMetadataToResultMetadata(metadata,
+                    current_capture_time, i->request_id, i->ae_trigger);
+            if (mIsZslMode) {
+                int found_metadata = 0;
+                //for ZSL case store the metadata buffer and corresp. ZSL handle ptr
+                for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
+                    j != i->buffers.end(); j++) {
+                    if (j->stream->stream_type == CAMERA3_STREAM_BIDIRECTIONAL) {
+                        //check if corresp. zsl already exists in the stored metadata list
+                        for (List<MetadataBufferInfo>::iterator m = mStoredMetadataList.begin();
+                                m != mStoredMetadataList.begin(); m++) {
+                            if (m->frame_number == frame_number) {
+                                m->meta_buf = metadata_buf;
+                                found_metadata = 1;
+                                break;
+                            }
+                        }
+                        if (!found_metadata) {
+                            MetadataBufferInfo store_meta_info;
+                            store_meta_info.meta_buf = metadata_buf;
+                            store_meta_info.frame_number = frame_number;
+                            mStoredMetadataList.push_back(store_meta_info);
+                            found_metadata = 1;
+                        }
+                    }
+                }
+                if (!found_metadata) {
+                    if (!i->input_buffer_present && i->blob_request) {
+                        //livesnapshot or fallback non-zsl snapshot case
+                        for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
+                                j != i->buffers.end(); j++){
+                            if (j->stream->stream_type == CAMERA3_STREAM_OUTPUT &&
+                                j->stream->format == HAL_PIXEL_FORMAT_BLOB) {
+                                mPictureChannel->queueMetadata(metadata_buf,mMetadataChannel,true);
+                                break;
+                            }
+                        }
+                    } else {
+                        //return the metadata immediately
+                        mMetadataChannel->bufDone(metadata_buf);
+                        free(metadata_buf);
+                    }
+                }
+            } else if (!mIsZslMode && i->blob_request) {
+                //If it is a blob request then send the metadata to the picture channel
+                mPictureChannel->queueMetadata(metadata_buf,mMetadataChannel,true);
+            } else {
+                // Return metadata buffer
+                mMetadataChannel->bufDone(metadata_buf);
+                free(metadata_buf);
+            }
+        }
+        if (!result.result) {
+            ALOGE("%s: metadata is NULL", __func__);
+        }
+        result.frame_number = i->frame_number;
+        result.num_output_buffers = 0;
+        result.output_buffers = NULL;
+        result.input_buffer = NULL;
+        for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
+                    j != i->buffers.end(); j++) {
+            if (j->buffer) {
+                result.num_output_buffers++;
+            }
+        }
+
+        if (result.num_output_buffers > 0) {
+            camera3_stream_buffer_t *result_buffers =
+                new camera3_stream_buffer_t[result.num_output_buffers];
+            if (!result_buffers) {
+                ALOGE("%s: Fatal error: out of memory", __func__);
+            }
+            size_t result_buffers_idx = 0;
+            for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
+                 j != i->buffers.end(); j++) {
+                if (j->buffer) {
+                    result_buffers[result_buffers_idx++] = *(j->buffer);
+                    free(j->buffer);
+                    j->buffer = NULL;
+                    mPendingBuffersMap.editValueFor(j->stream)--;
+                }
+            }
+            result.output_buffers = result_buffers;
+
+            mCallbackOps->process_capture_result(mCallbackOps, &result);
+            ALOGV("%s: meta frame_number = %d, capture_time = %lld",
+                    __func__, result.frame_number, current_capture_time);
+            free_camera_metadata((camera_metadata_t *)result.result);
+            delete[] result_buffers;
+        } else {
+            mCallbackOps->process_capture_result(mCallbackOps, &result);
+            ALOGV("%s: meta frame_number = %d, capture_time = %lld",
+                        __func__, result.frame_number, current_capture_time);
+            free_camera_metadata((camera_metadata_t *)result.result);
+        }
+        // erase the element from the list
+        i = mPendingRequestsList.erase(i);
+    }
+    if (!frame_number_exists) {
+        ALOGD("%s: Frame number# %d not in the Pending Request list", __func__,
+                frame_number);
+        // Race condition where in Metadata Frame# is valid but its not in Pending list
+        mMetadataChannel->bufDone(metadata_buf);
+        free(metadata_buf);
+    }
+
+done_metadata:
+    if (!pending_requests)
+        unblockRequestIfNecessary();
+
+}
+
+/*===========================================================================
+ * FUNCTION   : handleBufferWithLock
+ *
+ * DESCRIPTION: Handles image buffer callback with mMutex lock held.
+ *
+ * PARAMETERS : @buffer: image buffer for the callback
+ *              @frame_number: frame number of the image buffer
+ *
+ * RETURN     :
+ *
+ *==========================================================================*/
+void QCamera3HardwareInterface::handleBufferWithLock(
+    camera3_stream_buffer_t *buffer, uint32_t frame_number)
+{
+    // If the frame number doesn't exist in the pending request list,
+    // directly send the buffer to the frameworks, and update pending buffers map
+    // Otherwise, book-keep the buffer.
+    List<PendingRequestInfo>::iterator i = mPendingRequestsList.begin();
+    while (i != mPendingRequestsList.end() && i->frame_number != frame_number){
+        i++;
+    }
+    if (i == mPendingRequestsList.end()) {
+        // Verify all pending requests frame_numbers are greater
+        for (List<PendingRequestInfo>::iterator j = mPendingRequestsList.begin();
+                j != mPendingRequestsList.end(); j++) {
+            if (j->frame_number < frame_number) {
+                ALOGE("%s: Error: pending frame number %d is smaller than %d",
+                        __func__, j->frame_number, frame_number);
+            }
+        }
+        camera3_capture_result_t result;
+        result.result = NULL;
+        result.frame_number = frame_number;
+        result.num_output_buffers = 1;
+        result.output_buffers = buffer;
+        result.input_buffer = NULL;
+        ALOGV("%s: result frame_number = %d, buffer = %p",
+                __func__, frame_number, buffer);
+        mPendingBuffersMap.editValueFor(buffer->stream)--;
+        if (buffer->stream->stream_type == CAMERA3_STREAM_BIDIRECTIONAL) {
+            int found = 0;
+            for (List<MetadataBufferInfo>::iterator k = mStoredMetadataList.begin();
+                k != mStoredMetadataList.end(); k++) {
+                if (k->frame_number == frame_number) {
+                    k->zsl_buf_hdl = buffer->buffer;
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) {
+                MetadataBufferInfo meta_info;
+                meta_info.frame_number = frame_number;
+                meta_info.zsl_buf_hdl = buffer->buffer;
+                mStoredMetadataList.push_back(meta_info);
+            }
+        }
+        mCallbackOps->process_capture_result(mCallbackOps, &result);
+        unblockRequestIfNecessary();
+    } else {
+        for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
+                j != i->buffers.end(); j++) {
+            if (j->stream == buffer->stream) {
+                if (j->buffer != NULL) {
+                    ALOGE("%s: Error: buffer is already set", __func__);
+                } else {
+                    j->buffer = (camera3_stream_buffer_t *)malloc(
+                            sizeof(camera3_stream_buffer_t));
+                    *(j->buffer) = *buffer;
+                    ALOGV("%s: cache buffer %p at result frame_number %d",
+                            __func__, buffer, frame_number);
+                }
+            }
+        }
+    }
+}
+
+/*===========================================================================
+ * FUNCTION   : unblockRequestIfNecessary
+ *
+ * DESCRIPTION: Unblock capture_request if max_buffer hasn't been reached. Note
+ *              that mMutex is held when this function is called.
+ *
+ * PARAMETERS :
+ *
+ * RETURN     :
+ *
+ *==========================================================================*/
+void QCamera3HardwareInterface::unblockRequestIfNecessary()
+{
+    bool max_buffers_dequeued = false;
+    for (size_t i = 0; i < mPendingBuffersMap.size(); i++) {
+        const camera3_stream_t *stream = mPendingBuffersMap.keyAt(i);
+        uint32_t queued_buffers = mPendingBuffersMap.valueAt(i);
+        if (queued_buffers == stream->max_buffers) {
+            max_buffers_dequeued = true;
+            break;
+        }
+    }
+    if (!max_buffers_dequeued) {
+        // Unblock process_capture_request
+        mPendingRequest = 0;
+        pthread_cond_signal(&mRequestCond);
+    }
+}
+
+/*===========================================================================
  * FUNCTION   : registerStreamBuffers
  *
  * DESCRIPTION: Register buffers for a given stream with the HAL device.
@@ -1117,248 +1405,11 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
 {
     pthread_mutex_lock(&mMutex);
 
-    if (metadata_buf) {
-        metadata_buffer_t *metadata = (metadata_buffer_t *)metadata_buf->bufs[0]->buffer;
-        int32_t frame_number_valid = *(int32_t *)
-            POINTER_OF(CAM_INTF_META_FRAME_NUMBER_VALID, metadata);
-        uint32_t pending_requests = *(uint32_t *)POINTER_OF(
-            CAM_INTF_META_PENDING_REQUESTS, metadata);
-        uint32_t frame_number = *(uint32_t *)
-            POINTER_OF(CAM_INTF_META_FRAME_NUMBER, metadata);
-        const struct timeval *tv = (const struct timeval *)
-            POINTER_OF(CAM_INTF_META_SENSOR_TIMESTAMP, metadata);
-        nsecs_t capture_time = (nsecs_t)tv->tv_sec * NSEC_PER_SEC +
-            tv->tv_usec * NSEC_PER_USEC;
-        bool frame_number_exists = FALSE;
+    if (metadata_buf)
+        handleMetadataWithLock(metadata_buf);
+    else
+        handleBufferWithLock(buffer, frame_number);
 
-        if (!frame_number_valid) {
-            ALOGV("%s: Not a valid frame number, used as SOF only", __func__);
-            mMetadataChannel->bufDone(metadata_buf);
-            free(metadata_buf);
-            goto done_metadata;
-        }
-        ALOGV("%s: valid frame_number = %d, capture_time = %lld", __func__,
-                frame_number, capture_time);
-
-        // Go through the pending requests info and send shutter/results to frameworks
-        for (List<PendingRequestInfo>::iterator i = mPendingRequestsList.begin();
-                i != mPendingRequestsList.end() && i->frame_number <= frame_number;) {
-            camera3_capture_result_t result;
-            camera3_notify_msg_t notify_msg;
-            ALOGV("%s: frame_number in the list is %d", __func__, i->frame_number);
-            frame_number_exists = TRUE; // This frame number exists in Pending list
-            // Flush out all entries with less or equal frame numbers.
-
-            //TODO: Make sure shutter timestamp really reflects shutter timestamp.
-            //Right now it's the same as metadata timestamp
-
-            //TODO: When there is metadata drop, how do we derive the timestamp of
-            //dropped frames? For now, we fake the dropped timestamp by substracting
-            //from the reported timestamp
-            nsecs_t current_capture_time = capture_time -
-                (frame_number - i->frame_number) * NSEC_PER_33MSEC;
-
-            // Send shutter notify to frameworks
-            notify_msg.type = CAMERA3_MSG_SHUTTER;
-            notify_msg.message.shutter.frame_number = i->frame_number;
-            notify_msg.message.shutter.timestamp = current_capture_time;
-            mCallbackOps->notify(mCallbackOps, &notify_msg);
-            ALOGV("%s: notify frame_number = %d, capture_time = %lld", __func__,
-                    i->frame_number, capture_time);
-
-            // Send empty metadata with already filled buffers for dropped metadata
-            // and send valid metadata with already filled buffers for current metadata
-            if (i->frame_number < frame_number) {
-                CameraMetadata dummyMetadata;
-                dummyMetadata.update(ANDROID_SENSOR_TIMESTAMP,
-                        &current_capture_time, 1);
-                dummyMetadata.update(ANDROID_REQUEST_ID,
-                        &(i->request_id), 1);
-                result.result = dummyMetadata.release();
-            } else {
-                result.result = translateCbMetadataToResultMetadata(metadata,
-                        current_capture_time, i->request_id, i->ae_trigger);
-                if (mIsZslMode) {
-                   int found_metadata = 0;
-                   //for ZSL case store the metadata buffer and corresp. ZSL handle ptr
-                   for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
-                        j != i->buffers.end(); j++) {
-                      if (j->stream->stream_type == CAMERA3_STREAM_BIDIRECTIONAL) {
-                         //check if corresp. zsl already exists in the stored metadata list
-                         for (List<MetadataBufferInfo>::iterator m = mStoredMetadataList.begin();
-                               m != mStoredMetadataList.begin(); m++) {
-                            if (m->frame_number == frame_number) {
-                               m->meta_buf = metadata_buf;
-                               found_metadata = 1;
-                               break;
-                            }
-                         }
-                         if (!found_metadata) {
-                            MetadataBufferInfo store_meta_info;
-                            store_meta_info.meta_buf = metadata_buf;
-                            store_meta_info.frame_number = frame_number;
-                            mStoredMetadataList.push_back(store_meta_info);
-                            found_metadata = 1;
-                         }
-                      }
-                   }
-                   if (!found_metadata) {
-                       if (!i->input_buffer_present && i->blob_request) {
-                          //livesnapshot or fallback non-zsl snapshot case
-                          for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
-                                j != i->buffers.end(); j++){
-                              if (j->stream->stream_type == CAMERA3_STREAM_OUTPUT &&
-                                  j->stream->format == HAL_PIXEL_FORMAT_BLOB) {
-                                 mPictureChannel->queueMetadata(metadata_buf,mMetadataChannel,true);
-                                 break;
-                              }
-                         }
-                       } else {
-                            //return the metadata immediately
-                            mMetadataChannel->bufDone(metadata_buf);
-                            free(metadata_buf);
-                       }
-                   }
-               } else if (!mIsZslMode && i->blob_request) {
-                   //If it is a blob request then send the metadata to the picture channel
-                   mPictureChannel->queueMetadata(metadata_buf,mMetadataChannel,true);
-               } else {
-                   // Return metadata buffer
-                   mMetadataChannel->bufDone(metadata_buf);
-                   free(metadata_buf);
-               }
-
-            }
-            if (!result.result) {
-                ALOGE("%s: metadata is NULL", __func__);
-            }
-            result.frame_number = i->frame_number;
-            result.num_output_buffers = 0;
-            result.output_buffers = NULL;
-            result.input_buffer = NULL;
-            for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
-                    j != i->buffers.end(); j++) {
-                if (j->buffer) {
-                    result.num_output_buffers++;
-                }
-            }
-
-            if (result.num_output_buffers > 0) {
-                camera3_stream_buffer_t *result_buffers =
-                    new camera3_stream_buffer_t[result.num_output_buffers];
-                if (!result_buffers) {
-                    ALOGE("%s: Fatal error: out of memory", __func__);
-                }
-                size_t result_buffers_idx = 0;
-                for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
-                        j != i->buffers.end(); j++) {
-                    if (j->buffer) {
-                        result_buffers[result_buffers_idx++] = *(j->buffer);
-                        free(j->buffer);
-                        j->buffer = NULL;
-                        mPendingBuffersMap.editValueFor(j->stream)--;
-                    }
-                }
-                result.output_buffers = result_buffers;
-
-                mCallbackOps->process_capture_result(mCallbackOps, &result);
-                ALOGV("%s: meta frame_number = %d, capture_time = %lld",
-                        __func__, result.frame_number, current_capture_time);
-                free_camera_metadata((camera_metadata_t *)result.result);
-                delete[] result_buffers;
-            } else {
-                mCallbackOps->process_capture_result(mCallbackOps, &result);
-                ALOGV("%s: meta frame_number = %d, capture_time = %lld",
-                        __func__, result.frame_number, current_capture_time);
-                free_camera_metadata((camera_metadata_t *)result.result);
-            }
-            // erase the element from the list
-            i = mPendingRequestsList.erase(i);
-        }
-        if (!frame_number_exists) {
-            ALOGD("%s: Frame number# %d not in the Pending Request list", __func__,
-                    frame_number);
-            // Race condition where in Metadata Frame# is valid but its not in Pending list
-            mMetadataChannel->bufDone(metadata_buf);
-            free(metadata_buf);
-        }
-
-done_metadata:
-        bool max_buffers_dequeued = false;
-        for (size_t i = 0; i < mPendingBuffersMap.size(); i++) {
-            const camera3_stream_t *stream = mPendingBuffersMap.keyAt(i);
-            uint32_t queued_buffers = mPendingBuffersMap.valueAt(i);
-            if (queued_buffers == stream->max_buffers) {
-                max_buffers_dequeued = true;
-                break;
-            }
-        }
-        if (!max_buffers_dequeued && !pending_requests) {
-            // Unblock process_capture_request
-            mPendingRequest = 0;
-            pthread_cond_signal(&mRequestCond);
-        }
-    } else {
-        // If the frame number doesn't exist in the pending request list,
-        // directly send the buffer to the frameworks, and update pending buffers map
-        // Otherwise, book-keep the buffer.
-        List<PendingRequestInfo>::iterator i = mPendingRequestsList.begin();
-        while (i != mPendingRequestsList.end() && i->frame_number != frame_number){
-            i++;
-        }
-        if (i == mPendingRequestsList.end()) {
-            // Verify all pending requests frame_numbers are greater
-            for (List<PendingRequestInfo>::iterator j = mPendingRequestsList.begin();
-                    j != mPendingRequestsList.end(); j++) {
-                if (j->frame_number < frame_number) {
-                    ALOGE("%s: Error: pending frame number %d is smaller than %d",
-                            __func__, j->frame_number, frame_number);
-                }
-            }
-            camera3_capture_result_t result;
-            result.result = NULL;
-            result.frame_number = frame_number;
-            result.num_output_buffers = 1;
-            result.output_buffers = buffer;
-            result.input_buffer = NULL;
-            ALOGV("%s: result frame_number = %d, buffer = %p",
-                    __func__, frame_number, buffer);
-            mPendingBuffersMap.editValueFor(buffer->stream)--;
-            if (buffer->stream->stream_type == CAMERA3_STREAM_BIDIRECTIONAL) {
-                int found = 0;
-                for (List<MetadataBufferInfo>::iterator k = mStoredMetadataList.begin();
-                      k != mStoredMetadataList.end(); k++) {
-                    if (k->frame_number == frame_number) {
-                        k->zsl_buf_hdl = buffer->buffer;
-                        found = 1;
-                        break;
-                    }
-                }
-                if (!found) {
-                   MetadataBufferInfo meta_info;
-                   meta_info.frame_number = frame_number;
-                   meta_info.zsl_buf_hdl = buffer->buffer;
-                   mStoredMetadataList.push_back(meta_info);
-                }
-            }
-            mCallbackOps->process_capture_result(mCallbackOps, &result);
-        } else {
-            for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
-                    j != i->buffers.end(); j++) {
-                if (j->stream == buffer->stream) {
-                    if (j->buffer != NULL) {
-                        ALOGE("%s: Error: buffer is already set", __func__);
-                    } else {
-                        j->buffer = (camera3_stream_buffer_t *)malloc(
-                                sizeof(camera3_stream_buffer_t));
-                        *(j->buffer) = *buffer;
-                        ALOGV("%s: cache buffer %p at result frame_number %d",
-                                __func__, buffer, frame_number);
-                    }
-                }
-            }
-        }
-    }
     pthread_mutex_unlock(&mMutex);
     return;
 }
