@@ -146,6 +146,7 @@ camera3_device_ops_t QCamera3HardwareInterface::mCameraOps = {
     .reserved =                           {0},
 };
 
+int QCamera3HardwareInterface::kMaxInFlight = 5;
 
 /*===========================================================================
  * FUNCTION   : QCamera3HardwareInterface
@@ -841,6 +842,7 @@ void QCamera3HardwareInterface::handleMetadataWithLock(
         mCallbackOps->notify(mCallbackOps, &notify_msg);
         ALOGV("%s: notify frame_number = %d, capture_time = %lld", __func__,
                 i->frame_number, capture_time);
+        mPendingRequest--;
 
         // Send empty metadata with already filled buffers for dropped metadata
         // and send valid metadata with already filled buffers for current metadata
@@ -1051,7 +1053,6 @@ void QCamera3HardwareInterface::handleBufferWithLock(
             }
         }
         mCallbackOps->process_capture_result(mCallbackOps, &result);
-        unblockRequestIfNecessary();
     } else {
         for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
                 j != i->buffers.end(); j++) {
@@ -1107,7 +1108,6 @@ void QCamera3HardwareInterface::unblockRequestIfNecessary()
 
     if (!max_buffers_dequeued) {
         // Unblock process_capture_request
-        mPendingRequest = 0;
         pthread_cond_signal(&mRequestCond);
     }
 }
@@ -1344,10 +1344,10 @@ int QCamera3HardwareInterface::processCaptureRequest(
     mFirstRequest = false;
 
     //Block on conditional variable
-    mPendingRequest = 1;
-    while (mPendingRequest == 1) {
+    mPendingRequest++;
+    do {
         pthread_cond_wait(&mRequestCond, &mMutex);
-    }
+    }while (mPendingRequest >= kMaxInFlight);
 
     pthread_mutex_unlock(&mMutex);
 
