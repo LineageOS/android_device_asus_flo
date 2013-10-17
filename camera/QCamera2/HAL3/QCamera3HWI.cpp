@@ -227,9 +227,11 @@ QCamera3HardwareInterface::~QCamera3HardwareInterface()
 
     /* Clean up all channels */
     if (mCameraInitialized) {
-        mMetadataChannel->stop();
-        delete mMetadataChannel;
-        mMetadataChannel = NULL;
+        if (mMetadataChannel) {
+            mMetadataChannel->stop();
+            delete mMetadataChannel;
+            mMetadataChannel = NULL;
+        }
         deinitParameters();
     }
 
@@ -378,22 +380,6 @@ int QCamera3HardwareInterface::initialize(
         ALOGE("%s: initParamters failed %d", __func__, rc);
        goto err1;
     }
-    //Create metadata channel and initialize it
-    mMetadataChannel = new QCamera3MetadataChannel(mCameraHandle->camera_handle,
-                    mCameraHandle->ops, captureResultCb,
-                    &gCamCapability[mCameraId]->padding_info, this);
-    if (mMetadataChannel == NULL) {
-        ALOGE("%s: failed to allocate metadata channel", __func__);
-        rc = -ENOMEM;
-        goto err2;
-    }
-    rc = mMetadataChannel->initialize();
-    if (rc < 0) {
-        ALOGE("%s: metadata channel initialization failed", __func__);
-        delete mMetadataChannel;
-        mMetadataChannel = NULL;
-        goto err3;
-    }
 
     mCallbackOps = callback_ops;
 
@@ -401,11 +387,6 @@ int QCamera3HardwareInterface::initialize(
     mCameraInitialized = true;
     return 0;
 
-err3:
-    delete mMetadataChannel;
-    mMetadataChannel = NULL;
-err2:
-    deinitParameters();
 err1:
     pthread_mutex_unlock(&mMutex);
     return rc;
@@ -427,24 +408,20 @@ int QCamera3HardwareInterface::configureStreams(
         camera3_stream_configuration_t *streamList)
 {
     int rc = 0;
-    pthread_mutex_lock(&mMutex);
     // Sanity check stream_list
     if (streamList == NULL) {
         ALOGE("%s: NULL stream configuration", __func__);
-        pthread_mutex_unlock(&mMutex);
         return BAD_VALUE;
     }
 
     if (streamList->streams == NULL) {
         ALOGE("%s: NULL stream list", __func__);
-        pthread_mutex_unlock(&mMutex);
         return BAD_VALUE;
     }
 
     if (streamList->num_streams < 1) {
         ALOGE("%s: Bad number of streams requested: %d", __func__,
                 streamList->num_streams);
-        pthread_mutex_unlock(&mMutex);
         return BAD_VALUE;
     }
 
@@ -459,6 +436,12 @@ int QCamera3HardwareInterface::configureStreams(
         (*it)->status = INVALID;
     }
 
+    if (mMetadataChannel) {
+        /* If content of mStreamInfo is not 0, there is metadata stream */
+        mMetadataChannel->stop();
+    }
+    // Acquire Mutex after stoping all the channels
+    pthread_mutex_lock(&mMutex);
     for (size_t i = 0; i < streamList->num_streams; i++) {
         camera3_stream_t *newStream = streamList->streams[i];
         ALOGD("%s: newStream type = %d, stream format = %d stream size : %d x %d",
@@ -517,7 +500,29 @@ int QCamera3HardwareInterface::configureStreams(
         }
     }
 
-    //mMetadataChannel->stop();
+    if (mMetadataChannel) {
+        delete mMetadataChannel;
+        mMetadataChannel = NULL;
+    }
+
+    //Create metadata channel and initialize it
+    mMetadataChannel = new QCamera3MetadataChannel(mCameraHandle->camera_handle,
+                    mCameraHandle->ops, captureResultCb,
+                    &gCamCapability[mCameraId]->padding_info, this);
+    if (mMetadataChannel == NULL) {
+        ALOGE("%s: failed to allocate metadata channel", __func__);
+        rc = -ENOMEM;
+        pthread_mutex_unlock(&mMutex);
+        return rc;
+    }
+    rc = mMetadataChannel->initialize();
+    if (rc < 0) {
+        ALOGE("%s: metadata channel initialization failed", __func__);
+        delete mMetadataChannel;
+        mMetadataChannel = NULL;
+        pthread_mutex_unlock(&mMutex);
+        return rc;
+    }
 
     /* Allocate channel objects for the requested streams */
     for (size_t i = 0; i < streamList->num_streams; i++) {
