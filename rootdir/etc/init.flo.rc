@@ -244,7 +244,7 @@ service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     oneshot
 
 service rmt_storage /vendor/bin/rmt_storage
-    class main
+    class core
     user root
     group system wakelock
 
