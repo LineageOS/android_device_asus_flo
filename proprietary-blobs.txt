@@ -152,6 +152,11 @@
 /system/vendor/firmware/gss.b10
 /system/vendor/firmware/gss.b11
 /system/vendor/firmware/gss.mdt
+/system/vendor/firmware/keymaster/keymaster.b00
+/system/vendor/firmware/keymaster/keymaster.b01
+/system/vendor/firmware/keymaster/keymaster.b02
+/system/vendor/firmware/keymaster/keymaster.b03
+/system/vendor/firmware/keymaster/keymaster.mdt
 /system/vendor/firmware/q6.b00
 /system/vendor/firmware/q6.b01
 /system/vendor/firmware/q6.b03
