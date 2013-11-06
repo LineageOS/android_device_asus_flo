@@ -97,3 +97,8 @@ TARGET_USES_POST_PROCESSING := true
 TARGET_CUSTOM_DISPLAY_TUNING := true
 
 HAVE_ADRENO_SOURCE:= false
+
+BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
+
+# The list below is order dependent
+BOARD_SEPOLICY_UNION += file_contexts
