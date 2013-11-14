@@ -110,6 +110,7 @@ BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 BOARD_SEPOLICY_UNION += \
         app.te \
         device.te \
+        file.te \
         rmt.te \
         ueventd.te \
         surfaceflinger.te \
