@@ -284,7 +284,7 @@ on charger
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
 
-service irsc_util /system/bin/logwrapper /system/bin/irsc_util "/etc/sec_config"
+service irsc_util /system/bin/irsc_util "/etc/sec_config"
     class main
     user root
     oneshot
@@ -357,7 +357,7 @@ service sensors /system/bin/sensors.qcom
     user root
     group root
 
-service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
     -O/data/misc/wifi/sockets \
@@ -371,7 +371,7 @@ service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service p2p_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+service p2p_supplicant /system/bin/wpa_supplicant \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
     -I/system/etc/wifi/p2p_supplicant_overlay.conf -N \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
@@ -473,7 +473,7 @@ service qseecomd /system/bin/qseecomd
     user system
     group system
 
-service diag_mdlog /system/bin/logwrapper /system/bin/diag_mdlog -s 100
+service diag_mdlog /system/bin/diag_mdlog -s 100
     class late_start
     disabled
 
