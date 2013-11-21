@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright 2012 The Android Open Source Project
+# Copyright 2013 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,16 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# start jb-mr1-dev
-# 477685 = JOO88
-# end jb-mr1-dev
+# start jb-mr2-dev
+# 704765 = JSR72
+# 739313 = JSS11D
+# 741250 = JSS15
+# 746990 = JSS15H
+# 748502 = JSS15I
+# 748593 = JSS15J
+# 750418 = JSS15K
+# end jb-mr2-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=477685
-DEVICE=msm8960
-PRODUCT=
-VERSION=joo88
-#SRCPREFIX=signed-
-BOOTLOADER=msm8960z09o
-RADIO=m9615a-cefwmazm-2.0.1700.16
+BUILD=748593
+DEVICE=flo
+PRODUCT=razor
+VERSION=jss15j
+SRCPREFIX=signed-
+BOOTLOADER=flo-03.14
 source ../../../common/generate-factory-images-common.sh
