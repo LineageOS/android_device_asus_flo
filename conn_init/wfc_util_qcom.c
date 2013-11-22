@@ -549,7 +549,7 @@ int wfc_util_qcom_check_config(unsigned char *nv_mac_addr)
 
 #ifdef WFC_UTIL_FEAUTRE_COPY_NV_BIN
 	char nv_bin_tempfile_name[50];
-	char baseband[5];
+	char baseband[PROPERTY_VALUE_MAX];
 
 	// Default use WCNSS_qcom_wlan_nv_flo.bin
 	property_get("ro.boot.baseband", baseband, "apq");

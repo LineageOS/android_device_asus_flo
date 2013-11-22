@@ -36,3 +36,4 @@ touch.pressure.scale = 0.0048
 # Orientation
 touch.orientation.calibration = none
 
+touch.coverage.calibration = box

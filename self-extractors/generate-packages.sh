@@ -33,8 +33,8 @@
 BRANCH=jb-mr2-dev
 if test $BRANCH = jb-mr2-dev
 then
-  ZIP=razor-ota-750418
-  BUILD=jss15k
+  ZIP=razor-ota-748593
+  BUILD=jss15j
 fi # jb-mr2-dev
 ROOTDEVICE=flo
 DEVICE=flo

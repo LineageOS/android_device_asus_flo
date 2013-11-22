@@ -25,10 +25,10 @@
 # end jb-mr2-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=750418
+BUILD=748593
 DEVICE=flo
 PRODUCT=razor
-VERSION=jss15k
+VERSION=jss15j
 SRCPREFIX=signed-
 BOOTLOADER=flo-03.14
 source ../../../common/generate-factory-images-common.sh

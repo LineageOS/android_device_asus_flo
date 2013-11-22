@@ -31,4 +31,9 @@ void dumpstate_board()
 {
     dump_file("INTERRUPTS", "/proc/interrupts");
     dump_ks_bridges();
+    dump_file("eMMC manfid",
+        "/sys/devices/platform/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/manfid");
+    dump_file("eMMC capacity",
+        "/sys/devices/platform/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/sec_count");
+    dump_file("Touch firmware version", "/sys/class/switch/touch/name");
 };
