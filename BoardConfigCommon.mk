@@ -109,10 +109,23 @@ BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 # The list below is order dependent
 BOARD_SEPOLICY_UNION += \
         app.te \
+        bluetooth_loader.te \
+        bridge.te \
+        camera.te \
+        conn_init.te \
         device.te \
         file.te \
+        file_contexts \
+        kickstart.te \
+        mediaserver.te \
+        mpdecision.te \
+        netmgrd.te \
+        qmux.te \
         rmt.te \
+        sensors.te \
+        tee.te \
+        te_macros \
+        thermald.te \
         ueventd.te \
         surfaceflinger.te \
-        system_server.te \
-        file_contexts
+        system_server.te
