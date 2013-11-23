@@ -1,0 +1,43 @@
+# kickstart processes and scripts (system process)
+type kickstart, domain;
+type kickstart_exec, file_type, exec_type;
+
+init_daemon_domain(kickstart)
+
+permissive kickstart;
+
+# Run kickstart_checker.sh
+allow kickstart shell_exec:file { entrypoint read };
+allow kickstart kickstart_exec:file { getattr open execute_no_trans };
+
+# Spawn /system/bin/efsks and /system/bin/ks
+allow kickstart kickstart_exec:file { open execute_no_trans getattr };
+
+# Let qcks access /dev/mdm node (modem driver)
+allow kickstart radio_device:chr_file r_file_perms;
+
+# Access USB host ks bridge drivers
+allow kickstart kickstart_device:chr_file rw_file_perms;
+
+# Read and write to /dev/block/mmcblk0p[89]
+allow kickstart efs_block_device:blk_file rw_file_perms;
+allow kickstart block_device:dir { getattr write search };
+
+# Write contents of block device to kickstart data dir
+allow kickstart kickstart_data_file:file create_file_perms;
+allow kickstart kickstart_data_file:dir rw_dir_perms;
+
+# Read radio firmware file(s)
+allow kickstart radio_efs_file:dir search;
+allow kickstart radio_efs_file:file r_file_perms;
+
+# Run dd from toolbox on firmware files
+allow kickstart shell_exec:file rx_file_perms;
+allow kickstart system_file:file execute_no_trans;
+
+# Wake lock access
+allow kickstart sysfs_wake_lock:file { open append };
+
+# Set property key gsm.radio.kickstart
+allow kickstart radio_prop:property_service set;
+unix_socket_connect(kickstart, property, init)

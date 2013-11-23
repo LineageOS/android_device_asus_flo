@@ -1,0 +1,6 @@
+# Qualcomm Secure Execution Environment Communicator policy
+allow tee self:process execmem;
+
+# Read from persist partition
+allow tee persist_file:dir search;
+r_dir_file(tee, persist_data_file)
