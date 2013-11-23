@@ -43,6 +43,7 @@ on init
 
 on fs
     mount_all ./fstab.flo
+    restorecon_recursive /persist
     setprop ro.crypto.fuse_sdcard true
     write /sys/kernel/boot_adsp/boot 1
 
@@ -183,6 +184,9 @@ on post-fs-data
     mkdir /persist/sensors
     chmod 775 /persist/sensors
 
+    # Label in case file already exists
+    restorecon /data/fdAlbum
+
     # Modify from 777 (for camera calibration) to 775
     chmod 775 /persist/camera_calibration
 
@@ -218,8 +222,7 @@ on post-fs-data
     chown system system /sys/class/leds/white/device/blink
 
     # communicate with mpdecision and thermald
-    mkdir /dev/socket/mpdecision 0770 system system
-    chmod 2770 /dev/socket/mpdecision
+    mkdir /dev/socket/mpdecision 2770 root system
 
     # adjust vibrator amplitude
     write /sys/class/timed_output/vibrator/amp 70
@@ -292,11 +295,13 @@ service irsc_util /system/bin/irsc_util "/etc/sec_config"
 service rmt_storage /system/bin/rmt_storage
     class main
     user root
+    group system
 
 service hciattach /system/bin/sh /system/etc/init.flo.bt.sh
     class late_start
     user bluetooth
     group qcom_oncrpc bluetooth net_bt_admin system net_bt_stack
+    seclabel u:r:bluetooth_loader:s0
     disabled
     oneshot
 
@@ -325,6 +330,7 @@ service qmuxd /system/bin/qmuxd
 
 service ks_checker /system/bin/sh /system/etc/kickstart_checker.sh
     class core
+    seclabel u:r:kickstart:s0
     oneshot
 
 service kickstart /system/bin/qcks -i /firmware/image/ -r /data/tombstones/mdm/
@@ -349,6 +355,7 @@ on property:ril.asus_debugger_running=1
 
 service netmgrd /system/bin/netmgrd
     class main
+    group radio
     disabled
 
 
@@ -430,6 +437,7 @@ service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emul
 
 service thermald /system/bin/thermald
     class main
+    group radio
 
 service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
     class main
@@ -450,6 +458,7 @@ service wcnss_init /system/bin/sh /system/etc/init.flo.wifi.sh
     class main
     user system
     group system wifi
+    seclabel u:r:conn_init:s0
     oneshot
 
 service bdAddrLoader /system/bin/bdAddrLoader -f /persist/bluetooth/.bdaddr -h -x
