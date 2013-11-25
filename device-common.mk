@@ -56,8 +56,6 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/init.flo.wifi.sh:system/etc/init.flo.wifi.sh
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 \
-	device/asus/flo/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x \
 	device/asus/flo/audio_policy.conf:system/etc/audio_policy.conf
 
 PRODUCT_COPY_FILES += \
