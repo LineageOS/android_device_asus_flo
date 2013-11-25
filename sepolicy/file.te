@@ -2,6 +2,7 @@
 type qmuxd_socket, file_type;
 type sensors_socket, file_type;
 type camera_socket, file_type;
+type ppd_socket, file_type;
 
 type sensors_data_file, file_type, data_file_type;
 
@@ -23,3 +24,4 @@ type persist_wifi_file, file_type;
 
 type sysfs_rmnet, fs_type, sysfs_type;
 type sysfs_mpdecision, fs_type, sysfs_type;
+type sysfs_surfaceflinger, fs_type, sysfs_type;
