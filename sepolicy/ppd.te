@@ -1,0 +1,11 @@
+# HDMI output (system process)
+type ppd, domain;
+type ppd_exec, exec_type, file_type;
+
+# Started by init
+init_daemon_domain(ppd)
+
+permissive ppd;
+
+allow ppd graphics_device:chr_file rw_file_perms;
+unix_socket_connect(ppd, property, init)
