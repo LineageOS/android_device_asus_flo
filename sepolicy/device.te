@@ -1,5 +1,5 @@
 # GPU (used by most UI apps)
-type gpu_device, dev_type;
+type gpu_device, dev_type, mlstrustedobject;
 
 type wlan_device, dev_type;
 
@@ -10,8 +10,6 @@ type kickstart_device, dev_type;
 
 # SMD device, used by hci_qcomm_init
 type smd_device, dev_type;
-
-type mpdecision_device, dev_type;
 
 # Radio related block device
 type efs_block_device, dev_type;
