@@ -24,7 +24,6 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/hci_qcomm_init:system/bin/hci_qcomm_init:qcom \
     vendor/qcom/flo/proprietary/irsc_util:system/bin/irsc_util:qcom \
     vendor/qcom/flo/proprietary/ks:system/bin/ks:qcom \
-    vendor/qcom/flo/proprietary/mm-pp-daemon:system/bin/mm-pp-daemon:qcom \
     vendor/qcom/flo/proprietary/mm-qcamera-app:system/bin/mm-qcamera-app:qcom \
     vendor/qcom/flo/proprietary/mm-qcamera-daemon:system/bin/mm-qcamera-daemon:qcom \
     vendor/qcom/flo/proprietary/mm-qjpeg-enc-test:system/bin/mm-qjpeg-enc-test:qcom \
@@ -43,32 +42,34 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/usbhub:system/bin/usbhub:qcom \
     vendor/qcom/flo/proprietary/usbhub_init:system/bin/usbhub_init:qcom \
     vendor/qcom/flo/proprietary/DxHDCP.cfg:system/etc/DxHDCP.cfg:qcom \
+    vendor/qcom/flo/proprietary/vidc_1080p.fw:system/etc/firmware/vidc_1080p.fw:qcom \
     vendor/qcom/flo/proprietary/vidc.b00:system/etc/firmware/vidc.b00:qcom \
     vendor/qcom/flo/proprietary/vidc.b01:system/etc/firmware/vidc.b01:qcom \
     vendor/qcom/flo/proprietary/vidc.b02:system/etc/firmware/vidc.b02:qcom \
     vendor/qcom/flo/proprietary/vidc.b03:system/etc/firmware/vidc.b03:qcom \
-    vendor/qcom/flo/proprietary/vidc.mdt:system/etc/firmware/vidc.mdt:qcom \
-    vendor/qcom/flo/proprietary/vidc_1080p.fw:system/etc/firmware/vidc_1080p.fw:qcom \
     vendor/qcom/flo/proprietary/vidcfw.elf:system/etc/firmware/vidcfw.elf:qcom \
+    vendor/qcom/flo/proprietary/vidc.mdt:system/etc/firmware/vidc.mdt:qcom \
+    vendor/qcom/flo/proprietary/gps.conf:system/etc/gps.conf:qcom \
     vendor/qcom/flo/proprietary/eglsubAndroid.so:system/lib/egl/eglsubAndroid.so:qcom \
-    vendor/qcom/flo/proprietary/libEGL_adreno200.so:system/lib/egl/libEGL_adreno200.so:qcom \
-    vendor/qcom/flo/proprietary/libGLESv1_CM_adreno200.so:system/lib/egl/libGLESv1_CM_adreno200.so:qcom \
-    vendor/qcom/flo/proprietary/libGLESv2_adreno200.so:system/lib/egl/libGLESv2_adreno200.so:qcom \
-    vendor/qcom/flo/proprietary/libq3dtools_adreno200.so:system/lib/egl/libq3dtools_adreno200.so:qcom \
-    vendor/qcom/flo/proprietary/camera.flo.so:system/lib/hw/camera.flo.so:qcom \
+    vendor/qcom/flo/proprietary/libEGL_adreno.so:system/lib/egl/libEGL_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libGLESv1_CM_adreno.so:system/lib/egl/libGLESv1_CM_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libGLESv2_adreno.so:system/lib/egl/libGLESv2_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libplayback_adreno.so:system/lib/egl/libplayback_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libq3dtools_adreno.so:system/lib/egl/libq3dtools_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/flp.msm8960.so:system/lib/hw/flp.msm8960.so:qcom \
     vendor/qcom/flo/proprietary/gps.msm8960.so:system/lib/hw/gps.msm8960.so:qcom \
     vendor/qcom/flo/proprietary/sensors.msm8960.so:system/lib/hw/sensors.msm8960.so:qcom \
-    vendor/qcom/flo/proprietary/libC2D2.so:system/lib/libC2D2.so:qcom \
-    vendor/qcom/flo/proprietary/libCommandSvc.so:system/lib/libCommandSvc.so:qcom \
-    vendor/qcom/flo/proprietary/libDxHdcp.so:system/lib/libDxHdcp.so:qcom \
-    vendor/qcom/flo/proprietary/libI420colorconvert.so:system/lib/libI420colorconvert.so:qcom \
-    vendor/qcom/flo/proprietary/libQSEEComAPI.so:system/lib/libQSEEComAPI.so:qcom \
+    vendor/qcom/flo/proprietary/libadreno_utils.so:system/lib/libadreno_utils.so:qcom \
     vendor/qcom/flo/proprietary/libaudcal.so:system/lib/libaudcal.so:qcom \
     vendor/qcom/flo/proprietary/libaudioalsa.so:system/lib/libaudioalsa.so:qcom \
-    vendor/qcom/flo/proprietary/libc2d2_a3xx.so:system/lib/libc2d2_a3xx.so:qcom \
+    vendor/qcom/flo/proprietary/libC2D2.so:system/lib/libC2D2.so:qcom \
+    vendor/qcom/flo/proprietary/libc2d30-a3xx.so:system/lib/libc2d30-a3xx.so:qcom \
+    vendor/qcom/flo/proprietary/libc2d30.so:system/lib/libc2d30.so:qcom \
+    vendor/qcom/flo/proprietary/libCB.so:system/lib/libCB.so:qcom \
     vendor/qcom/flo/proprietary/libchromatix_ov5693_common.so:system/lib/libchromatix_ov5693_common.so:qcom \
     vendor/qcom/flo/proprietary/libchromatix_ov5693_default_video.so:system/lib/libchromatix_ov5693_default_video.so:qcom \
     vendor/qcom/flo/proprietary/libchromatix_ov5693_preview.so:system/lib/libchromatix_ov5693_preview.so:qcom \
+    vendor/qcom/flo/proprietary/libCommandSvc.so:system/lib/libCommandSvc.so:qcom \
     vendor/qcom/flo/proprietary/libconfigdb.so:system/lib/libconfigdb.so:qcom \
     vendor/qcom/flo/proprietary/libcsd-client.so:system/lib/libcsd-client.so:qcom \
     vendor/qcom/flo/proprietary/libdiag.so:system/lib/libdiag.so:qcom \
@@ -80,29 +81,24 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/libdss.so:system/lib/libdss.so:qcom \
     vendor/qcom/flo/proprietary/libdsucsd.so:system/lib/libdsucsd.so:qcom \
     vendor/qcom/flo/proprietary/libdsutils.so:system/lib/libdsutils.so:qcom \
-    vendor/qcom/flo/proprietary/libgeofence.so:system/lib/libgeofence.so:qcom \
     vendor/qcom/flo/proprietary/libgps.utils.so:system/lib/libgps.utils.so:qcom \
     vendor/qcom/flo/proprietary/libgsl.so:system/lib/libgsl.so:qcom \
+    vendor/qcom/flo/proprietary/libI420colorconvert.so:system/lib/libI420colorconvert.so:qcom \
     vendor/qcom/flo/proprietary/libidl.so:system/lib/libidl.so:qcom \
     vendor/qcom/flo/proprietary/libllvm-a3xx.so:system/lib/libllvm-a3xx.so:qcom \
-    vendor/qcom/flo/proprietary/libloc_adapter.so:system/lib/libloc_adapter.so:qcom \
-    vendor/qcom/flo/proprietary/libloc_api_v02.so:system/lib/libloc_api_v02.so:qcom \
+    vendor/qcom/flo/proprietary/libloc_core.so:system/lib/libloc_core.so:qcom \
     vendor/qcom/flo/proprietary/libloc_eng.so:system/lib/libloc_eng.so:qcom \
-    vendor/qcom/flo/proprietary/libmm-abl-oem.so:system/lib/libmm-abl-oem.so:qcom \
     vendor/qcom/flo/proprietary/libmm-abl.so:system/lib/libmm-abl.so:qcom \
-    vendor/qcom/flo/proprietary/libmm-color-convertor.so:system/lib/libmm-color-convertor.so:qcom \
     vendor/qcom/flo/proprietary/libmmcamera2_stats_algorithm.so:system/lib/libmmcamera2_stats_algorithm.so:qcom \
     vendor/qcom/flo/proprietary/libmmcamera_image_stab.so:system/lib/libmmcamera_image_stab.so:qcom \
-    vendor/qcom/flo/proprietary/libmmcamera_interface.so:system/lib/libmmcamera_interface.so:qcom \
     vendor/qcom/flo/proprietary/libmmcamera_mi1040.so:system/lib/libmmcamera_mi1040.so:qcom \
     vendor/qcom/flo/proprietary/libmmcamera_ov5693.so:system/lib/libmmcamera_ov5693.so:qcom \
-    vendor/qcom/flo/proprietary/libmmjpeg_interface.so:system/lib/libmmjpeg_interface.so:qcom \
+    vendor/qcom/flo/proprietary/libmm-color-convertor.so:system/lib/libmm-color-convertor.so:qcom \
     vendor/qcom/flo/proprietary/libnetmgr.so:system/lib/libnetmgr.so:qcom \
     vendor/qcom/flo/proprietary/liboemcrypto.so:system/lib/liboemcrypto.so:qcom \
     vendor/qcom/flo/proprietary/libqcci_legacy.so:system/lib/libqcci_legacy.so:qcom \
     vendor/qcom/flo/proprietary/libqdi.so:system/lib/libqdi.so:qcom \
     vendor/qcom/flo/proprietary/libqdp.so:system/lib/libqdp.so:qcom \
-    vendor/qcom/flo/proprietary/libqmi.so:system/lib/libqmi.so:qcom \
     vendor/qcom/flo/proprietary/libqmi_cci.so:system/lib/libqmi_cci.so:qcom \
     vendor/qcom/flo/proprietary/libqmi_client_qmux.so:system/lib/libqmi_client_qmux.so:qcom \
     vendor/qcom/flo/proprietary/libqmi_common_so.so:system/lib/libqmi_common_so.so:qcom \
@@ -110,7 +106,11 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/libqmi_csvt_srvc.so:system/lib/libqmi_csvt_srvc.so:qcom \
     vendor/qcom/flo/proprietary/libqmi_encdec.so:system/lib/libqmi_encdec.so:qcom \
     vendor/qcom/flo/proprietary/libqmiservices.so:system/lib/libqmiservices.so:qcom \
-    vendor/qcom/flo/proprietary/libqomx_core.so:system/lib/libqomx_core.so:qcom \
+    vendor/qcom/flo/proprietary/libqmi.so:system/lib/libqmi.so:qcom \
+    vendor/qcom/flo/proprietary/libQSEEComAPI.so:system/lib/libQSEEComAPI.so:qcom \
+    vendor/qcom/flo/proprietary/librs_adreno_sha1.so:system/lib/librs_adreno_sha1.so:qcom \
+    vendor/qcom/flo/proprietary/librs_adreno.so:system/lib/librs_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libRSDriver_adreno.so:system/lib/libRSDriver_adreno.so:qcom \
     vendor/qcom/flo/proprietary/libsc-a3xx.so:system/lib/libsc-a3xx.so:qcom \
     vendor/qcom/flo/proprietary/libsensor1.so:system/lib/libsensor1.so:qcom \
     vendor/qcom/flo/proprietary/libsensor_reg.so:system/lib/libsensor_reg.so:qcom \
@@ -144,6 +144,11 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/gss.b10:system/vendor/firmware/gss.b10:qcom \
     vendor/qcom/flo/proprietary/gss.b11:system/vendor/firmware/gss.b11:qcom \
     vendor/qcom/flo/proprietary/gss.mdt:system/vendor/firmware/gss.mdt:qcom \
+    vendor/qcom/flo/proprietary/keymaster.b00:system/vendor/firmware/keymaster/keymaster.b00:qcom \
+    vendor/qcom/flo/proprietary/keymaster.b01:system/vendor/firmware/keymaster/keymaster.b01:qcom \
+    vendor/qcom/flo/proprietary/keymaster.b02:system/vendor/firmware/keymaster/keymaster.b02:qcom \
+    vendor/qcom/flo/proprietary/keymaster.b03:system/vendor/firmware/keymaster/keymaster.b03:qcom \
+    vendor/qcom/flo/proprietary/keymaster.mdt:system/vendor/firmware/keymaster/keymaster.mdt:qcom \
     vendor/qcom/flo/proprietary/q6.b00:system/vendor/firmware/q6.b00:qcom \
     vendor/qcom/flo/proprietary/q6.b01:system/vendor/firmware/q6.b01:qcom \
     vendor/qcom/flo/proprietary/q6.b03:system/vendor/firmware/q6.b03:qcom \
@@ -163,8 +168,12 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/wcnss.mdt:system/vendor/firmware/wcnss.mdt:qcom \
     vendor/qcom/flo/proprietary/libdrmdecrypt.so:system/vendor/lib/libdrmdecrypt.so:qcom \
     vendor/qcom/flo/proprietary/libgemini.so:system/vendor/lib/libgemini.so:qcom \
+    vendor/qcom/flo/proprietary/libgeofence.so:system/vendor/lib/libgeofence.so:qcom \
     vendor/qcom/flo/proprietary/libimage-jpeg-enc-omx-comp.so:system/vendor/lib/libimage-jpeg-enc-omx-comp.so:qcom \
     vendor/qcom/flo/proprietary/libimage-omx-common.so:system/vendor/lib/libimage-omx-common.so:qcom \
+    vendor/qcom/flo/proprietary/libizat_core.so:system/vendor/lib/libizat_core.so:qcom \
+    vendor/qcom/flo/proprietary/libloc_api_v02.so:system/vendor/lib/libloc_api_v02.so:qcom \
+    vendor/qcom/flo/proprietary/libloc_ds_api.so:system/vendor/lib/libloc_ds_api.so:qcom \
     vendor/qcom/flo/proprietary/libmmcamera2_c2d_module.so:system/vendor/lib/libmmcamera2_c2d_module.so:qcom \
     vendor/qcom/flo/proprietary/libmmcamera2_cpp_module.so:system/vendor/lib/libmmcamera2_cpp_module.so:qcom \
     vendor/qcom/flo/proprietary/libmmcamera2_iface_modules.so:system/vendor/lib/libmmcamera2_iface_modules.so:qcom \
