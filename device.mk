@@ -26,8 +26,14 @@ PRODUCT_COPY_FILES := \
     device/asus/flo/fstab.flo:root/fstab.flo \
     device/asus/flo/init.flo.rc:root/init.flo.rc
 
+PRODUCT_PACKAGES := \
+    libwpa_client \
+    hostapd \
+    wpa_supplicant \
+    wpa_supplicant.conf
+
 PRODUCT_PACKAGES += \
-	camera.flo
+    camera.flo
 
 # NFC
 PRODUCT_PACKAGES += \
