@@ -103,3 +103,8 @@ OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 USE_DEVICE_SPECIFIC_CAMERA:= true
 
 HAVE_ADRENO_SOURCE:= false
+
+BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
+
+# The list below is order dependent
+BOARD_SEPOLICY_UNION += file_contexts
