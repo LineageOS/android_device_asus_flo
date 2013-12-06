@@ -120,12 +120,13 @@ BOARD_SEPOLICY_UNION += \
         mediaserver.te \
         mpdecision.te \
         netmgrd.te \
+        ppd.te \
         qmux.te \
         rmt.te \
         sensors.te \
+        surfaceflinger.te \
+        system_server.te \
         tee.te \
         te_macros \
         thermald.te \
-        ueventd.te \
-        surfaceflinger.te \
-        system_server.te
+        ueventd.te

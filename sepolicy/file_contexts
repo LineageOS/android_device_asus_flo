@@ -26,6 +26,9 @@
 # CPU governor controls
 /dev/socket/mpdecision(/.*)?           u:object_r:mpdecision_socket:s0
 
+# HDMI output socket (mm-pp-daemon)
+/dev/socket/pps                        u:object_r:ppd_socket:s0
+
 ## Radio related
 # modem driver
 /dev/mdm                               u:object_r:radio_device:s0
@@ -80,10 +83,15 @@
 /dev/ks_hsic_bridge                u:object_r:kickstart_device:s0
 /dev/efs_hsic_bridge               u:object_r:kickstart_device:s0
 
+/system/bin/qcks                   u:object_r:kickstart_exec:s0
+/system/bin/efsks                  u:object_r:kickstart_exec:s0
+/system/bin/ks                     u:object_r:kickstart_exec:s0
+
 /data/nfc(/.*)?                    u:object_r:nfc_data_file:s0
 /data/qcks(/.*)?                   u:object_r:kickstart_data_file:s0
 /data/misc/sensors(/.*)?           u:object_r:sensors_data_file:s0
 /data/system/sensors(/.*)?         u:object_r:sensors_data_file:s0
+/data/misc/playready(/.*)?         u:object_r:drm_data_file:s0
 /data/fdAlbum                      u:object_r:camera_data_file:s0
 
 /system/bin/hci_qcomm_init         u:object_r:hci_attach_exec:s0
@@ -101,6 +109,7 @@
 /system/bin/mm-qcamera-daemon      u:object_r:camera_exec:s0
 /system/bin/qseecomd               u:object_r:tee_exec:s0
 /system/bin/conn_init              u:object_r:conn_init_exec:s0
+/system/bin/mm-pp-daemon           u:object_r:ppd_exec:s0
 
 # Persist firmware filesystem
 /persist(/.*)?                    u:object_r:persist_file:s0
@@ -119,3 +128,7 @@
 # Sysfs files used by mpdecision
 /sys/module/pm2/modes(/.*)?            u:object_r:sysfs_mpdecision:s0
 /sys/module/pm_8x60/modes(/.*)?        u:object_r:sysfs_mpdecision:s0
+
+# Sysfs files used by surfaceflinger
+/sys/devices/virtual/graphics/fb1/format_3d -- u:object_r:sysfs_surfaceflinger:s0
+/sys/devices/virtual/graphics/fb1/hpd       -- u:object_r:sysfs_surfaceflinger:s0
