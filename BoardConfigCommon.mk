@@ -109,4 +109,5 @@ BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 # The list below is order dependent
 BOARD_SEPOLICY_UNION += \
         rmt.te \
+        ueventd.te \
         file_contexts
