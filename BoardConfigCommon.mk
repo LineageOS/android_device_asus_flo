@@ -108,7 +108,6 @@ BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 
 # The list below is order dependent
 BOARD_SEPOLICY_UNION += \
-        app.te \
         bluetooth_loader.te \
         bridge.te \
         camera.te \
