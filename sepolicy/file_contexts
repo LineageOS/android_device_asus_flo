@@ -110,6 +110,7 @@
 /system/bin/qseecomd               u:object_r:tee_exec:s0
 /system/bin/conn_init              u:object_r:conn_init_exec:s0
 /system/bin/mm-pp-daemon           u:object_r:ppd_exec:s0
+/system/bin/irsc_util              u:object_r:irsc_util_exec:s0
 
 # Persist firmware filesystem
 /persist(/.*)?                    u:object_r:persist_file:s0
