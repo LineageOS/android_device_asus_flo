@@ -115,6 +115,7 @@ BOARD_SEPOLICY_UNION += \
         device.te \
         file.te \
         file_contexts \
+        irsc_util.te \
         kickstart.te \
         mediaserver.te \
         mpdecision.te \
