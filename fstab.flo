@@ -11,4 +11,4 @@
 /dev/block/platform/msm_sdcc.1/by-name/recovery     /recovery       emmc    defaults                                                                     defaults
 /dev/block/platform/msm_sdcc.1/by-name/misc         /misc           emmc    defaults                                                                     defaults
 
-/devices/platform/msm_hsusb_host/usb    /storage/usbdisk0       auto    default     voldmanaged=sda:auto
+/devices/platform/msm_hsusb_host/usb    auto       auto    defaults     voldmanaged=usbdisk:auto
