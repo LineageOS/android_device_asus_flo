@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a5ae5dd_bcac67ee",
+        "filename": "init.flo.rc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2014-01-14T15:21:37Z",
+      "side": 1,
+      "message": "Just kill these 2. The symlinks are generally for back-compat scenarios and apps that assume fixed paths, I doubt there\u0027s much of \"/mnt/usbdisk\" hardwiring going on :)",
+      "revId": "341a13801201b606f02947d91804514643a53743",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
