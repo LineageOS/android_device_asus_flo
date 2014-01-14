@@ -2,7 +2,7 @@
 type conn_init, domain;
 type conn_init_exec, exec_type, file_type;
 
-permissive conn_init;
+permissive_or_unconfined(conn_init)
 
 # Runs init.flo.wifi.sh
 allow conn_init shell_exec:file { entrypoint read };
