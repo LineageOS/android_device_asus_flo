@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -60,7 +60,7 @@
   FILE *fp = fopen(filename, "w+"); \
   if (fp) { \
     rc = fwrite(p_addr, 1, len, fp); \
-    CDBG_ERROR("%s:%d] written size %d", __func__, __LINE__, len); \
+    CDBG_HIGH("%s:%d] written size %d", __func__, __LINE__, len); \
     fclose(fp); \
   } else { \
     CDBG_ERROR("%s:%d] open %s failed", __func__, __LINE__, filename); \
@@ -80,7 +80,7 @@
   if (fp) { \
     rc = fwrite(p_addr1, 1, len1, fp); \
     rc = fwrite(p_addr2, 1, len2, fp); \
-    CDBG_ERROR("%s:%d] written %d %d", __func__, __LINE__, len1, len2); \
+    CDBG_HIGH("%s:%d] written %d %d", __func__, __LINE__, len1, len2); \
     fclose(fp); \
   } else { \
     CDBG_ERROR("%s:%d] open %s failed", __func__, __LINE__, filename); \
@@ -2245,12 +2245,12 @@ mm_jpeg_job_q_node_t* mm_jpeg_queue_remove_job_by_client_id(
     data = (mm_jpeg_job_q_node_t *)node->data;
 
     if (data && (data->enc_info.client_handle == client_hdl)) {
-      CDBG_ERROR("%s:%d] found matching client handle", __func__, __LINE__);
+      CDBG_HIGH("%s:%d] found matching client handle", __func__, __LINE__);
       job_node = data;
       cam_list_del_node(&node->list);
       queue->size--;
       free(node);
-      CDBG_ERROR("%s: queue size = %d", __func__, queue->size);
+      CDBG_HIGH("%s: queue size = %d", __func__, queue->size);
       break;
     }
     pos = pos->next;
@@ -2279,12 +2279,12 @@ mm_jpeg_job_q_node_t* mm_jpeg_queue_remove_job_by_session_id(
     data = (mm_jpeg_job_q_node_t *)node->data;
 
     if (data && (data->enc_info.encode_job.session_id == session_id)) {
-      CDBG_ERROR("%s:%d] found matching session id", __func__, __LINE__);
+      CDBG_HIGH("%s:%d] found matching session id", __func__, __LINE__);
       job_node = data;
       cam_list_del_node(&node->list);
       queue->size--;
       free(node);
-      CDBG_ERROR("%s: queue size = %d", __func__, queue->size);
+      CDBG_HIGH("%s: queue size = %d", __func__, queue->size);
       break;
     }
     pos = pos->next;
@@ -2313,7 +2313,7 @@ mm_jpeg_job_q_node_t* mm_jpeg_queue_remove_job_by_job_id(
     data = (mm_jpeg_job_q_node_t *)node->data;
 
     if (data && (data->enc_info.job_id == job_id)) {
-      CDBG_ERROR("%s:%d] found matching job id", __func__, __LINE__);
+      CDBG_HIGH("%s:%d] found matching job id", __func__, __LINE__);
       job_node = data;
       cam_list_del_node(&node->list);
       queue->size--;
