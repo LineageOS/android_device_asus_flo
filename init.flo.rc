@@ -218,6 +218,9 @@ on post-fs-data
     mkdir /data/qcks 0770 system system
     chown system /dev/block/platform/msm_sdcc.1/by-name
 
+    # Remove old socket so that it is re-created in the right context.
+    rm /data/app/sensor_ctl_socket
+
     setprop vold.post_fs_data_done 1
 
     rm /data/local/tmp/adreno_config.txt
