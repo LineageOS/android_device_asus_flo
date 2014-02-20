@@ -11,6 +11,10 @@ permissive kickstart;
 allow kickstart shell_exec:file { entrypoint read };
 allow kickstart kickstart_exec:file { getattr open execute_no_trans };
 
+# kickstart_checker.sh changes block devices
+# /dev/block/platform/msm_sdcc.1/by-name/m9kefs*
+allow kickstart self:capability { chown fowner };
+
 # Spawn /system/bin/efsks and /system/bin/ks
 allow kickstart kickstart_exec:file { open execute_no_trans getattr };
 
@@ -20,8 +24,8 @@ allow kickstart radio_device:chr_file r_file_perms;
 # Access USB host ks bridge drivers
 allow kickstart kickstart_device:chr_file rw_file_perms;
 
-# Read and write to /dev/block/mmcblk0p[89]
-allow kickstart efs_block_device:blk_file rw_file_perms;
+# Read and write to /dev/block/mmcblk0p[567]
+allow kickstart efs_block_device:blk_file { setattr rw_file_perms };
 allow kickstart block_device:dir { getattr write search };
 
 # Write contents of block device to kickstart data dir
@@ -42,3 +46,6 @@ allow kickstart sysfs_wake_lock:file { open append };
 # Set property key gsm.radio.kickstart
 allow kickstart radio_prop:property_service set;
 unix_socket_connect(kickstart, property, init)
+
+# Access /sys/module/rmnet_usb/parameters/rmnet_data_init
+allow kickstart sysfs_rmnet:file w_file_perms;
