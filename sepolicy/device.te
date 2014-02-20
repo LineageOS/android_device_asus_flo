@@ -10,6 +10,7 @@ type smd_device, dev_type;
 
 # Radio related block device
 type efs_block_device, dev_type;
+type modem_block_device, dev_type;
 
 # Shared memory logger
 type shared_log_device, dev_type;
