@@ -4,8 +4,7 @@ type kickstart_exec, file_type, exec_type;
 
 init_daemon_domain(kickstart)
 
-permissive kickstart;
-# permissive_or_unconfined(kickstart)
+permissive_or_unconfined(kickstart)
 
 # Run kickstart_checker.sh
 allow kickstart shell_exec:file { entrypoint read };
