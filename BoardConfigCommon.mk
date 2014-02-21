@@ -113,6 +113,7 @@ BOARD_SEPOLICY_UNION += \
         camera.te \
         conn_init.te \
         device.te \
+        domain.te \
         file.te \
         file_contexts \
         irsc_util.te \
