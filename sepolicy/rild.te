@@ -1,5 +1,1 @@
-userdebug_or_eng(`
-  allow rild diag_device:chr_file rw_file_perms;
-')
-
 qmux_socket(rild)
