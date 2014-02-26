@@ -251,7 +251,7 @@ service rmt_storage /vendor/bin/rmt_storage
 service hciattach /vendor/bin/init.flo.bt.sh
     class late_start
     user bluetooth
-    group qcom_oncrpc bluetooth system
+    group bluetooth system
     disabled
     oneshot
 
