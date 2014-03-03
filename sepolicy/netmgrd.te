@@ -24,3 +24,7 @@ qmux_socket(netmgrd)
 # directory doesn't exist so deny access.
 dontaudit netmgrd shell_exec:file rx_file_perms;
 dontaudit netmgrd system_file:file execute_no_trans;
+
+# set net.rmnet* properties.
+unix_socket_connect(netmgrd, property, init)
+allow netmgrd radio_prop:property_service set;
