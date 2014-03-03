@@ -15,7 +15,8 @@ dontaudit netmgrd self:capability sys_module;
 
 allow netmgrd self:udp_socket { create ioctl };
 allow netmgrd self:netlink_socket create_socket_perms;
-allow netmgrd self:netlink_route_socket create_socket_perms;
+allow netmgrd self:netlink_route_socket { create_socket_perms nlmsg_read nlmsg_write };
+allow netmgrd self:packet_socket create_socket_perms;
 
 # Talk to qmuxd (qmux_radio)
 qmux_socket(netmgrd)
