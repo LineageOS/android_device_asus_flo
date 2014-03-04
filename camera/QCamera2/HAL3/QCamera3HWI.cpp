@@ -126,8 +126,13 @@ const QCamera3HardwareInterface::QCameraMap QCamera3HardwareInterface::FLASH_MOD
     { ANDROID_FLASH_MODE_TORCH,  CAM_FLASH_MODE_TORCH }
 };
 
-const int32_t available_thumbnail_sizes[] = {512, 288, 480, 288, 256, 154, 432, 288,
-                                             320, 240, 176, 144, 0, 0};
+const int32_t available_thumbnail_sizes[] = {0, 0,
+                                             176, 144,
+                                             320, 240,
+                                             432, 288,
+                                             480, 288,
+                                             512, 288,
+                                             512, 384};
 
 camera3_device_ops_t QCamera3HardwareInterface::mCameraOps = {
     .initialize =                         QCamera3HardwareInterface::initialize,
