@@ -122,6 +122,7 @@ BOARD_SEPOLICY_UNION += \
         netmgrd.te \
         ppd.te \
         qmux.te \
+        rild.te \
         rmt.te \
         sensors.te \
         surfaceflinger.te \
