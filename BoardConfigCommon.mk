@@ -116,6 +116,7 @@ BOARD_SEPOLICY_UNION += \
         domain.te \
         file.te \
         file_contexts \
+        hostapd.te \
         irsc_util.te \
         kickstart.te \
         mediaserver.te \
