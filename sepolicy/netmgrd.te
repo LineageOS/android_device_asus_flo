@@ -20,10 +20,8 @@ allow netmgrd self:rawip_socket create_socket_perms;
 # Talk to qmuxd (qmux_radio)
 qmux_socket(netmgrd)
 
-# Tries to access /data/data_test/ with toolbox. The data_test
-# directory doesn't exist so deny access.
-dontaudit netmgrd shell_exec:file rx_file_perms;
-dontaudit netmgrd system_file:file execute_no_trans;
+# Runs /system/bin/ip addr flush dev <device> commands.
+allow netmgrd system_file:file execute_no_trans;
 
 # set net.rmnet* properties.
 unix_socket_connect(netmgrd, property, init)
