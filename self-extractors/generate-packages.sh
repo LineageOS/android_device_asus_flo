@@ -33,9 +33,9 @@
 BRANCH=klp-dev
 if test $BRANCH = klp-dev
 then
-  ZIP=razor-ota-748593
-  BUILD=jss15j
-fi # jb-mr2-dev
+  ZIP=razor-ota-937116
+  BUILD=kot49h
+fi # klp-dev
 ROOTDEVICE=flo
 DEVICE=flo
 MANUFACTURER=asus
