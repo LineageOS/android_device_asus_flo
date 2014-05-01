@@ -156,7 +156,6 @@ public:
 private:
     camera3_stream_t *mCamera3Stream;
     uint32_t mNumBufs;
-    Vector<buffer_handle_t *> mCamera3Buffers;
 
     QCamera3GrallocMemory mMemory;
 
@@ -267,7 +266,6 @@ public:
 private:
     camera3_stream_t *mCamera3Stream;
     uint32_t mNumBufs;
-    Vector<buffer_handle_t *> mCamera3Buffers;
     jpeg_settings_t* mJpegSettings;
     int32_t mCurrentBufIndex;
     bool m_bWNROn;
