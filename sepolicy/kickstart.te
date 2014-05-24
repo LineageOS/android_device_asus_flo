@@ -38,7 +38,7 @@ allow kickstart shell_exec:file rx_file_perms;
 allow kickstart system_file:file execute_no_trans;
 
 # Wake lock access
-allow kickstart sysfs_wake_lock:file { open append };
+wakelock_use(kickstart)
 
 # Set property key gsm.radio.kickstart
 allow kickstart radio_prop:property_service set;
