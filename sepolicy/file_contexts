@@ -35,9 +35,6 @@
 # CPU governor controls
 /dev/socket/mpdecision(/.*)?           u:object_r:mpdecision_socket:s0
 
-# HDMI output socket (mm-pp-daemon)
-/dev/socket/pps                        u:object_r:ppd_socket:s0
-
 ## Radio related
 # modem driver
 /dev/mdm                               u:object_r:radio_device:s0
@@ -121,7 +118,6 @@
 /system/bin/mm-qcamera-daemon      u:object_r:camera_exec:s0
 /system/bin/qseecomd               u:object_r:tee_exec:s0
 /system/bin/conn_init              u:object_r:conn_init_exec:s0
-/system/bin/mm-pp-daemon           u:object_r:ppd_exec:s0
 /system/bin/irsc_util              u:object_r:irsc_util_exec:s0
 
 # Persist firmware filesystem
