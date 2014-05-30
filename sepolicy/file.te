@@ -2,7 +2,6 @@
 type qmuxd_socket, file_type;
 type sensors_socket, file_type;
 type camera_socket, file_type;
-type ppd_socket, file_type;
 
 type sensors_data_file, file_type, data_file_type;
 
