@@ -1,2 +1,1 @@
 allow surfaceflinger sysfs_surfaceflinger:file rw_file_perms;
-unix_socket_connect(surfaceflinger, ppd, ppd)
