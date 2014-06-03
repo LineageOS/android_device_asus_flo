@@ -13,3 +13,7 @@ unix_socket_connect(system_server, mpdecision, mpdecision)
 unix_socket_send(system_server, mpdecision, mpdecision)
 allow system_server mpdecision:unix_stream_socket sendto;
 allow system_server mpdecision_socket:dir search;
+
+# Read /data/misc/sensors or /data/system/sensors.
+allow system_server sensors_data_file:dir r_dir_perms;
+allow system_server sensors_data_file:file r_file_perms;
