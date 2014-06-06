@@ -42,6 +42,11 @@
 /system/bin/usbhub
 /system/bin/usbhub_init
 /system/etc/DxHDCP.cfg
+/system/etc/firmware/tzapps.b00
+/system/etc/firmware/tzapps.b01
+/system/etc/firmware/tzapps.b02
+/system/etc/firmware/tzapps.b03
+/system/etc/firmware/tzapps.mdt
 /system/etc/firmware/vidc.b00
 /system/etc/firmware/vidc.b01
 /system/etc/firmware/vidc.b02
@@ -84,6 +89,7 @@
 /system/lib/libdss.so
 /system/lib/libdsucsd.so
 /system/lib/libdsutils.so
+/system/lib/libDxHdcp.so
 /system/lib/libgps.utils.so
 /system/lib/libgsl.so
 /system/lib/libI420colorconvert.so
