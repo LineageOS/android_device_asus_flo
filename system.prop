@@ -3,3 +3,6 @@
 #LTE, GSM, WCDMA(9)
 #
 ro.telephony.default_network=9
+
+# CWM Recovery
+ro.cwm.forbid_format=/boot,/sbl1,/sbl2,/sbl3,/tz,/rpm,/aboot,/sbl2b,/sbl3b,/tzb,/rpmb,/abootb
