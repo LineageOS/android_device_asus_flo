@@ -30,3 +30,5 @@ allow netmgrd system_file:file rx_file_perms;
 # set net.rmnet* properties.
 unix_socket_connect(netmgrd, property, init)
 allow netmgrd radio_prop:property_service set;
+auditallow netmgrd radio_prop:property_service set;
+allow netmgrd net_radio_prop:property_service set;
