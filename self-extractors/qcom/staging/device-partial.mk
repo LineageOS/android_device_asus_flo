@@ -85,7 +85,7 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/libgsl.so:system/lib/libgsl.so:qcom \
     vendor/qcom/flo/proprietary/libI420colorconvert.so:system/lib/libI420colorconvert.so:qcom \
     vendor/qcom/flo/proprietary/libidl.so:system/lib/libidl.so:qcom \
-    vendor/qcom/flo/proprietary/libllvm-a3xx.so:system/lib/libllvm-a3xx.so:qcom \
+    vendor/qcom/flo/proprietary/libllvm-qcom.so:system/lib/libllvm-qcom.so:qcom \
     vendor/qcom/flo/proprietary/libloc_core.so:system/lib/libloc_core.so:qcom \
     vendor/qcom/flo/proprietary/libloc_eng.so:system/lib/libloc_eng.so:qcom \
     vendor/qcom/flo/proprietary/libmm-abl.so:system/lib/libmm-abl.so:qcom \
