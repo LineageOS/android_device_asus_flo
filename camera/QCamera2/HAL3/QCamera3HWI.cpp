@@ -1097,6 +1097,7 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
             result.frame_number = i->frame_number;
             result.num_output_buffers = 0;
             result.output_buffers = NULL;
+            result.input_buffer = NULL;
             for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
                     j != i->buffers.end(); j++) {
                 if (j->buffer) {
@@ -1181,6 +1182,7 @@ done_metadata:
             result.frame_number = frame_number;
             result.num_output_buffers = 1;
             result.output_buffers = buffer;
+            result.input_buffer = NULL;
             ALOGV("%s: result frame_number = %d, buffer = %p",
                     __func__, frame_number, buffer);
             mPendingBuffersMap.editValueFor(buffer->stream)--;
