@@ -183,6 +183,7 @@ system/lib/libc2d2_a3xx.so:qcom
 system/lib/libdebugger_jni.so:asus
 system/lib/libgsl.so:qcom
 system/lib/libllvm-qcom.so:qcom
+system/lib/libbccQTI.so:qcom
 system/lib/egl/libq3dtools_adreno200.so:qcom
 system/lib/libsc-a3xx.so:qcom
 system/lib/libgeofence.so:qcom
