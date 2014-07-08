@@ -135,6 +135,7 @@ do
             system/lib/libI420colorconvert.so \
             system/lib/libidl.so \
             system/lib/libllvm-qcom.so \
+            system/lib/libbccQTI.so \
             system/lib/libloc_core.so \
             system/lib/libloc_eng.so \
             system/lib/libmm-abl.so \
