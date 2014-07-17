@@ -97,7 +97,6 @@ do
             system/etc/firmware/vidc.b03 \
             system/etc/firmware/vidcfw.elf \
             system/etc/firmware/vidc.mdt \
-            system/etc/gps.conf \
             system/lib/egl/eglsubAndroid.so \
             system/lib/egl/libEGL_adreno.so \
             system/lib/egl/libGLESv1_CM_adreno.so \
