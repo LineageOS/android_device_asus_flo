@@ -119,6 +119,8 @@ BOARD_SEPOLICY_UNION += \
         mediaserver.te \
         mpdecision.te \
         netmgrd.te \
+        property.te \
+        property_contexts \
         qmux.te \
         rild.te \
         rmt.te \
