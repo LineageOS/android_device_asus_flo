@@ -24,9 +24,5 @@ TARGET_RELEASETOOLS_EXTENSIONS := device/asus/flo
 
 TARGET_RECOVERY_FSTAB = device/asus/flo/fstab.flo
 
-MALLOC_IMPL := dlmalloc
-
-MALLOC_IMPL := dlmalloc
-
 -include vendor/asus/flo/BoardConfigVendor.mk
 include device/asus/flo/BoardConfigCommon.mk
