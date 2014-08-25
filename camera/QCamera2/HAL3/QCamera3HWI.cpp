@@ -597,6 +597,8 @@ int QCamera3HardwareInterface::configureStreams(
             // Do nothing for now
         }
     }
+
+    mPendingBuffersMap.clear();
     /*For the streams to be reconfigured we need to register the buffers
       since the framework wont*/
     for (List<stream_info_t *>::iterator it = mStreamInfo.begin();
@@ -617,12 +619,7 @@ int QCamera3HardwareInterface::configureStreams(
             }
         }
 
-        ssize_t index = mPendingBuffersMap.indexOfKey((*it)->stream);
-        if (index == NAME_NOT_FOUND) {
-            mPendingBuffersMap.add((*it)->stream, 0);
-        } else {
-            mPendingBuffersMap.editValueAt(index) = 0;
-        }
+        mPendingBuffersMap.add((*it)->stream, 0);
     }
 
     /* Initialize mPendingRequestInfo and mPendnigBuffersMap */
