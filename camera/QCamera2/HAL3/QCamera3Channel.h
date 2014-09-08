@@ -42,6 +42,7 @@ extern "C" {
 
 using namespace android;
 
+#define F_NUMBER_DECIMAL_PRECISION  100
 namespace qcamera {
 
 typedef void (*channel_cb_routine)(mm_camera_super_buf_t *metadata,
