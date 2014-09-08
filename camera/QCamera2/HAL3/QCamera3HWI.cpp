@@ -3251,6 +3251,23 @@ int QCamera3HardwareInterface::getJpegSettings
     mJpegSettings->max_jpeg_size = calcMaxJpegSize();
     mJpegSettings->is_jpeg_format = true;
     mJpegSettings->min_required_pp_mask = gCamCapability[mCameraId]->min_required_pp_mask;
+    mJpegSettings->f_number = gCamCapability[mCameraId]->apertures[0];
+
+    if (jpeg_settings.exists(ANDROID_CONTROL_AWB_MODE)) {
+        mJpegSettings->wb =
+            jpeg_settings.find(ANDROID_CONTROL_AWB_MODE).data.u8[0];
+    } else {
+        mJpegSettings->wb = 0;
+    }
+
+    if (jpeg_settings.exists(ANDROID_FLASH_MODE)) {
+        mJpegSettings->flash =
+            jpeg_settings.find(ANDROID_FLASH_MODE).data.u8[0];
+    } else {
+        mJpegSettings->flash = 0;
+    }
+
+
     return 0;
 }
 
