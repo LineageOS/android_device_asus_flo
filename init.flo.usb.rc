@@ -13,7 +13,7 @@
 # limitations under the License.
 
 on init
-    write /sys/class/android_usb/android0/f_rndis/manufacturer LGE
+    write /sys/class/android_usb/android0/f_rndis/manufacturer ASUS
     write /sys/class/android_usb/android0/f_rndis/vendorID 18D1
     write /sys/class/android_usb/android0/f_rndis/wceis 1
 
