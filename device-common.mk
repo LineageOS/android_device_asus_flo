@@ -273,8 +273,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.text_small_cache_width=1024 \
 	ro.hwui.text_small_cache_height=1024 \
 	ro.hwui.text_large_cache_width=2048 \
-	ro.hwui.text_large_cache_height=1024 \
-	debug.hwui.render_dirty_regions=false
+	ro.hwui.text_large_cache_height=1024
 
 PRODUCT_PACKAGES += \
     power.flo
