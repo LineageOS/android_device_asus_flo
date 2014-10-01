@@ -233,6 +233,9 @@ private:
     } PendingBuffersMap;
 
     List<MetadataBufferInfo> mStoredMetadataList;
+
+    typedef KeyedVector<uint32_t, Vector<PendingBufferInfo> > FlushMap;
+
     List<PendingRequestInfo> mPendingRequestsList;
     PendingBuffersMap mPendingBuffersMap;
     pthread_cond_t mRequestCond;
