@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2011 The Android Open-Source Project
+# Copyright (c) 2014 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +35,7 @@ endif
 # currently contain all of the bitmaps at xhdpi density so
 # we do this little trick to fall back to the hdpi version
 # if the xhdpi doesn't exist.
-PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
+PRODUCT_AAPT_CONFIG := normal large hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PACKAGES := \
