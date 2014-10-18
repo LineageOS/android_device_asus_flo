@@ -24,13 +24,16 @@
 /dev/diag                          u:object_r:diag_device:s0
 
 # efs block labeling
-/dev/block/mmcblk0p[567]           u:object_r:efs_block_device:s0
-/dev/block/mmcblk0p28              u:object_r:efs_block_device:s0
+/dev/block/platform/msm_sdcc\.1/by-name/m9kefs[123c] u:object_r:efs_block_device:s0
 # Root block labeling
 /dev/block/mmcblk0                 u:object_r:root_block_device:s0
 # modemst1, modemst2, fsg, ssd labeling
-/dev/block/mmcblk0p[238]           u:object_r:modem_block_device:s0
-/dev/block/mmcblk0p27              u:object_r:modem_block_device:s0
+/dev/block/platform/msm_sdcc\.1/by-name/modemst[12] u:object_r:modem_block_device:s0
+/dev/block/platform/msm_sdcc\.1/by-name/fsg u:object_r:modem_block_device:s0
+/dev/block/platform/msm_sdcc\.1/by-name/ssd u:object_r:modem_block_device:s0
+# system and recovery labeling
+/dev/block/platform/msm_sdcc\.1/by-name/system u:object_r:system_block_device:s0
+/dev/block/platform/msm_sdcc\.1/by-name/recovery u:object_r:recovery_block_device:s0
 # cache and userdata labeling
 /dev/block/platform/msm_sdcc\.1/by-name/cache u:object_r:cache_block_device:s0
 /dev/block/platform/msm_sdcc\.1/by-name/userdata u:object_r:userdata_block_device:s0
