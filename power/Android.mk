@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011 The Android Open-Source Project
+# Copyright 2014 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,15 +14,12 @@
 # limitations under the License.
 #
 
-TARGET_BOOTLOADER_BOARD_NAME := flo
-TARGET_BOOTLOADER_NAME := flo
-TARGET_BOARD_INFO_FILE := device/asus/flo/board-info.txt
+LOCAL_PATH:= $(call my-dir)
 
-BOARD_HAL_STATIC_LIBRARIES := libdumpstate.flo
-
-TARGET_RELEASETOOLS_EXTENSIONS := device/asus/flo
-
-TARGET_RECOVERY_FSTAB = device/asus/flo/fstab.flo
-
--include vendor/asus/flo/BoardConfigVendor.mk
-include device/asus/flo/BoardConfigCommon.mk
+include $(CLEAR_VARS)
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_SRC_FILES := power_flo.c
+LOCAL_SHARED_LIBRARIES := liblog libcutils
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE := power.flo
+include $(BUILD_SHARED_LIBRARY)

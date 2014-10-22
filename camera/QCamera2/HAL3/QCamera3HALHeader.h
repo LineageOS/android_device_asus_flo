@@ -58,6 +58,9 @@ namespace qcamera {
         char gps_processing_method[35];
         bool is_jpeg_format;
         uint32_t min_required_pp_mask;
+        float f_number;
+        int wb;
+        uint32_t flash;
     } jpeg_settings_t;
 
     typedef struct {
