@@ -120,6 +120,15 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
 	frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml
 
+# Modem debugger
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+PRODUCT_COPY_FILES += \
+    device/asus/flo/init.flo.diag.rc.userdebug:root/init.flo.diag.rc
+else
+PRODUCT_COPY_FILES += \
+    device/asus/flo/init.flo.diag.rc.user:root/init.flo.diag.rc
+endif
+
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=196608
 
