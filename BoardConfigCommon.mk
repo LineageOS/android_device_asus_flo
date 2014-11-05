@@ -85,10 +85,17 @@ PRESENT_TIME_OFFSET_FROM_VSYNC_NS := 3200000
 TARGET_USES_ION := true
 TARGET_USES_OVERLAY := true
 TARGET_USES_SF_BYPASS := true
-TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_C2D_COMPOSITION := false
 
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-TARGET_RECOVERY_UI_LIB := librecovery_ui_flo
+# Enable dex-preoptimization to speed up first boot sequence
+ifeq ($(HOST_OS),linux)
+  ifeq ($(TARGET_BUILD_VARIANT),user)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+    endif
+  endif
+endif
+WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216 # 16M
@@ -133,5 +140,42 @@ BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 # Webkit
 ENABLE_WEBGL := true
 TARGET_FORCE_CPU_UPLOAD := true
+
+BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
+
+# The list below is order dependent
+BOARD_SEPOLICY_UNION += \
+        bluetooth_loader.te \
+        bridge.te \
+        camera.te \
+        conn_init.te \
+        device.te \
+        domain.te \
+        file.te \
+        file_contexts \
+        hostapd.te \
+        irsc_util.te \
+        kickstart.te \
+        mediaserver.te \
+        mpdecision.te \
+        netmgrd.te \
+        property.te \
+        property_contexts \
+        qmux.te \
+        rild.te \
+        rmt.te \
+        sensors.te \
+        surfaceflinger.te \
+        system_server.te \
+        tee.te \
+        te_macros \
+        thermald.te \
+        ueventd.te
+
+# Enable Minikin text layout engine (will be the default soon)
+USE_MINIKIN := true
+
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 -include vendor/asus/flo/BoardConfigVendor.mk

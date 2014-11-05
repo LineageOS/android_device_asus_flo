@@ -39,11 +39,17 @@ PRODUCT_AAPT_CONFIG := normal large hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PACKAGES := \
+    libwpa_client \
+    hostapd \
+    dhcpcd.conf \
+    wpa_supplicant \
+    wpa_supplicant.conf
+
+PRODUCT_PACKAGES += \
 	lights.msm8960
 
 PRODUCT_PACKAGES += \
-    charger_res_images \
-    charger
+    charger_res_images
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
@@ -60,8 +66,6 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/init.flo.wifi.sh:system/etc/init.flo.wifi.sh
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 \
-	device/asus/flo/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x \
 	device/asus/flo/audio_policy.conf:system/etc/audio_policy.conf
 
 PRODUCT_COPY_FILES += \
@@ -75,6 +79,8 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/init.flo.usb.rc:root/init.flo.usb.rc \
 	device/asus/flo/ueventd.flo.rc:root/ueventd.flo.rc \
 	device/asus/flo/media_profiles.xml:system/etc/media_profiles.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
 	device/asus/flo/media_codecs.xml:system/etc/media_codecs.xml
 
 PRODUCT_COPY_FILES += \
@@ -102,7 +108,7 @@ PRODUCT_COPY_FILES += \
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-	frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+	frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
 	frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
 	frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
 	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
@@ -114,7 +120,8 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
 	frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
-	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml
+	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
+	frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=196608
@@ -126,8 +133,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.audio.handset.mic=dmic \
 	persist.audio.fluence.mode=endfire \
-	persist.audio.lowlatency.rec=false \
-	af.resampler.quality=4
+	persist.audio.lowlatency.rec=false
 
 # Camera Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -167,7 +173,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
 	alsa.msm8960 \
-	audio_policy.msm8960 \
 	audio.primary.msm8960 \
 	audio.a2dp.default \
 	audio.usb.default \
@@ -274,15 +279,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.text_large_cache_width=2048 \
 	ro.hwui.text_large_cache_height=1024
 
-# Hardware codecs
-PRODUCT_PROPERTY_OVERRIDES += \
-    qcom.hw.aac.encoder=true
-
 PRODUCT_PACKAGES += \
-    libOmxAacEnc \
-    libOmxAmrEnc \
-    libOmxEvrcEnc \
-    libOmxQcelp13Enc
+    power.flo
 
 # NFC packages
 PRODUCT_PACKAGES += \

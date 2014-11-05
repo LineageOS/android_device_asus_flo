@@ -20,11 +20,9 @@ TARGET_BOARD_INFO_FILE := device/asus/flo/board-info.txt
 
 BOARD_HAL_STATIC_LIBRARIES := libdumpstate.flo
 
-# TARGET_RECOVERY_UI_LIB := librecovery_ui_flo
-
 TARGET_RELEASETOOLS_EXTENSIONS := device/asus/flo
 
-TARGET_RECOVERY_FSTAB = device/asus/flo/recovery.fstab
+TARGET_RECOVERY_FSTAB = device/asus/flo/fstab.flo
 
 #-include vendor/asus/flo/BoardConfigVendor.mk
 include device/asus/flo/BoardConfigCommon.mk

@@ -50,22 +50,22 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/vidcfw.elf:system/etc/firmware/vidcfw.elf:qcom \
     vendor/qcom/flo/proprietary/vidc.mdt:system/etc/firmware/vidc.mdt:qcom \
     vendor/qcom/flo/proprietary/gps.conf:system/etc/gps.conf:qcom \
-    vendor/qcom/flo/proprietary/eglsubAndroid.so:system/lib/egl/eglsubAndroid.so:qcom \
-    vendor/qcom/flo/proprietary/libEGL_adreno.so:system/lib/egl/libEGL_adreno.so:qcom \
-    vendor/qcom/flo/proprietary/libGLESv1_CM_adreno.so:system/lib/egl/libGLESv1_CM_adreno.so:qcom \
-    vendor/qcom/flo/proprietary/libGLESv2_adreno.so:system/lib/egl/libGLESv2_adreno.so:qcom \
-    vendor/qcom/flo/proprietary/libplayback_adreno.so:system/lib/egl/libplayback_adreno.so:qcom \
-    vendor/qcom/flo/proprietary/libq3dtools_adreno.so:system/lib/egl/libq3dtools_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/eglsubAndroid.so:system/vendor/lib/egl/eglsubAndroid.so:qcom \
+    vendor/qcom/flo/proprietary/libEGL_adreno.so:system/vendor/lib/egl/libEGL_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libGLESv1_CM_adreno.so:system/vendor/lib/egl/libGLESv1_CM_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libGLESv2_adreno.so:system/vendor/lib/egl/libGLESv2_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libplayback_adreno.so:system/vendor/lib/egl/libplayback_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libq3dtools_adreno.so:system/vendor/lib/egl/libq3dtools_adreno.so:qcom \
     vendor/qcom/flo/proprietary/flp.msm8960.so:system/lib/hw/flp.msm8960.so:qcom \
     vendor/qcom/flo/proprietary/gps.msm8960.so:system/lib/hw/gps.msm8960.so:qcom \
     vendor/qcom/flo/proprietary/sensors.msm8960.so:system/lib/hw/sensors.msm8960.so:qcom \
-    vendor/qcom/flo/proprietary/libadreno_utils.so:system/lib/libadreno_utils.so:qcom \
+    vendor/qcom/flo/proprietary/libadreno_utils.so:system/vendor/lib/libadreno_utils.so:qcom \
     vendor/qcom/flo/proprietary/libaudcal.so:system/lib/libaudcal.so:qcom \
     vendor/qcom/flo/proprietary/libaudioalsa.so:system/lib/libaudioalsa.so:qcom \
-    vendor/qcom/flo/proprietary/libC2D2.so:system/lib/libC2D2.so:qcom \
-    vendor/qcom/flo/proprietary/libc2d30-a3xx.so:system/lib/libc2d30-a3xx.so:qcom \
-    vendor/qcom/flo/proprietary/libc2d30.so:system/lib/libc2d30.so:qcom \
-    vendor/qcom/flo/proprietary/libCB.so:system/lib/libCB.so:qcom \
+    vendor/qcom/flo/proprietary/libC2D2.so:system/vendor/lib/libC2D2.so:qcom \
+    vendor/qcom/flo/proprietary/libc2d30-a3xx.so:system/vendor/lib/libc2d30-a3xx.so:qcom \
+    vendor/qcom/flo/proprietary/libc2d30.so:system/vendor/lib/libc2d30.so:qcom \
+    vendor/qcom/flo/proprietary/libCB.so:system/vendor/lib/libCB.so:qcom \
     vendor/qcom/flo/proprietary/libchromatix_ov5693_common.so:system/lib/libchromatix_ov5693_common.so:qcom \
     vendor/qcom/flo/proprietary/libchromatix_ov5693_default_video.so:system/lib/libchromatix_ov5693_default_video.so:qcom \
     vendor/qcom/flo/proprietary/libchromatix_ov5693_preview.so:system/lib/libchromatix_ov5693_preview.so:qcom \
@@ -82,10 +82,11 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/libdsucsd.so:system/lib/libdsucsd.so:qcom \
     vendor/qcom/flo/proprietary/libdsutils.so:system/lib/libdsutils.so:qcom \
     vendor/qcom/flo/proprietary/libgps.utils.so:system/lib/libgps.utils.so:qcom \
-    vendor/qcom/flo/proprietary/libgsl.so:system/lib/libgsl.so:qcom \
+    vendor/qcom/flo/proprietary/libgsl.so:system/vendor/lib/libgsl.so:qcom \
     vendor/qcom/flo/proprietary/libI420colorconvert.so:system/lib/libI420colorconvert.so:qcom \
     vendor/qcom/flo/proprietary/libidl.so:system/lib/libidl.so:qcom \
-    vendor/qcom/flo/proprietary/libllvm-a3xx.so:system/lib/libllvm-a3xx.so:qcom \
+    vendor/qcom/flo/proprietary/libllvm-qcom.so:system/vendor/lib/libllvm-qcom.so:qcom \
+    vendor/qcom/flo/proprietary/libbccQTI.so:system/vendor/lib/libbccQTI.so:qcom \
     vendor/qcom/flo/proprietary/libloc_core.so:system/lib/libloc_core.so:qcom \
     vendor/qcom/flo/proprietary/libloc_eng.so:system/lib/libloc_eng.so:qcom \
     vendor/qcom/flo/proprietary/libmm-abl.so:system/lib/libmm-abl.so:qcom \
@@ -108,10 +109,10 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/flo/proprietary/libqmiservices.so:system/lib/libqmiservices.so:qcom \
     vendor/qcom/flo/proprietary/libqmi.so:system/lib/libqmi.so:qcom \
     vendor/qcom/flo/proprietary/libQSEEComAPI.so:system/lib/libQSEEComAPI.so:qcom \
-    vendor/qcom/flo/proprietary/librs_adreno_sha1.so:system/lib/librs_adreno_sha1.so:qcom \
-    vendor/qcom/flo/proprietary/librs_adreno.so:system/lib/librs_adreno.so:qcom \
-    vendor/qcom/flo/proprietary/libRSDriver_adreno.so:system/lib/libRSDriver_adreno.so:qcom \
-    vendor/qcom/flo/proprietary/libsc-a3xx.so:system/lib/libsc-a3xx.so:qcom \
+    vendor/qcom/flo/proprietary/librs_adreno_sha1.so:system/vendor/lib/librs_adreno_sha1.so:qcom \
+    vendor/qcom/flo/proprietary/librs_adreno.so:system/vendor/lib/librs_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libRSDriver_adreno.so:system/vendor/lib/libRSDriver_adreno.so:qcom \
+    vendor/qcom/flo/proprietary/libsc-a3xx.so:system/vendor/lib/libsc-a3xx.so:qcom \
     vendor/qcom/flo/proprietary/libsensor1.so:system/lib/libsensor1.so:qcom \
     vendor/qcom/flo/proprietary/libsensor_reg.so:system/lib/libsensor_reg.so:qcom \
     vendor/qcom/flo/proprietary/libsensor_user_cal.so:system/lib/libsensor_user_cal.so:qcom \

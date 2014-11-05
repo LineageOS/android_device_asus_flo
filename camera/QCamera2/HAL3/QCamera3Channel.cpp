@@ -1651,21 +1651,30 @@ QCamera3Exif *QCamera3PicChannel::getExifData()
     }
 
     uint16_t isoSpeed = (uint16_t)mJpegSettings->sensor_sensitivity;
+    if(isoSpeed == 0) {
+        isoSpeed = (uint16_t)(mJpegSettings->lens_focal_length + 0.5)*100;
+    }
+
     exif->addEntry(EXIFTAGID_ISO_SPEED_RATING,
                    EXIF_SHORT,
                    1,
                    (void *)&(isoSpeed));
 
-    rat_t sensorExpTime ;
+    rat_t sensorExpTime, temp;
     rc = getExifExpTimeInfo(&sensorExpTime, (int64_t)mJpegSettings->sensor_exposure_time);
-    if (rc == NO_ERROR){
-        exif->addEntry(EXIFTAGID_EXPOSURE_TIME,
-                       EXIF_RATIONAL,
-                       1,
-                       (void *)&(sensorExpTime));
-    } else {
-        ALOGE("now addEntry for EXIFTAGID_EXPOSURE_TIME is %d", sensorExpTime);
+    if(sensorExpTime.denom <= 0) {// avoid zero-divide problem
+        sensorExpTime.denom  = 0.01668; // expoure time will be 1/60 s
+        uint16_t temp2 = (uint16_t)(sensorExpTime.denom <= 0 * 100000);
+        temp2 = (uint16_t)(100000 / temp2);
+        temp.num = 1;
+        temp.denom = temp2;
+        memcpy(&sensorExpTime, &temp, sizeof(sensorExpTime));
     }
+    exif->addEntry(EXIFTAGID_EXPOSURE_TIME,
+                    EXIF_LONG,
+                    1,
+                    (void *) &(sensorExpTime.denom));
+
     if (strlen(mJpegSettings->gps_processing_method) > 0) {
         char gpsProcessingMethod[EXIF_ASCII_PREFIX_SIZE + GPS_PROCESSING_METHOD_SIZE];
         count = 0;
@@ -1785,6 +1794,55 @@ QCamera3Exif *QCamera3PicChannel::getExifData()
     } else {
         ALOGE("%s: getExifModel failed", __func__);
     }
+
+    float f_number = 0.0f;
+    f_number = mJpegSettings->f_number;
+    rat_t aperture;
+    getRational(&aperture, (uint32_t)f_number*F_NUMBER_DECIMAL_PRECISION, (uint32_t)F_NUMBER_DECIMAL_PRECISION);
+    exif->addEntry(EXIFTAGID_APERTURE,
+                       EXIF_RATIONAL,
+                       1,
+                       (void *)&(aperture));
+
+    exif->addEntry(EXIFTAGID_F_NUMBER,
+                       EXIF_RATIONAL,
+                       1,
+                       (void *)&(aperture));
+
+    uint16_t flash = mJpegSettings->flash;
+    exif->addEntry(EXIFTAGID_FLASH,
+                   EXIF_SHORT, 1,
+                   (void *)&(flash));
+
+    int wb;
+    short val_short;
+    wb = mJpegSettings->wb;
+    if(wb == CAM_WB_MODE_AUTO)
+        val_short = 0;
+    else
+        val_short = 1;
+
+    exif->addEntry(EXIFTAGID_WHITE_BALANCE,
+                       EXIF_SHORT,
+                       1,
+                       (void *)&(wb));
+
+    struct timeval tv;
+    char subsecTime[7];
+    gettimeofday(&tv, NULL);
+    snprintf(subsecTime, 7, "%06ld", tv.tv_usec);
+
+    exif->addEntry(EXIFTAGID_SUBSEC_TIME,
+                   EXIF_ASCII, 7,
+                   (void *)subsecTime);
+
+    exif->addEntry(EXIFTAGID_SUBSEC_TIME_ORIGINAL,
+                   EXIF_ASCII, 7,
+                   (void *)subsecTime);
+
+    exif->addEntry(EXIFTAGID_SUBSEC_TIME_DIGITIZED,
+                   EXIF_ASCII, 7,
+                   (void *)subsecTime);
 
     return exif;
 }

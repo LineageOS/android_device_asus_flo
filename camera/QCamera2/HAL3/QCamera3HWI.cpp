@@ -597,6 +597,8 @@ int QCamera3HardwareInterface::configureStreams(
             // Do nothing for now
         }
     }
+
+    mPendingBuffersMap.clear();
     /*For the streams to be reconfigured we need to register the buffers
       since the framework wont*/
     for (List<stream_info_t *>::iterator it = mStreamInfo.begin();
@@ -617,12 +619,7 @@ int QCamera3HardwareInterface::configureStreams(
             }
         }
 
-        ssize_t index = mPendingBuffersMap.indexOfKey((*it)->stream);
-        if (index == NAME_NOT_FOUND) {
-            mPendingBuffersMap.add((*it)->stream, 0);
-        } else {
-            mPendingBuffersMap.editValueAt(index) = 0;
-        }
+        mPendingBuffersMap.add((*it)->stream, 0);
     }
 
     /* Initialize mPendingRequestInfo and mPendnigBuffersMap */
@@ -1097,6 +1094,7 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
             result.frame_number = i->frame_number;
             result.num_output_buffers = 0;
             result.output_buffers = NULL;
+            result.input_buffer = NULL;
             for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
                     j != i->buffers.end(); j++) {
                 if (j->buffer) {
@@ -1181,6 +1179,7 @@ done_metadata:
             result.frame_number = frame_number;
             result.num_output_buffers = 1;
             result.output_buffers = buffer;
+            result.input_buffer = NULL;
             ALOGV("%s: result frame_number = %d, buffer = %p",
                     __func__, frame_number, buffer);
             mPendingBuffersMap.editValueFor(buffer->stream)--;
@@ -1811,16 +1810,6 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
                       lens_shading_map_size,
                       sizeof(lens_shading_map_size)/sizeof(int32_t));
 
-    int32_t geo_correction_map_size[] = {gCamCapability[cameraId]->geo_correction_map_size.width,
-                                                      gCamCapability[cameraId]->geo_correction_map_size.height};
-    staticInfo.update(ANDROID_LENS_INFO_GEOMETRIC_CORRECTION_MAP_SIZE,
-            geo_correction_map_size,
-            sizeof(geo_correction_map_size)/sizeof(int32_t));
-
-    staticInfo.update(ANDROID_LENS_INFO_GEOMETRIC_CORRECTION_MAP,
-                       gCamCapability[cameraId]->geo_correction_map,
-                       sizeof(gCamCapability[cameraId]->geo_correction_map)/sizeof(float));
-
     staticInfo.update(ANDROID_SENSOR_INFO_PHYSICAL_SIZE,
             gCamCapability[cameraId]->sensor_physical_size, 2);
 
@@ -1931,9 +1920,9 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
     staticInfo.update(ANDROID_SCALER_AVAILABLE_MAX_DIGITAL_ZOOM,
             &maxZoom, 1);
 
-    int32_t max3aRegions = 1;
+    int32_t max3aRegions[] = {/*AE*/ 1,/*AWB*/ 0,/*AF*/ 1};
     staticInfo.update(ANDROID_CONTROL_MAX_REGIONS,
-            &max3aRegions, 1);
+            max3aRegions, 3);
 
     uint8_t availableFaceDetectModes[] = {
             ANDROID_STATISTICS_FACE_DETECT_MODE_OFF };
@@ -2898,21 +2887,6 @@ int QCamera3HardwareInterface::translateMetadataToParameters
                 CAM_INTF_META_FLASH_FIRING_TIME, sizeof(flashFiringTime), &flashFiringTime);
     }
 
-    if (frame_settings.exists(ANDROID_GEOMETRIC_MODE)) {
-        uint8_t geometricMode =
-            frame_settings.find(ANDROID_GEOMETRIC_MODE).data.u8[0];
-        rc = AddSetParmEntryToBatch(mParameters, CAM_INTF_META_GEOMETRIC_MODE,
-                sizeof(geometricMode), &geometricMode);
-    }
-
-    if (frame_settings.exists(ANDROID_GEOMETRIC_STRENGTH)) {
-        uint8_t geometricStrength =
-            frame_settings.find(ANDROID_GEOMETRIC_STRENGTH).data.u8[0];
-        rc = AddSetParmEntryToBatch(mParameters,
-                CAM_INTF_META_GEOMETRIC_STRENGTH,
-                sizeof(geometricStrength), &geometricStrength);
-    }
-
     if (frame_settings.exists(ANDROID_HOT_PIXEL_MODE)) {
         uint8_t hotPixelMode =
             frame_settings.find(ANDROID_HOT_PIXEL_MODE).data.u8[0];
@@ -3277,6 +3251,23 @@ int QCamera3HardwareInterface::getJpegSettings
     mJpegSettings->max_jpeg_size = calcMaxJpegSize();
     mJpegSettings->is_jpeg_format = true;
     mJpegSettings->min_required_pp_mask = gCamCapability[mCameraId]->min_required_pp_mask;
+    mJpegSettings->f_number = gCamCapability[mCameraId]->apertures[0];
+
+    if (jpeg_settings.exists(ANDROID_CONTROL_AWB_MODE)) {
+        mJpegSettings->wb =
+            jpeg_settings.find(ANDROID_CONTROL_AWB_MODE).data.u8[0];
+    } else {
+        mJpegSettings->wb = 0;
+    }
+
+    if (jpeg_settings.exists(ANDROID_FLASH_MODE)) {
+        mJpegSettings->flash =
+            jpeg_settings.find(ANDROID_FLASH_MODE).data.u8[0];
+    } else {
+        mJpegSettings->flash = 0;
+    }
+
+
     return 0;
 }
 

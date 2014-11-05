@@ -314,7 +314,7 @@ int QCameraMemory::allocOneBuffer(QCameraMemInfo &memInfo, int heap_id, int size
     if (m_bCached) {
         alloc.flags = ION_FLAG_CACHED;
     }
-    alloc.heap_mask = heap_id;
+    alloc.heap_id_mask = heap_id;
     rc = ioctl(main_ion_fd, ION_IOC_ALLOC, &alloc);
     if (rc < 0) {
         ALOGE("ION allocation failed: %s\n", strerror(errno));
@@ -439,8 +439,8 @@ void *QCameraHeapMemory::getPtr(int index) const
  *==========================================================================*/
 int QCameraHeapMemory::allocate(int count, int size)
 {
-    int heap_mask = 0x1 << ION_IOMMU_HEAP_ID;
-    int rc = alloc(count, size, heap_mask);
+    int heap_id_mask = 0x1 << ION_IOMMU_HEAP_ID;
+    int rc = alloc(count, size, heap_id_mask);
     if (rc < 0)
         return rc;
 
@@ -615,8 +615,8 @@ QCameraStreamMemory::~QCameraStreamMemory()
  *==========================================================================*/
 int QCameraStreamMemory::allocate(int count, int size)
 {
-    int heap_mask = 0x1 << ION_IOMMU_HEAP_ID;
-    int rc = alloc(count, size, heap_mask);
+    int heap_id_mask = 0x1 << ION_IOMMU_HEAP_ID;
+    int rc = alloc(count, size, heap_id_mask);
     if (rc < 0)
         return rc;
 
