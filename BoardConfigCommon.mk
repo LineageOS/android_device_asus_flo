@@ -179,5 +179,3 @@ USE_MINIKIN := true
 EXTENDED_FONT_FOOTPRINT := true
 
 -include vendor/asus/flo/BoardConfigVendor.mk
-
-TARGET_USES_LOGD := false
