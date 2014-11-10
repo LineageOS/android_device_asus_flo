@@ -28,19 +28,14 @@ LOCAL_C_INCLUDES := \
         $(LOCAL_PATH)/../stack/common \
         frameworks/native/include/media/hardware \
         frameworks/native/include/media/openmax \
-        hardware/qcom/media/libstagefrighthw \
+        $(call project-path-for,qcom-media)/libstagefrighthw \
         system/media/camera/include \
         $(LOCAL_PATH)/../../mm-image-codec/qexif \
         $(LOCAL_PATH)/../../mm-image-codec/qomx_core \
         $(LOCAL_PATH)/../util
 
-ifneq ($(filter msm8974 msm8x74,$(TARGET_BOARD_PLATFORM)),)
 LOCAL_C_INCLUDES += \
-        hardware/qcom/display/msm8974/libgralloc
-else
-LOCAL_C_INCLUDES += \
-        hardware/qcom/display/msm8960/libgralloc
-endif
+        $(call project-path-for,qcom-display)/libgralloc
 
 LOCAL_SHARED_LIBRARIES := libcamera_client liblog libhardware libutils libcutils libdl
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface
