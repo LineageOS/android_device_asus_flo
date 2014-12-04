@@ -17,6 +17,9 @@ LOCAL_SRC_FILES := \
         QCameraParameters.cpp \
         QCameraThermalAdapter.cpp
 
+# Ignore benign clang warnings, avoid changes to third party code.
+LOCAL_CLANG_CFLAGS += -Wno-gnu-designator
+
 LOCAL_CFLAGS = -Wall -Werror -DDEFAULT_ZSL_MODE_ON -DDEFAULT_DENOISE_MODE_ON
 #Debug logs are enabled
 #LOCAL_CFLAGS += -DDISABLE_DEBUG_LOG
