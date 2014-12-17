@@ -121,7 +121,7 @@
 /system/lib/libsensor_reg.so
 /system/lib/libsensor_user_cal.so
 /system/lib/libstagefright_hdcp.so
-/system/lib/libWVphoneAPI.so
+/system/vendor/lib/libWVphoneAPI.so
 /system/lib/libxml.so
 /system/vendor/firmware/a300_pfp.fw
 /system/vendor/firmware/a300_pm4.fw
