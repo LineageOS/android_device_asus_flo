@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa08908_410d7936",
+        "filename": "init.flo.usb.rc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2015-01-11T15:15:39Z",
+      "side": 1,
+      "message": "you should have stop adbd here",
+      "revId": "7c24e3bdc2470aee06c08f53f535b0c06db6da52",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
