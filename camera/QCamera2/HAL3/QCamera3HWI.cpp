@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2013, The Linux Foundataion. All rights reserved.
+/* Copyright (c) 2012-2013, 2015, The Linux Foundataion. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -164,7 +164,8 @@ QCamera3HardwareInterface::QCamera3HardwareInterface(int cameraId)
       mParameters(NULL),
       mJpegSettings(NULL),
       mIsZslMode(false),
-      m_pPowerModule(NULL)
+      m_pPowerModule(NULL),
+      mPrecaptureId(0)
 {
     mCameraDevice.common.tag = HARDWARE_DEVICE_TAG;
     mCameraDevice.common.version = CAMERA_DEVICE_API_VERSION_3_0;
@@ -875,19 +876,21 @@ int QCamera3HardwareInterface::processCaptureRequest(
         streamTypeMask |= channel->getStreamTypeMask();
     }
 
-    rc = setFrameParameters(request->frame_number, request->settings, streamTypeMask);
-    if (rc < 0) {
-        ALOGE("%s: fail to set frame parameters", __func__);
-        pthread_mutex_unlock(&mMutex);
-        return rc;
-    }
-
-    /* Update pending request list and pending buffers map */
     PendingRequestInfo pendingRequest;
     pendingRequest.frame_number = frameNumber;
     pendingRequest.num_buffers = request->num_output_buffers;
     pendingRequest.request_id = request_id;
     pendingRequest.blob_request = blob_request;
+    pendingRequest.ae_trigger.trigger_id = mPrecaptureId;
+    pendingRequest.ae_trigger.trigger = CAM_AEC_TRIGGER_IDLE;
+
+    rc = setFrameParameters(request->frame_number, request->settings,
+            streamTypeMask, pendingRequest.ae_trigger);
+    if (rc < 0) {
+        ALOGE("%s: fail to set frame parameters", __func__);
+        pthread_mutex_unlock(&mMutex);
+        return rc;
+    }
 
     for (size_t i = 0; i < request->num_output_buffers; i++) {
         RequestedBufferInfo requestedBuf;
@@ -1077,7 +1080,8 @@ void QCamera3HardwareInterface::captureResultCb(mm_camera_super_buf_t *metadata_
                 result.result = dummyMetadata.release();
             } else {
                 result.result = translateCbMetadataToResultMetadata(metadata,
-                        current_capture_time, i->request_id);
+                        current_capture_time, i->request_id, i->ae_trigger);
+
                 if (i->blob_request && needReprocess()) {
                    //If it is a blob request then send the metadata to the picture channel
                    mPictureChannel->queueMetadata(metadata_buf);
@@ -1219,7 +1223,7 @@ done_metadata:
 camera_metadata_t*
 QCamera3HardwareInterface::translateCbMetadataToResultMetadata
                                 (metadata_buffer_t *metadata, nsecs_t timestamp,
-                                 int32_t request_id)
+                                 int32_t request_id, const cam_trigger_t &aeTrigger)
 {
     CameraMetadata camMetadata;
     camera_metadata_t* resultMetadata;
@@ -1263,9 +1267,8 @@ QCamera3HardwareInterface::translateCbMetadataToResultMetadata
         (uint8_t *)POINTER_OF(CAM_INTF_META_COLOR_CORRECT_MODE, metadata);
     camMetadata.update(ANDROID_COLOR_CORRECTION_MODE, color_correct_mode, 1);
 
-    int32_t  *ae_precapture_id =
-        (int32_t *)POINTER_OF(CAM_INTF_META_AEC_PRECAPTURE_ID, metadata);
-    camMetadata.update(ANDROID_CONTROL_AE_PRECAPTURE_ID, ae_precapture_id, 1);
+    camMetadata.update(ANDROID_CONTROL_AE_PRECAPTURE_ID,
+            &aeTrigger.trigger_id, 1);
 
     /*aec regions*/
     cam_area_t  *hAeRegions =
@@ -1277,9 +1280,17 @@ QCamera3HardwareInterface::translateCbMetadataToResultMetadata
         uint8_t ae_state = ANDROID_CONTROL_AE_STATE_CONVERGED;
         camMetadata.update(ANDROID_CONTROL_AE_STATE, &ae_state, 1);
     } else {
-        uint8_t *ae_state =
-            (uint8_t *)POINTER_OF(CAM_INTF_META_AEC_STATE, metadata);
-        camMetadata.update(ANDROID_CONTROL_AE_STATE, ae_state, 1);
+        uint8_t ae_state =
+            *(uint8_t *)POINTER_OF(CAM_INTF_META_AEC_STATE, metadata);
+        //Override AE state for front(YUV) sensor if corresponding request
+        //contain a precapture trigger. This is to work around the precapture
+        //trigger timeout for YUV sensor.
+        if (gCamCapability[mCameraId]->position == CAM_POSITION_FRONT &&
+                aeTrigger.trigger_id > 0 && aeTrigger.trigger ==
+                ANDROID_CONTROL_AE_PRECAPTURE_TRIGGER_START) {
+            ae_state = ANDROID_CONTROL_AE_STATE_CONVERGED;
+        }
+        camMetadata.update(ANDROID_CONTROL_AE_STATE, &ae_state, 1);
     }
     uint8_t  *focusMode =
         (uint8_t *)POINTER_OF(CAM_INTF_PARM_FOCUS_MODE, metadata);
@@ -2567,12 +2578,14 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
  *   @frame_id  : frame number for this particular request
  *   @settings  : frame settings information from framework
  *   @streamTypeMask : bit mask of stream types on which buffers are requested
+ *   @aeTrigger : Return aeTrigger if it exists in the request
  *
  * RETURN     : success: NO_ERROR
  *              failure:
  *==========================================================================*/
 int QCamera3HardwareInterface::setFrameParameters(int frame_id,
-                    const camera_metadata_t *settings, uint32_t streamTypeMask)
+        const camera_metadata_t *settings, uint32_t streamTypeMask,
+        cam_trigger_t &aeTrigger)
 {
     /*translate from camera_metadata_t type to parm_type_t*/
     int rc = 0;
@@ -2605,7 +2618,7 @@ int QCamera3HardwareInterface::setFrameParameters(int frame_id,
     }
 
     if(settings != NULL){
-        rc = translateMetadataToParameters(settings);
+        rc = translateMetadataToParameters(settings, aeTrigger);
     }
     /*set the parameters to backend*/
     mCameraHandle->ops->set_parms(mCameraHandle->camera_handle, mParameters);
@@ -2620,13 +2633,13 @@ int QCamera3HardwareInterface::setFrameParameters(int frame_id,
  *
  * PARAMETERS :
  *   @settings  : frame settings information from framework
- *
+ *   @aeTrigger : output ae trigger if it's set in request
  *
  * RETURN     : success: NO_ERROR
  *              failure:
  *==========================================================================*/
-int QCamera3HardwareInterface::translateMetadataToParameters
-                                  (const camera_metadata_t *settings)
+int QCamera3HardwareInterface::translateMetadataToParameters(
+        const camera_metadata_t *settings, cam_trigger_t &aeTrigger)
 {
     int rc = 0;
     CameraMetadata frame_settings;
@@ -2782,18 +2795,16 @@ int QCamera3HardwareInterface::translateMetadataToParameters
                     sizeof(colorCorrectTransform), &colorCorrectTransform);
     }
 
-    cam_trigger_t aecTrigger;
-    aecTrigger.trigger = CAM_AEC_TRIGGER_IDLE;
-    aecTrigger.trigger_id = -1;
     if (frame_settings.exists(ANDROID_CONTROL_AE_PRECAPTURE_TRIGGER)&&
         frame_settings.exists(ANDROID_CONTROL_AE_PRECAPTURE_ID)) {
-        aecTrigger.trigger =
+        aeTrigger.trigger =
             frame_settings.find(ANDROID_CONTROL_AE_PRECAPTURE_TRIGGER).data.u8[0];
-        aecTrigger.trigger_id =
+        aeTrigger.trigger_id =
             frame_settings.find(ANDROID_CONTROL_AE_PRECAPTURE_ID).data.i32[0];
+        mPrecaptureId = aeTrigger.trigger_id;
     }
     rc = AddSetParmEntryToBatch(mParameters, CAM_INTF_META_AEC_PRECAPTURE_TRIGGER,
-                                sizeof(aecTrigger), &aecTrigger);
+                                sizeof(aeTrigger), &aeTrigger);
 
     /*af_trigger must come with a trigger id*/
     if (frame_settings.exists(ANDROID_CONTROL_AF_TRIGGER) &&
