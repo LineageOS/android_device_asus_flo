@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2013, The Linux Foundataion. All rights reserved.
+/* Copyright (c) 2012-2013, 2015, The Linux Foundataion. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -121,10 +121,13 @@ public:
     void getMetadataVendorTagOps(vendor_tag_query_ops_t* ops);
     void dump(int fd);
 
-    int setFrameParameters(int frame_id, const camera_metadata_t *settings, uint32_t streamTypeMask);
-    int translateMetadataToParameters(const camera_metadata_t *settings);
+    int setFrameParameters(int frame_id, const camera_metadata_t *settings,
+        uint32_t streamTypeMask, cam_trigger_t &aeTrigger);
+    int translateMetadataToParameters(const camera_metadata_t *settings,
+            cam_trigger_t &aeTrigger);
     camera_metadata_t* translateCbMetadataToResultMetadata(metadata_buffer_t *metadata,
-                            nsecs_t timestamp, int32_t request_id);
+                            nsecs_t timestamp, int32_t request_id,
+                            const cam_trigger_t &aeTrigger);
     int getJpegSettings(const camera_metadata_t *settings);
     int initParameters();
     void deinitParameters();
@@ -197,6 +200,7 @@ private:
         int32_t request_id;
         List<RequestedBufferInfo> buffers;
         int blob_request;
+        cam_trigger_t ae_trigger;
     } PendingRequestInfo;
     typedef KeyedVector<camera3_stream_t *, uint32_t> PendingBuffersMap;
 
@@ -215,6 +219,8 @@ private:
     bool mIsZslMode;
 
     power_module_t *m_pPowerModule;   // power module
+
+    int32_t mPrecaptureId;
 
     static const QCameraMap EFFECT_MODES_MAP[];
     static const QCameraMap WHITE_BALANCE_MODES_MAP[];
