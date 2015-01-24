@@ -149,6 +149,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	camera.disable_zsl_mode=1
 
+# Disable nuplayer
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.media.use-awesome=true
+
 # Kickstart
 PRODUCT_PACKAGES += \
 	qcks \
