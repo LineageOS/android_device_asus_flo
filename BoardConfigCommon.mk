@@ -123,6 +123,7 @@ BOARD_SEPOLICY_UNION += \
         file.te \
         file_contexts \
         hostapd.te \
+        init.te \
         irsc_util.te \
         kickstart.te \
         mediaserver.te \
