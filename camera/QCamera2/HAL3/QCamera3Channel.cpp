@@ -927,7 +927,11 @@ QCamera3PicChannel::QCamera3PicChannel(uint32_t cam_handle,
 
 QCamera3PicChannel::~QCamera3PicChannel()
 {
-    int32_t rc = m_postprocessor.deinit();
+    int32_t rc = m_postprocessor.stop();
+    if (rc != NO_ERROR) {
+        ALOGE("%s: Postprocessor stop failed", __func__);
+    }
+    rc = m_postprocessor.deinit();
     if (rc != 0) {
         ALOGE("De-init Postprocessor failed");
     }
