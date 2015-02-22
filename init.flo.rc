@@ -481,7 +481,7 @@ service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emul
     class late_start
 
 # USB-OTG storage daemon
-service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
+service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
     class late_start
     disabled
 
