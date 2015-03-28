@@ -331,10 +331,6 @@ service kickstart /system/bin/qcks -i /firmware/image/ -r /data/tombstones/mdm/
     disabled
     oneshot
 
-service asus-dbug-d /data/data/com.asus.debugger/files/asus-debugger-d
-    class late_start
-    disabled
-
 on property:gsm.radio.kickstart=on
     start kickstart
 
