@@ -60,7 +60,7 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
 	device/asus/flo/WCNSS_qcom_wlan_nv_flo.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_flo.bin \
 	device/asus/flo/WCNSS_qcom_wlan_nv_deb.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_deb.bin \
-	device/asus/flo/init.flo.wifi.sh:system/etc/init.flo.wifi.sh
+	device/asus/flo/init.flo.wifi.sh:system/bin/init.flo.wifi.sh
 
 PRODUCT_COPY_FILES += \
 	device/asus/flo/audio_policy.conf:system/etc/audio_policy.conf
@@ -81,7 +81,7 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/media_codecs.xml:system/etc/media_codecs.xml
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/kickstart_checker.sh:system/etc/kickstart_checker.sh
+	device/asus/flo/kickstart_checker.sh:system/bin/kickstart_checker.sh
 
 # Prebuilt kl and kcm keymaps
 PRODUCT_COPY_FILES += \
@@ -201,7 +201,7 @@ PRODUCT_PACKAGES += \
 	power.msm8960
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/init.flo.bt.sh:system/etc/init.flo.bt.sh
+	device/asus/flo/init.flo.bt.sh:system/bin/init.flo.bt.sh
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.qualcomm.bt.hci_transport=smd
