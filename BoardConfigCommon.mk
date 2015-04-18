@@ -73,13 +73,12 @@ TARGET_USES_C2D_COMPOSITION := false
 
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
-  ifeq ($(TARGET_BUILD_VARIANT),user)
+  ifeq ($(call match-word-in-list,$(TARGET_BUILD_VARIANT),user userdebug),true)
     ifeq ($(WITH_DEXPREOPT),)
       WITH_DEXPREOPT := true
     endif
   endif
 endif
-WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
@@ -151,5 +150,8 @@ USE_MINIKIN := true
 
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
+
+# Enable transparent compression in the build
+TARGET_TRANSPARENT_COMPRESSION_METHOD := lz4
 
 -include vendor/asus/flo/BoardConfigVendor.mk
