@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7fb54a_35f9a8c9",
+        "filename": "device-common.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1053
+      },
+      "writtenOn": "2015-04-23T22:05:16Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t make much sense now.\nI think you can remove it too.",
+      "revId": "51b56d99b3fb5e923e72b8c06a466ed7f306eed9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
