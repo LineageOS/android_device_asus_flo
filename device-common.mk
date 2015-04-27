@@ -283,6 +283,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.text_large_cache_width=2048 \
 	ro.hwui.text_large_cache_height=1024
 
+# Near-ultrasound support in the default audio and speaker paths.
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.audio.spkr.ultrasound=true \
+    persist.audio.mic.ultrasound=true
+
 PRODUCT_PACKAGES += \
     power.flo
 
