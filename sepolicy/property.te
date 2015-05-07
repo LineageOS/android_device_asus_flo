@@ -1,1 +1,2 @@
 type ctl_rmt_prop, property_type;
+type ctl_mpdecision, property_type;
