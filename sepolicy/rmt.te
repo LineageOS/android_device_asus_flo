@@ -28,5 +28,4 @@ wakelock_use(rmt)
 allow rmt uio_device:chr_file rw_file_perms;
 
 # rmt_storage shuts itself down if there is an unknown value of ro.baseband
-unix_socket_connect(rmt, property, init)
-allow rmt ctl_rmt_prop:property_service set;
+set_prop(rmt, ctl_rmt_prop)
