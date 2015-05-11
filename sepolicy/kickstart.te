@@ -42,8 +42,7 @@ allow kickstart system_file:file execute_no_trans;
 wakelock_use(kickstart)
 
 # Set property key gsm.radio.kickstart
-allow kickstart radio_prop:property_service set;
-unix_socket_connect(kickstart, property, init)
+set_prop(kickstart, radio_prop)
 
 # Access /sys/module/rmnet_usb/parameters/rmnet_data_init
 allow kickstart sysfs_rmnet:file w_file_perms;
