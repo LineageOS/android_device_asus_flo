@@ -31,7 +31,6 @@ allow netmgrd proc_net:file r_file_perms;
 allow netmgrd proc_net:dir r_dir_perms;
 
 # set net.rmnet* properties.
-unix_socket_connect(netmgrd, property, init)
-allow netmgrd radio_prop:property_service set;
+set_prop(netmgrd, radio_prop)
 auditallow netmgrd radio_prop:property_service set;
-allow netmgrd net_radio_prop:property_service set;
+set_prop(netmgrd, net_radio_prop)
