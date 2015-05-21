@@ -259,6 +259,8 @@
         <ctl name="RX4 HPF Switch" value="0" />
         <ctl name="RX3 MIX1 INP1" value="RX2" />
         <ctl name="RX4 MIX1 INP1" value="RX1" />
+        <ctl name="RX3 MIX1 INP2" value="ZERO" />
+        <ctl name="RX4 MIX1 INP2" value="ZERO" />
         <ctl name="SLIM TX3 MUX" value="RMIX4" />
         <ctl name="SLIM TX5 MUX" value="RMIX3" />
     </path>
@@ -270,8 +272,10 @@
         <ctl name="RX4 HPF cut off" value="MIN_3DB_150Hz" />
         <ctl name="RX3 HPF Switch" value="0" />
         <ctl name="RX4 HPF Switch" value="0" />
-        <ctl name="RX3 MIX1 INP1" value="RX1" />
-        <ctl name="RX4 MIX1 INP1" value="RX2" />
+        <ctl name="RX3 MIX1 INP2" value="RX1" />
+        <ctl name="RX4 MIX1 INP2" value="RX2" />
+        <ctl name="RX3 MIX1 INP1" value="ZERO" />
+        <ctl name="RX4 MIX1 INP1" value="ZERO" />
         <ctl name="SLIM TX3 MUX" value="RMIX3" />
         <ctl name="SLIM TX5 MUX" value="RMIX4" />
     </path>
