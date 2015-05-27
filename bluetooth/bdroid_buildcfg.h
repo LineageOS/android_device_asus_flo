@@ -19,6 +19,8 @@
 
 #define BTM_DEF_LOCAL_NAME   "Nexus 7"
 
+#define SC_MODE_INCLUDED FALSE
+
 // Networking, Capturing, Object Transfer
 // MAJOR CLASS: COMPUTER
 // MINOR CLASS: PALM SIZE PC/PDA
