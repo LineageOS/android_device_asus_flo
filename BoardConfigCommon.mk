@@ -146,9 +146,6 @@ BOARD_SEPOLICY_UNION += \
         thermald.te \
         ueventd.te
 
-# Enable Minikin text layout engine (will be the default soon)
-USE_MINIKIN := true
-
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
