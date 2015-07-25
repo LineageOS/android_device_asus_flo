@@ -268,7 +268,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	hw.cabl.level=Auto \
 	persist.qcom.cabl.video_only=1
 
-
 # Configure libhwui
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.texture_cache_size=48 \
@@ -282,6 +281,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.text_small_cache_height=1024 \
 	ro.hwui.text_large_cache_width=2048 \
 	ro.hwui.text_large_cache_height=1024
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat-swap=false
 
 PRODUCT_PACKAGES += \
     power.flo
