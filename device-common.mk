@@ -163,8 +163,7 @@ PRODUCT_PACKAGES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-	e2fsck \
-	setup_fs
+	e2fsck
 
 PRODUCT_PACKAGES += \
 	libgenlock \
