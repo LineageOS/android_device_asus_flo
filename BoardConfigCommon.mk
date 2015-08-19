@@ -119,7 +119,5 @@ BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
 
-# Only include a limited subset of the fonts.
-# Note: this footprint is not thorougly tested and should not be used on any
-# device other than flo.
-CONSTRAINED_FONT_FOOTPRINT := true
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
