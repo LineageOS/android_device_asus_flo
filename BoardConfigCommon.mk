@@ -71,13 +71,10 @@ TARGET_USES_C2D_COMPOSITION := false
 
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
-  ifeq ($(TARGET_BUILD_VARIANT),user)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
+  ifeq ($(WITH_DEXPREOPT),)
+    WITH_DEXPREOPT := true
   endif
 endif
-WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
