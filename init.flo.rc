@@ -411,7 +411,7 @@ service thermald /system/bin/thermald
     group radio system
 
 service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
-    class main
+    class late_start
     user root
     group root system
 
