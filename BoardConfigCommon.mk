@@ -84,6 +84,9 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 23068672 # 22M
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 880803840 # 840M
 
+#Reduce space taken by the journal
+BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
+
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 12348030976 # 11.5G
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 
@@ -94,6 +97,7 @@ USE_CAMERA_STUB := false
 BOARD_USES_CAMERA_FAST_AUTOFOCUS := false
 
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
+BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 TARGET_NO_RPC := true
 
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -115,34 +119,8 @@ HAVE_ADRENO_SOURCE:= false
 
 BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 
-# The list below is order dependent
-BOARD_SEPOLICY_UNION += \
-        bluetooth_loader.te \
-        bridge.te \
-        camera.te \
-        conn_init.te \
-        device.te \
-        domain.te \
-        file.te \
-        file_contexts \
-        hostapd.te \
-        irsc_util.te \
-        kickstart.te \
-        mediaserver.te \
-        mpdecision.te \
-        netmgrd.te \
-        property.te \
-        property_contexts \
-        qmux.te \
-        rild.te \
-        rmt.te \
-        sensors.te \
-        surfaceflinger.te \
-        system_server.te \
-        tee.te \
-        te_macros \
-        thermald.te \
-        ueventd.te
+# Enable Minikin text layout engine (will be the default soon)
+USE_MINIKIN := true
 
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true

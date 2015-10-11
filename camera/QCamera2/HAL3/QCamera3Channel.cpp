@@ -1479,21 +1479,17 @@ int32_t getExifLatitude(rat_t *latitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
-        parseGPSCoordinate(str, latitude);
+    parseGPSCoordinate(str, latitude);
 
-        //set Latitude Ref
-        float latitudeValue = strtof(str, 0);
-        if(latitudeValue < 0.0f) {
-            latRef[0] = 'S';
-        } else {
-            latRef[0] = 'N';
-        }
-        latRef[1] = '\0';
-        return NO_ERROR;
-    }else{
-        return BAD_VALUE;
+    //set Latitude Ref
+    float latitudeValue = strtof(str, 0);
+    if(latitudeValue < 0.0f) {
+        latRef[0] = 'S';
+    } else {
+        latRef[0] = 'N';
     }
+    latRef[1] = '\0';
+    return NO_ERROR;
 }
 
 /*===========================================================================
@@ -1514,21 +1510,17 @@ int32_t getExifLongitude(rat_t *longitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
-        parseGPSCoordinate(str, longitude);
+    parseGPSCoordinate(str, longitude);
 
-        //set Longitude Ref
-        float longitudeValue = strtof(str, 0);
-        if(longitudeValue < 0.0f) {
-            lonRef[0] = 'W';
-        } else {
-            lonRef[0] = 'E';
-        }
-        lonRef[1] = '\0';
-        return NO_ERROR;
-    }else{
-        return BAD_VALUE;
+    //set Longitude Ref
+    float longitudeValue = strtof(str, 0);
+    if(longitudeValue < 0.0f) {
+        lonRef[0] = 'W';
+    } else {
+        lonRef[0] = 'E';
     }
+    lonRef[1] = '\0';
+    return NO_ERROR;
 }
 
 /*===========================================================================
@@ -1549,17 +1541,13 @@ int32_t getExifAltitude(rat_t *altitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
-        double value = atof(str);
-        *altRef = 0;
-        if(value < 0){
-            *altRef = 1;
-            value = -value;
-        }
-        return getRational(altitude, value*1000, 1000);
-    }else{
-        return BAD_VALUE;
+    value = atof(str);
+    *altRef = 0;
+    if(value < 0){
+        *altRef = 1;
+        value = -value;
     }
+    return getRational(altitude, value*1000, 1000);
 }
 
 /*===========================================================================
@@ -1582,20 +1570,16 @@ int32_t getExifGpsDateTimeStamp(char *gpsDateStamp,
 {
     char str[30];
     snprintf(str, sizeof(str), "%lld", value);
-    if(str != NULL) {
-        time_t unixTime = (time_t)atol(str);
-        struct tm *UTCTimestamp = gmtime(&unixTime);
+    time_t unixTime = (time_t)atol(str);
+    struct tm *UTCTimestamp = gmtime(&unixTime);
 
-        strftime(gpsDateStamp, bufLen, "%Y:%m:%d", UTCTimestamp);
+    strftime(gpsDateStamp, bufLen, "%Y:%m:%d", UTCTimestamp);
 
-        getRational(&gpsTimeStamp[0], UTCTimestamp->tm_hour, 1);
-        getRational(&gpsTimeStamp[1], UTCTimestamp->tm_min, 1);
-        getRational(&gpsTimeStamp[2], UTCTimestamp->tm_sec, 1);
+    getRational(&gpsTimeStamp[0], UTCTimestamp->tm_hour, 1);
+    getRational(&gpsTimeStamp[1], UTCTimestamp->tm_min, 1);
+    getRational(&gpsTimeStamp[2], UTCTimestamp->tm_sec, 1);
 
-        return NO_ERROR;
-    } else {
-        return BAD_VALUE;
-    }
+    return NO_ERROR;
 }
 
 int32_t getExifExposureValue(srat_t* exposure_val, int32_t exposure_comp,

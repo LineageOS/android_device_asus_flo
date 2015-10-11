@@ -51,7 +51,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
         LiveWallpapers \
         LiveWallpapersPicker \
-        VisualizationWallpapers \
         librs_jni
 
 PRODUCT_COPY_FILES += \
@@ -59,7 +58,7 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
 	device/asus/flo/WCNSS_qcom_wlan_nv_flo.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_flo.bin \
 	device/asus/flo/WCNSS_qcom_wlan_nv_deb.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_deb.bin \
-	device/asus/flo/init.flo.wifi.sh:system/etc/init.flo.wifi.sh
+	device/asus/flo/init.flo.wifi.sh:system/bin/init.flo.wifi.sh
 
 PRODUCT_COPY_FILES += \
 	device/asus/flo/audio_policy.conf:system/etc/audio_policy.conf
@@ -78,10 +77,11 @@ PRODUCT_COPY_FILES += \
 	device/asus/flo/media_profiles.xml:system/etc/media_profiles.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
-	device/asus/flo/media_codecs.xml:system/etc/media_codecs.xml
+	device/asus/flo/media_codecs.xml:system/etc/media_codecs.xml \
+	device/asus/flo/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/kickstart_checker.sh:system/etc/kickstart_checker.sh
+	device/asus/flo/kickstart_checker.sh:system/bin/kickstart_checker.sh
 
 # Prebuilt kl and kcm keymaps
 PRODUCT_COPY_FILES += \
@@ -118,7 +118,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
 	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
-	frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml
+	frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml
 
 # Modem debugger
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
@@ -201,7 +201,7 @@ PRODUCT_PACKAGES += \
 	power.msm8960
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/init.flo.bt.sh:system/etc/init.flo.bt.sh
+	device/asus/flo/init.flo.bt.sh:system/bin/init.flo.bt.sh
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.qualcomm.bt.hci_transport=smd
@@ -268,7 +268,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	hw.cabl.level=Auto \
 	persist.qcom.cabl.video_only=1
 
-
 # Configure libhwui
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.texture_cache_size=48 \
@@ -282,6 +281,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.text_small_cache_height=1024 \
 	ro.hwui.text_large_cache_width=2048 \
 	ro.hwui.text_large_cache_height=1024
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat-swap=false
 
 # set default USB configuration
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \

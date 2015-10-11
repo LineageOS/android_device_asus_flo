@@ -1811,10 +1811,6 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
                       (uint8_t*)gCamCapability[cameraId]->optical_stab_modes,
                       gCamCapability[cameraId]->optical_stab_modes_count);
 
-    staticInfo.update(ANDROID_LENS_POSITION,
-                      gCamCapability[cameraId]->lens_position,
-                      sizeof(gCamCapability[cameraId]->lens_position)/ sizeof(float));
-
     int32_t lens_shading_map_size[] = {gCamCapability[cameraId]->lens_shading_map_size.width,
                                                     gCamCapability[cameraId]->lens_shading_map_size.height};
     staticInfo.update(ANDROID_LENS_INFO_SHADING_MAP_SIZE,
@@ -3179,11 +3175,9 @@ int QCamera3HardwareInterface::getJpegSettings
             free(mJpegSettings->gps_timestamp);
             mJpegSettings->gps_timestamp = NULL;
         }
-        if (mJpegSettings->gps_coordinates) {
-            for (int i = 0; i < 3; i++) {
-                free(mJpegSettings->gps_coordinates[i]);
-                mJpegSettings->gps_coordinates[i] = NULL;
-            }
+        for (int i = 0; i < 3; i++) {
+            free(mJpegSettings->gps_coordinates[i]);
+            mJpegSettings->gps_coordinates[i] = NULL;
         }
         free(mJpegSettings);
         mJpegSettings = NULL;

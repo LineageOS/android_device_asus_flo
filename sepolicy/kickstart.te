@@ -9,15 +9,12 @@ allow kickstart self:capability dac_override;
 auditallow kickstart self:capability dac_override;
 
 # Run kickstart_checker.sh
-allow kickstart shell_exec:file { entrypoint read };
-allow kickstart kickstart_exec:file { getattr open execute_no_trans };
+allow kickstart shell_exec:file rx_file_perms;
+allow kickstart kickstart_exec:file rx_file_perms;
 
 # kickstart_checker.sh changes block devices
 # /dev/block/platform/msm_sdcc.1/by-name/m9kefs*
 allow kickstart self:capability { chown fowner };
-
-# Spawn /system/bin/efsks and /system/bin/ks
-allow kickstart kickstart_exec:file { open execute_no_trans getattr };
 
 # Let qcks access /dev/mdm node (modem driver)
 allow kickstart radio_device:chr_file r_file_perms;
