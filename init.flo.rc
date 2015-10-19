@@ -400,8 +400,8 @@ service thermald /system/bin/thermald
     class main
     group radio system
 
-service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
-    class main
+service mpdecision /system/bin/mpdecision --avg_comp
+    class late_start
     user root
     group root system
 
