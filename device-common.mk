@@ -301,10 +301,6 @@ PRODUCT_PACKAGES += \
     NfcNci \
     Tag
 
-# IO Scheduler
-PRODUCT_PROPERTY_OVERRIDES += \
-    sys.io.scheduler=bfq
-
 # IPv6 tethering
 PRODUCT_PACKAGES += \
     ebtables \

@@ -36,11 +36,15 @@ on enable-low-power
     write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
     write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90
     write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
-
+    write /sys/devices/system/cpu/cpufreq/interactive/boost 1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 384000
+
+on property:sys.boot_completed=1
+    setprop sys.io.scheduler bfq
+    write /sys/devices/system/cpu/cpufreq/interactive/boost 0
 
 on charger
     write /sys/module/rpm_resources/enable_low_power/L2_cache 1
@@ -71,7 +75,10 @@ on charger
     write /sys/devices/system/cpu/cpu2/online 0
     write /sys/devices/system/cpu/cpu3/online 0
 
-on class_start:late_start
+on boot
+    trigger enable-low-power
+
+on property:init.svc.recovery=running
     trigger enable-low-power
 
 # CyanogenMod Performance Profiles
