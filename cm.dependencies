@@ -1,6 +1,8 @@
 [
  {
    "repository": "android_kernel_google_msm",
-   "target_path": "kernel/google/msm"
+   "target_path": "kernel/google/msm",
+   "repository": "android_external_stlport",
+   "target_path": "external/stlport"
  }
 ]
