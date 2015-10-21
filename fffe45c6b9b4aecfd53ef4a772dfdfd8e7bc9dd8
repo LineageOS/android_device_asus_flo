@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f2577a7_8761ba3c",
+        "filename": "BoardConfigCommon.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 7202
+      },
+      "writtenOn": "2015-10-21T15:35:52Z",
+      "side": 1,
+      "message": "Fixed in build. Not needed.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 49
+      },
+      "revId": "fffe45c6b9b4aecfd53ef4a772dfdfd8e7bc9dd8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
