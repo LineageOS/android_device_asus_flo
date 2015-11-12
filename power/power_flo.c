@@ -52,8 +52,18 @@ static int client_sockfd;
 static struct sockaddr_un client_addr;
 static int last_state = -1;
 
-static bool low_power_mode = false;
-static pthread_mutex_t low_power_mode_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t perf_profile_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+static unsigned int target_min_freq = LOW_POWER_MIN_FREQ;
+static unsigned int target_max_freq = NORMAL_MAX_FREQ;
+
+enum {
+    PROFILE_POWER_SAVE = 0,
+    PROFILE_BALANCED,
+    PROFILE_HIGH_PERFORMANCE
+};
+
+static int current_power_profile = PROFILE_BALANCED;
 
 static void socket_init()
 {
@@ -156,6 +166,9 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
             last_state = on;
     }
 
+    if (current_power_profile != PROFILE_BALANCED)
+        return;
+
     ALOGV("%s %s", __func__, (on ? "ON" : "OFF"));
     if (on) {
         touch_boost();
@@ -185,22 +198,55 @@ static int sysfs_write(const char *path, char *s)
     return 0;
 }
 
-static void low_power(int on)
+static void set_power_profile(int profile)
 {
-    pthread_mutex_lock(&low_power_mode_lock);
-    if (on) {
-        sysfs_write(MAX_FREQ_LIMIT_PATH, LOW_POWER_MAX_FREQ);
-        sysfs_write(MIN_FREQ_LIMIT_PATH, LOW_POWER_MIN_FREQ);
-    } else {
-        sysfs_write(MAX_FREQ_LIMIT_PATH, NORMAL_MAX_FREQ);
+    if (profile == current_power_profile)
+        return;
+
+    ALOGV("%s: profile=%d", __func__, profile);
+
+    pthread_mutex_lock(&perf_profile_mutex);
+
+    if (profile == PROFILE_BALANCED) {
+        target_min_freq = LOW_POWER_MIN_FREQ;
+        target_max_freq = NORMAL_MAX_FREQ;
+        ALOGD("%s: set balanced mode", __func__);
+    } else if (profile == PROFILE_HIGH_PERFORMANCE) {
+        target_min_freq = NORMAL_MAX_FREQ;
+        target_max_freq = NORMAL_MAX_FREQ;
+        ALOGD("%s: set performance mode", __func__);
+    } else if (profile == PROFILE_POWER_SAVE) {
+        target_min_freq = LOW_POWER_MIN_FREQ;
+        target_max_freq = LOW_POWER_MAX_FREQ;
+        ALOGD("%s: set powersave", __func__);
     }
-    pthread_mutex_unlock(&low_power_mode_lock);
+
+    sysfs_write(MIN_FREQ_LIMIT_PATH, target_min_freq);
+    sysfs_write(MAX_FREQ_LIMIT_PATH, target_max_freq);
+
+    pthread_mutex_unlock(&perf_profile_mutex);
+
+    current_power_profile = profile;
 }
 
 static void power_hint( __attribute__((unused)) struct power_module *module,
-                      power_hint_t hint, __attribute__((unused)) void *data)
+                      power_hint_t hint, void *data)
 {
-    int cpu, ret;
+    switch (hint) {
+        case POWER_HINT_SET_PROFILE:
+            set_power_profile(*(int32_t *) data);
+            break;
+        case POWER_HINT_LOW_POWER:
+            set_power_profile(data ? PROFILE_POWER_SAVE : PROFILE_BALANCED);
+            break;
+        default:
+            break;
+    }
+
+    // Skip other hints in high/low power modes
+    if (current_power_profile != PROFILE_BALANCED) {
+        return;
+    }
 
     switch (hint) {
         case POWER_HINT_INTERACTION:
@@ -210,9 +256,6 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
         case POWER_HINT_VIDEO_ENCODE:
             process_video_encode_hint(data);
             break;
-        case POWER_HINT_LOW_POWER:
-            low_power(*(int32_t *) data);
-            break;
         default:
             break;
     }
@@ -221,6 +264,15 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
 static struct hw_module_methods_t power_module_methods = {
     .open = NULL,
 };
+
+int get_feature(struct power_module *module __unused, feature_t feature)
+{
+    if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
+        return 3;
+    }
+
+    return -1;
+}
 
 struct power_module HAL_MODULE_INFO_SYM = {
     .common = {
@@ -236,4 +288,5 @@ struct power_module HAL_MODULE_INFO_SYM = {
     .init = power_init,
     .setInteractive = power_set_interactive,
     .powerHint = power_hint,
+    .getFeature = get_feature
 };
