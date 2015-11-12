@@ -70,6 +70,14 @@ static char *cpu_path_max[] = {
 static bool low_power_mode = false;
 static pthread_mutex_t low_power_mode_lock = PTHREAD_MUTEX_INITIALIZER;
 
+enum {
+    PROFILE_POWER_SAVE = 0,
+    PROFILE_BALANCED,
+    PROFILE_HIGH_PERFORMANCE
+};
+
+static int current_power_profile = PROFILE_BALANCED;
+
 static void socket_init()
 {
     if (!client_sockfd) {
@@ -286,40 +294,82 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
             last_state = on;
     }
 
+    if (current_power_profile == PROFILE_POWER_SAVE)
+        return;
+
     ALOGV("%s %s", __func__, (on ? "ON" : "OFF"));
     if (on) {
         touch_boost();
     }
 }
 
-static void power_hint( __attribute__((unused)) struct power_module *module,
-                      power_hint_t hint, __attribute__((unused)) void *data)
+static void low_power(int on)
 {
     int cpu;
 
+    pthread_mutex_lock(&low_power_mode_lock);
+    if (on) {
+        low_power_mode = true;
+        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
+            sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
+            sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
+        }
+    } else {
+        low_power_mode = false;
+        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
+            sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
+        }
+    }
+    pthread_mutex_unlock(&low_power_mode_lock);
+}
+
+static void set_power_profile(int profile)
+{
+    if (profile == current_power_profile)
+        return;
+
+    ALOGV("%s: profile=%d", __func__, profile);
+
+    if (profile == PROFILE_BALANCED) {
+        low_power(0);
+        enc_boost(0);
+        ALOGD("%s: set balanced mode", __func__);
+    } else if (profile == PROFILE_HIGH_PERFORMANCE) {
+        low_power(0);
+        enc_boost(1);
+        ALOGD("%s: set performance mode", __func__);
+    } else if (profile == PROFILE_POWER_SAVE) {
+        low_power(1);
+        enc_boost(0);
+        ALOGD("%s: set powersave", __func__);
+    }
+
+    current_power_profile = profile;
+}
+
+static void power_hint( __attribute__((unused)) struct power_module *module,
+                      power_hint_t hint, void *data)
+{
     switch (hint) {
         case POWER_HINT_INTERACTION:
+            if (current_power_profile == PROFILE_POWER_SAVE)
+                return;
             ALOGV("POWER_HINT_INTERACTION");
             touch_boost();
             break;
         case POWER_HINT_VIDEO_ENCODE:
+            if (current_power_profile != PROFILE_BALANCED)
+                return;
             process_video_encode_hint(data);
             break;
+        case POWER_HINT_SET_PROFILE:
+            set_power_profile(*(int32_t *)data);
+            break;
         case POWER_HINT_LOW_POWER:
-             pthread_mutex_lock(&low_power_mode_lock);
-             if (data) {
-                 low_power_mode = true;
-                 for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                     sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-                     sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-                 }
-             } else {
-                 low_power_mode = false;
-                 for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                     sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-                 }
-             }
-             pthread_mutex_unlock(&low_power_mode_lock);
+            if (current_power_profile == PROFILE_POWER_SAVE)
+                set_power_profile(PROFILE_BALANCED);
+            else
+                set_power_profile(PROFILE_POWER_SAVE);
             break;
         default:
             break;
@@ -329,6 +379,14 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
 static struct hw_module_methods_t power_module_methods = {
     .open = NULL,
 };
+
+int get_feature(struct power_module *module __unused, feature_t feature)
+{
+    if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
+        return 3;
+    }
+    return -1;
+}
 
 struct power_module HAL_MODULE_INFO_SYM = {
     .common = {
@@ -344,4 +402,5 @@ struct power_module HAL_MODULE_INFO_SYM = {
     .init = power_init,
     .setInteractive = power_set_interactive,
     .powerHint = power_hint,
+    .getFeature = get_feature
 };
