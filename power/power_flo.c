@@ -67,7 +67,6 @@ static char *cpu_path_max[] = {
     "/sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq",
     "/sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq",
 };
-static bool freq_set[TOTAL_CPUS];
 static bool low_power_mode = false;
 static pthread_mutex_t low_power_mode_lock = PTHREAD_MUTEX_INITIALIZER;
 
@@ -134,22 +133,20 @@ static int uevent_event()
         }
 
         pthread_mutex_lock(&low_power_mode_lock);
-        if (low_power_mode && !freq_set[cpu]) {
+        if (low_power_mode) {
             while (retry) {
                 sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
                 ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
                 if (!ret) {
-                    freq_set[cpu] = true;
                     break;
                 }
                 usleep(SLEEP_USEC_BETWN_RETRY);
                 retry--;
            }
-        } else if (!low_power_mode && freq_set[cpu]) {
+        } else {
              while (retry) {
                   ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
                   if (!ret) {
-                      freq_set[cpu] = false;
                       break;
                   }
                   usleep(SLEEP_USEC_BETWN_RETRY);
@@ -298,7 +295,7 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
 static void power_hint( __attribute__((unused)) struct power_module *module,
                       power_hint_t hint, __attribute__((unused)) void *data)
 {
-    int cpu, ret;
+    int cpu;
 
     switch (hint) {
         case POWER_HINT_INTERACTION:
@@ -314,18 +311,12 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
                  low_power_mode = true;
                  for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
                      sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-                     ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-                     if (!ret) {
-                         freq_set[cpu] = true;
-                     }
+                     sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
                  }
              } else {
                  low_power_mode = false;
                  for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                     ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-                     if (!ret) {
-                         freq_set[cpu] = false;
-                     }
+                     sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
                  }
              }
              pthread_mutex_unlock(&low_power_mode_lock);
