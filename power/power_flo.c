@@ -67,8 +67,10 @@ static char *cpu_path_max[] = {
     "/sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq",
     "/sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq",
 };
-static bool low_power_mode = false;
-static pthread_mutex_t low_power_mode_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t perf_profile_lock = PTHREAD_MUTEX_INITIALIZER;
+
+static int target_min_freq = LOW_POWER_MIN_FREQ;
+static int target_max_freq = NORMAL_MAX_FREQ;
 
 enum {
     PROFILE_POWER_SAVE = 0,
@@ -119,7 +121,7 @@ static int uevent_event()
 {
     char msg[UEVENT_MSG_LEN];
     char *cp;
-    int n, cpu, ret, retry = RETRY_TIME_CHANGING_FREQ;
+    int n, cpu, ret[2], retry = RETRY_TIME_CHANGING_FREQ;
 
     n = recv(pfd.fd, msg, UEVENT_MSG_LEN, MSG_DONTWAIT);
     if (n <= 0) {
@@ -140,28 +142,19 @@ static int uevent_event()
             return -1;
         }
 
-        pthread_mutex_lock(&low_power_mode_lock);
-        if (low_power_mode) {
-            while (retry) {
-                sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-                ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-                if (!ret) {
-                    break;
-                }
-                usleep(SLEEP_USEC_BETWN_RETRY);
-                retry--;
-           }
-        } else {
-             while (retry) {
-                  ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-                  if (!ret) {
-                      break;
-                  }
-                  usleep(SLEEP_USEC_BETWN_RETRY);
-                  retry--;
-             }
+        pthread_mutex_lock(&perf_profile_lock);
+        if (target_min_freq)
+
+        while (retry) {
+            ret[0] = sysfs_write(cpu_path_min[cpu], target_min_freq);
+            ret[1] = sysfs_write(cpu_path_max[cpu], target_max_freq);
+            if (!ret[0] && !ret[1]) {
+                break;
+            }
+            usleep(SLEEP_USEC_BETWN_RETRY);
+            retry--;
         }
-        pthread_mutex_unlock(&low_power_mode_lock);
+        pthread_mutex_unlock(&perf_profile_lock);
     }
     return 0;
 }
@@ -294,7 +287,7 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
             last_state = on;
     }
 
-    if (current_power_profile == PROFILE_POWER_SAVE)
+    if (current_power_profile != PROFILE_BALANCED)
         return;
 
     ALOGV("%s %s", __func__, (on ? "ON" : "OFF"));
@@ -303,46 +296,37 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
     }
 }
 
-static void low_power(int on)
+static void set_power_profile(int profile)
 {
     int cpu;
 
-    pthread_mutex_lock(&low_power_mode_lock);
-    if (on) {
-        low_power_mode = true;
-        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-            sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-            sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-        }
-    } else {
-        low_power_mode = false;
-        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-            sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-        }
-    }
-    pthread_mutex_unlock(&low_power_mode_lock);
-}
-
-static void set_power_profile(int profile)
-{
     if (profile == current_power_profile)
         return;
 
     ALOGV("%s: profile=%d", __func__, profile);
 
+    pthread_mutex_lock(&perf_profile_lock);
+
     if (profile == PROFILE_BALANCED) {
-        low_power(0);
-        enc_boost(0);
+        target_min_freq = LOW_POWER_MIN_FREQ;
+        target_max_freq = NORMAL_MAX_FREQ;
         ALOGD("%s: set balanced mode", __func__);
     } else if (profile == PROFILE_HIGH_PERFORMANCE) {
-        low_power(0);
-        enc_boost(1);
+        target_min_freq = NORMAL_MAX_FREQ;
+        target_max_freq = NORMAL_MAX_FREQ;
         ALOGD("%s: set performance mode", __func__);
     } else if (profile == PROFILE_POWER_SAVE) {
-        low_power(1);
-        enc_boost(0);
+        target_min_freq = LOW_POWER_MIN_FREQ;
+        target_max_freq = LOW_POWER_MAX_FREQ;
         ALOGD("%s: set powersave", __func__);
     }
+
+    for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
+        sysfs_write(cpu_path_min[cpu], target_min_freq);
+        sysfs_write(cpu_path_max[cpu], target_max_freq);
+    }
+
+    pthread_mutex_unlock(&perf_profile_lock);
 
     current_power_profile = profile;
 }
@@ -352,7 +336,7 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
 {
     switch (hint) {
         case POWER_HINT_INTERACTION:
-            if (current_power_profile == PROFILE_POWER_SAVE)
+            if (current_power_profile != PROFILE_BALANCED)
                 return;
             ALOGV("POWER_HINT_INTERACTION");
             touch_boost();
