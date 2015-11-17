@@ -1,0 +1,2 @@
+# Perf
+ro.vendor.extension_library=libqti-perfd-client.so

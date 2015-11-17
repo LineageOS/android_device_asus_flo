@@ -10,3 +10,11 @@ allow mediaserver self:socket create_socket_perms;
 
 # For text relocations in /system/vendor/lib/libmmjpeg.so
 allow mediaserver system_file:file execmod;
+
+allow mediaserver mpdecision:unix_stream_socket connectto;
+allow mediaserver system_data_file:sock_file write;
+
+# Access to perflock
+allow mediaserver mpctl_socket:dir r_dir_perms;
+unix_socket_send(mediaserver, mpctl, mpdecision)
+unix_socket_connect(mediaserver, mpctl, mpdecision)

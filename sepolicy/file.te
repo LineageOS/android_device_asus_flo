@@ -8,6 +8,8 @@ type sensors_data_file, file_type, data_file_type;
 type kickstart_data_file, file_type, data_file_type;
 
 type mpdecision_socket, file_type;
+type mpctl_socket, file_type;
+type mpctl_data_file, file_type, data_file_type;
 
 # Default type for anything under /firmware
 type radio_efs_file, fs_type, contextmount_type;

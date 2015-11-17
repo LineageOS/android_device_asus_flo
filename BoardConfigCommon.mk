@@ -125,4 +125,7 @@ USE_MINIKIN := true
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
+# Power
+TARGET_POWERHAL_VARIANT := qcom
+
 -include vendor/asus/flo/BoardConfigVendor.mk
