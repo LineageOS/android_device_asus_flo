@@ -17,3 +17,10 @@ allow system_server mpdecision_socket:dir search;
 # Read /data/misc/sensors or /data/system/sensors.
 allow system_server sensors_data_file:dir r_dir_perms;
 allow system_server sensors_data_file:file r_file_perms;
+
+allow system_server persist_file:dir search;
+
+# Access to perflock
+allow system_server mpctl_socket:dir r_dir_perms;
+unix_socket_send(system_server, mpctl, mpdecision)
+unix_socket_connect(system_server, mpctl, mpdecision)

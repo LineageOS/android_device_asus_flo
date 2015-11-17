@@ -108,7 +108,9 @@
 
 /data/nfc(/.*)?                    u:object_r:nfc_data_file:s0
 /data/qcks(/.*)?                   u:object_r:kickstart_data_file:s0
+/data/misc/perfd(/.*)?             u:object_r:mpctl_socket:s0
 /data/misc/sensors(/.*)?           u:object_r:sensors_data_file:s0
+/data/system/perfd(/.*)?           u:object_r:mpctl_data_file:s0
 /data/system/sensors(/.*)?         u:object_r:sensors_data_file:s0
 /data/misc/playready(/.*)?         u:object_r:drm_data_file:s0
 /data/fdAlbum                      u:object_r:camera_data_file:s0

@@ -206,3 +206,4 @@
 /system/vendor/lib/libwvm.so
 /system/vendor/lib/libWVStreamControlAPI_L1.so
 /system/vendor/lib/mediadrm/libwvdrmengine.so
+/system/vendor/lib/libqti-perfd-client.so

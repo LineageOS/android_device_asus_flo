@@ -127,4 +127,7 @@ EXTENDED_FONT_FOOTPRINT := true
 
 USE_CLANG_PLATFORM_BUILD := true
 
+# Power
+TARGET_POWERHAL_VARIANT := qcom
+
 -include vendor/asus/flo/BoardConfigVendor.mk
