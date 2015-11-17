@@ -42,6 +42,9 @@ on enable-low-power
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 384000
 
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1134000
+    write /sys/module/cpu_boost/parameters/input_boost_ms 500
+
     rm /data/system/perfd/default_values
 
 on property:sys.boot_completed=1
