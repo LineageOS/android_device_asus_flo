@@ -44,3 +44,7 @@ r_dir_file(mpdecision, system_server)
 r_dir_file(mpdecision, mediaserver)
 
 allow mpdecision self:capability sys_nice;
+
+allow mpdecision power_control_device:chr_file { open write };
+allow mpdecision system_data_file:dir { remove_name write };
+allow mpdecision system_data_file:sock_file unlink;
