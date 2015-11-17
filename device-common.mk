@@ -292,9 +292,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.isUsbOtgEnabled=1
 
-PRODUCT_PACKAGES += \
-    power.flo
-
 # NFC packages
 PRODUCT_PACKAGES += \
     libnfc-nci \
