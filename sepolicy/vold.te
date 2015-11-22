@@ -1,0 +1,1 @@
+allow vold persist_data_file:dir { open read write ioctl getattr };
