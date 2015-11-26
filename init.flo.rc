@@ -207,6 +207,10 @@ on post-fs-data
     # adjust vibrator amplitude
     write /sys/class/timed_output/vibrator/amp 70
 
+    # Color calibration
+    chown system system /sys/devices/platform/kcal_ctrl.0/kcal
+    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal
+
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
 
