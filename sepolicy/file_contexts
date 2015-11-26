@@ -153,3 +153,7 @@
 # Sysfs files used by surfaceflinger
 /sys/devices/virtual/graphics/fb1/format_3d -- u:object_r:sysfs_surfaceflinger:s0
 /sys/devices/virtual/graphics/fb1/hpd       -- u:object_r:sysfs_surfaceflinger:s0
+
+# Color calibration
+/sys/devices/platform/DIAG0.0/power_rail           u:object_r:livedisplay_sysfs:s0
+/sys/devices/platform/DIAG0.0/power_rail_ctrl      u:object_r:livedisplay_sysfs:s0

@@ -122,4 +122,7 @@ BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
+# CM Hardware
+BOARD_HARDWARE_CLASS := device/asus/flo/cmhw
+
 -include vendor/asus/flo/BoardConfigVendor.mk
