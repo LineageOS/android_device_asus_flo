@@ -50,6 +50,8 @@
 #define NORMAL_MAX_FREQ "1512000"
 #define UEVENT_STRING "online@/devices/system/cpu/"
 
+#define TIMER_RATE_PATH "/sys/devices/system/cpu/cpufreq/interactive/timer_rate"
+
 static int client_sockfd;
 static struct sockaddr_un client_addr;
 static int last_state = -1;
@@ -290,6 +292,7 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
     }
 
     ALOGV("%s %s", __func__, (on ? "ON" : "OFF"));
+    sysfs_write(TIMER_RATE_PATH, on ? "20000" : "50000");
     if (on) {
         touch_boost();
     }
