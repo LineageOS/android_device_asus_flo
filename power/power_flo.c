@@ -48,6 +48,8 @@
 #define MAX_FREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/limited_max_freq"
 #define MIN_FREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/limited_min_freq"
 
+#define TIMER_RATE_PATH "/sys/devices/system/cpu/cpufreq/interactive/timer_rate"
+
 static int client_sockfd;
 static struct sockaddr_un client_addr;
 static int last_state = -1;
@@ -172,6 +174,7 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
         return;
 
     ALOGV("%s %s", __func__, (on ? "ON" : "OFF"));
+    sysfs_write(TIMER_RATE_PATH, on ? "20000" : "50000");
     if (on) {
         touch_boost();
     }
@@ -262,6 +265,8 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
 
     switch (hint) {
         case POWER_HINT_INTERACTION:
+        case POWER_HINT_LAUNCH_BOOST:
+        case POWER_HINT_CPU_BOOST:
             touch_boost();
             break;
         case POWER_HINT_VIDEO_ENCODE:
