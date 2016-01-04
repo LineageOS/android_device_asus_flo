@@ -15,4 +15,5 @@
 <resources>
     <!-- Whether the device support Bluetooth MAP profile -->
     <bool name="profile_supported_map">false</bool>
+    <bool name="profile_supported_sap">true</bool>
 </resources>
