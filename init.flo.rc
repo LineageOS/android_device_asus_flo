@@ -191,8 +191,6 @@ on post-fs-data
     mkdir /data/qcks 0770 system system
     chown system /dev/block/platform/msm_sdcc.1/by-name
 
-    setprop vold.post_fs_data_done 1
-
     rm /data/local/tmp/adreno_config.txt
 
     # White LED
@@ -207,6 +205,8 @@ on post-fs-data
 
     # adjust vibrator amplitude
     write /sys/class/timed_output/vibrator/amp 70
+
+    setprop vold.post_fs_data_done 1
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
