@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,35 +42,31 @@
 #define MAX_LENGTH         50
 #define BOOST_SOCKET       "/dev/socket/pb"
 
-#define UEVENT_MSG_LEN 2048
-#define TOTAL_CPUS 4
-#define RETRY_TIME_CHANGING_FREQ 20
-#define SLEEP_USEC_BETWN_RETRY 200
 #define LOW_POWER_MAX_FREQ "1026000"
 #define LOW_POWER_MIN_FREQ "384000"
 #define NORMAL_MAX_FREQ "1512000"
-#define UEVENT_STRING "online@/devices/system/cpu/"
+
+#define MAX_FREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/limited_max_freq"
+#define MIN_FREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/limited_min_freq"
 
 static int client_sockfd;
 static struct sockaddr_un client_addr;
 static int last_state = -1;
 
-static struct pollfd pfd;
-static char *cpu_path_min[] = {
-    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
-    "/sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq",
-    "/sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq",
-    "/sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq",
+static pthread_mutex_t hint_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+enum {
+    PROFILE_POWER_SAVE = 0,
+    PROFILE_BALANCED,
+    PROFILE_HIGH_PERFORMANCE,
+    PROFILE_BIAS_POWER,
+    PROFILE_BIAS_PERFORMANCE
 };
-static char *cpu_path_max[] = {
-    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
-    "/sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq",
-    "/sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq",
-    "/sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq",
-};
-static bool freq_set[TOTAL_CPUS];
-static bool low_power_mode = false;
-static pthread_mutex_t low_power_mode_lock = PTHREAD_MUTEX_INITIALIZER;
+
+static int current_power_profile = PROFILE_BALANCED;
+
+static unsigned int target_min_freq = LOW_POWER_MIN_FREQ;
+static unsigned int target_max_freq = NORMAL_MAX_FREQ;
 
 static void socket_init()
 {
@@ -108,104 +105,10 @@ static int sysfs_write(const char *path, char *s)
     return 0;
 }
 
-static int uevent_event()
-{
-    char msg[UEVENT_MSG_LEN];
-    char *cp;
-    int n, cpu, ret, retry = RETRY_TIME_CHANGING_FREQ;
-
-    n = recv(pfd.fd, msg, UEVENT_MSG_LEN, MSG_DONTWAIT);
-    if (n <= 0) {
-        return -1;
-    }
-    if (n >= UEVENT_MSG_LEN) {   /* overflow -- discard */
-        return -1;
-    }
-
-    cp = msg;
-
-    if (strstr(cp, UEVENT_STRING)) {
-        n = strlen(cp);
-        errno = 0;
-        cpu = strtol(cp + n - 1, NULL, 10);
-
-        if (errno == EINVAL || errno == ERANGE || cpu < 0 || cpu >= TOTAL_CPUS) {
-            return -1;
-        }
-
-        pthread_mutex_lock(&low_power_mode_lock);
-        if (low_power_mode && !freq_set[cpu]) {
-            while (retry) {
-                sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-                ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-                if (!ret) {
-                    freq_set[cpu] = true;
-                    break;
-                }
-                usleep(SLEEP_USEC_BETWN_RETRY);
-                retry--;
-           }
-        } else if (!low_power_mode && freq_set[cpu]) {
-             while (retry) {
-                  ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-                  if (!ret) {
-                      freq_set[cpu] = false;
-                      break;
-                  }
-                  usleep(SLEEP_USEC_BETWN_RETRY);
-                  retry--;
-             }
-        }
-        pthread_mutex_unlock(&low_power_mode_lock);
-    }
-    return 0;
-}
-
-void *thread_uevent(__attribute__((unused)) void *x)
-{
-    while (1) {
-        int nevents, ret;
-
-        nevents = poll(&pfd, 1, -1);
-
-        if (nevents == -1) {
-            if (errno == EINTR)
-                continue;
-            ALOGE("powerhal: thread_uevent: poll_wait failed\n");
-            break;
-        }
-        ret = uevent_event();
-        if (ret < 0)
-            ALOGE("Error processing the uevent event");
-    }
-    return NULL;
-}
-
-static void uevent_init()
-{
-    struct sockaddr_nl client;
-    pthread_t tid;
-    pfd.fd = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_KOBJECT_UEVENT);
-
-    if (pfd.fd < 0) {
-        ALOGE("%s: failed to open: %s", __func__, strerror(errno));
-        return;
-    }
-    memset(&client, 0, sizeof(struct sockaddr_nl));
-    pthread_create(&tid, NULL, thread_uevent, NULL);
-    client.nl_family = AF_NETLINK;
-    client.nl_pid = tid;
-    client.nl_groups = -1;
-    pfd.events = POLLIN;
-    bind(pfd.fd, (void *)&client, sizeof(struct sockaddr_nl));
-    return;
-}
-
 static void power_init(__attribute__((unused)) struct power_module *module)
 {
     ALOGI("%s", __func__);
     socket_init();
-    uevent_init();
 }
 
 static void enc_boost(int off)
@@ -280,55 +183,73 @@ static void touch_boost()
 
 static void power_set_interactive(__attribute__((unused)) struct power_module *module, int on)
 {
-    if (last_state == -1) {
-        last_state = on;
-    } else {
-        if (last_state == on)
-            return;
-        else
-            last_state = on;
-    }
+    if (last_state == on)
+        return;
 
-    ALOGV("%s %s", __func__, (on ? "ON" : "OFF"));
+    last_state = on;
+
+    ALOGD("%s %s", __func__, (on ? "ON" : "OFF"));
     if (on) {
         touch_boost();
     }
 }
 
-static void power_hint( __attribute__((unused)) struct power_module *module,
-                      power_hint_t hint, __attribute__((unused)) void *data)
+static void set_power_profile(int profile)
 {
-    int cpu, ret;
+    if (profile == current_power_profile)
+        return;
+
+    ALOGV("%s: profile=%d", __func__, profile);
+
+    if (profile == PROFILE_BALANCED) {
+        target_min_freq = LOW_POWER_MIN_FREQ;
+        target_max_freq = NORMAL_MAX_FREQ;
+        ALOGD("%s: set balanced mode", __func__);
+    } else if (profile == PROFILE_HIGH_PERFORMANCE) {
+        target_min_freq = NORMAL_MAX_FREQ;
+        target_max_freq = NORMAL_MAX_FREQ;
+        ALOGD("%s: set performance mode", __func__);
+    } else if (profile == PROFILE_BIAS_PERFORMANCE) {
+        target_min_freq = LOW_POWER_MAX_FREQ;
+        target_max_freq = NORMAL_MAX_FREQ;
+        ALOGD("%s: set bias perf mode", __func__);
+    } else if (profile == PROFILE_BIAS_POWER) {
+        target_min_freq = LOW_POWER_MIN_FREQ;
+        target_max_freq = LOW_POWER_MAX_FREQ;
+        ALOGD("%s: set bias power mode", __func__);
+    } else if (profile == PROFILE_POWER_SAVE) {
+        target_min_freq = LOW_POWER_MIN_FREQ;
+        target_max_freq = LOW_POWER_MAX_FREQ;
+        ALOGD("%s: set powersave", __func__);
+    }
+
+    sysfs_write(MIN_FREQ_LIMIT_PATH, target_min_freq);
+    sysfs_write(MAX_FREQ_LIMIT_PATH, target_max_freq);
+
+    current_power_profile = profile;
+}
+
+static void power_hint( __attribute__((unused)) struct power_module *module,
+                      power_hint_t hint, void *data)
+{
+    if (hint == POWER_HINT_SET_PROFILE) {
+        pthread_mutex_lock(&hint_mutex);
+        set_power_profile(*(int32_t *) data);
+        pthread_mutex_unlock(&hint_mutex);
+        return;
+    }
+
+    // Skip other hints in high/low power modes
+    if (current_power_profile == PROFILE_POWER_SAVE ||
+        current_power_profile == PROFILE_HIGH_PERFORMANCE)
+        return;
 
     switch (hint) {
         case POWER_HINT_INTERACTION:
-            ALOGV("POWER_HINT_INTERACTION");
             touch_boost();
             break;
         case POWER_HINT_VIDEO_ENCODE:
             process_video_encode_hint(data);
-            break;
-        case POWER_HINT_LOW_POWER:
-             pthread_mutex_lock(&low_power_mode_lock);
-             if (data) {
-                 low_power_mode = true;
-                 for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                     sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-                     ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-                     if (!ret) {
-                         freq_set[cpu] = true;
-                     }
-                 }
-             } else {
-                 low_power_mode = false;
-                 for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                     ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-                     if (!ret) {
-                         freq_set[cpu] = false;
-                     }
-                 }
-             }
-             pthread_mutex_unlock(&low_power_mode_lock);
             break;
         default:
             break;
@@ -339,6 +260,15 @@ static struct hw_module_methods_t power_module_methods = {
     .open = NULL,
 };
 
+int get_feature(struct power_module *module __unused, feature_t feature)
+{
+    if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
+        return 5;
+    }
+
+    return -1;
+}
+
 struct power_module HAL_MODULE_INFO_SYM = {
     .common = {
         .tag = HARDWARE_MODULE_TAG,
@@ -346,11 +276,12 @@ struct power_module HAL_MODULE_INFO_SYM = {
         .hal_api_version = HARDWARE_HAL_API_VERSION,
         .id = POWER_HARDWARE_MODULE_ID,
         .name = "Flo/Deb Power HAL",
-        .author = "The Android Open Source Project",
+        .author = "The Android Open Source Project / The CyanogenMod Project",
         .methods = &power_module_methods,
     },
 
     .init = power_init,
     .setInteractive = power_set_interactive,
     .powerHint = power_hint,
+    .getFeature = get_feature
 };
