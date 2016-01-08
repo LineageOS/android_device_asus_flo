@@ -35,7 +35,8 @@ typedef struct governor_settings {
     int max_freq_hysteresis;
     char *target_loads;
     char *target_loads_off;
-    int scaling_max_freq;
+    int limited_min_freq;
+    int limited_max_freq;
 } power_profile;
 
 static power_profile profiles[PROFILE_MAX] = {
@@ -51,7 +52,8 @@ static power_profile profiles[PROFILE_MAX] = {
         .max_freq_hysteresis = 100000,
         .target_loads = "95 1728000:99",
         .target_loads_off = "95 1512000:99",
-        .scaling_max_freq = 702000,
+        .limited_min_freq = 384000,
+        .limited_max_freq = 702000,
     },
     [PROFILE_BALANCED] = {
         .boost = 0,
@@ -65,7 +67,8 @@ static power_profile profiles[PROFILE_MAX] = {
         .max_freq_hysteresis = 100000,
         .target_loads = "80 918000:90 1512000:99",
         .target_loads_off = "95 1512000:99",
-        .scaling_max_freq = 1512000,
+        .limited_min_freq = 384000,
+        .limited_max_freq = 1512000,
     },
     [PROFILE_HIGH_PERFORMANCE] = {
         .boost = 1,
@@ -79,7 +82,8 @@ static power_profile profiles[PROFILE_MAX] = {
         .max_freq_hysteresis = 100000,
         .target_loads = "80",
         .target_loads_off = "80",
-        .scaling_max_freq = 1512000
+        .limited_min_freq = 384000,
+        .limited_max_freq = 1512000,
     },
     [PROFILE_BIAS_POWER_SAVE] = {
         .boost = 0,
@@ -93,6 +97,7 @@ static power_profile profiles[PROFILE_MAX] = {
         .max_freq_hysteresis = 100000,
         .target_loads = "95 1190400:99",
         .target_loads_off = "95 1190400:99",
-        .scaling_max_freq = 1190400,
+        .limited_min_freq = 384000,
+        .limited_max_freq = 1512000,
     },
 };

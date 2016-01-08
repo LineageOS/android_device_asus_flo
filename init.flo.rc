@@ -107,6 +107,10 @@ on boot
     #Enable logging of the wake up reasons in the kernel log
     write /sys/module/msm_show_resume_irq/parameters/debug_mask 1
 
+    # CPUFreq limit
+    chown system system /sys/kernel/cpufreq_limit/limited_max_freq
+    chown system system /sys/kernel/cpufreq_limit/limited_min_freq
+
 # NFC: create data/nfc for nv storage
     mkdir /data/nfc 770 nfc nfc
     mkdir /data/nfc/param 770 nfc nfc
