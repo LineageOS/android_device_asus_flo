@@ -302,6 +302,8 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
 
     switch (hint) {
         case POWER_HINT_INTERACTION:
+        case POWER_HINT_LAUNCH_BOOST:
+        case POWER_HINT_CPU_BOOST:
             ALOGV("POWER_HINT_INTERACTION");
             touch_boost();
             break;
