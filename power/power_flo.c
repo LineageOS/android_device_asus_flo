@@ -31,7 +31,7 @@
 
 #include "power.h"
 
-#define CPUFREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/"
+#define CPUFREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/"
 #define INTERACTIVE_PATH "/sys/devices/system/cpu/cpufreq/interactive/"
 
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
@@ -161,8 +161,10 @@ static void set_power_profile(int profile)
                     profiles[profile].max_freq_hysteresis);
     sysfs_write_str(INTERACTIVE_PATH "target_loads",
                     profiles[profile].target_loads);
-    sysfs_write_int(CPUFREQ_PATH "scaling_max_freq",
-                    profiles[profile].scaling_max_freq);
+    sysfs_write_int(CPUFREQ_LIMIT_PATH "limited_min_freq",
+                    profiles[profile].limited_min_freq);
+    sysfs_write_int(CPUFREQ_LIMIT_PATH "limited_max_freq",
+                    profiles[profile].limited_max_freq);
 
     current_power_profile = profile;
 }
