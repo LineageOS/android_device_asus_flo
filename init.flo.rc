@@ -206,6 +206,11 @@ on post-fs-data
     # adjust vibrator amplitude
     write /sys/class/timed_output/vibrator/amp 70
 
+    chown system system /sys/kernel/cpufreq_limit/limited_max_freq
+    chmod 0660 /sys/kernel/cpufreq_limit/limited_max_freq
+    chown system system /sys/kernel/cpufreq_limit/limited_min_freq
+    chmod 0660 /sys/kernel/cpufreq_limit/limited_min_freq
+
     setprop vold.post_fs_data_done 1
 
 on property:init.svc.wpa_supplicant=stopped
