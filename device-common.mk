@@ -296,6 +296,10 @@ PRODUCT_COPY_FILES += \
 # TODO(danalbert): Remove this once stlport is dead and gone.
 PRODUCT_PACKAGES +=  libstlport
 
+# Camera
+PRODUCT_PACKAGES += \
+    Snap
+
 PRODUCT_LOCALES := en_US es_US de_DE zh_CN
 
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
