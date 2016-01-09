@@ -92,6 +92,8 @@
             <Limit name="measured-frame-rate-1280x720" range="107-107" />
             <Limit name="measured-frame-rate-1920x1080" range="94-94" />
         </MediaCodec>
+        <MediaCodec name="OMX.ffmpeg.mpeg4.decoder" type="video/mp4v-es" update="true">
+            <Limit name="measured-frame-rate-480x360" range="965-965" />
+        </MediaCodec>
     </Decoders>
 </MediaCodecs>
-
