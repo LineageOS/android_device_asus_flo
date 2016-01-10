@@ -61,14 +61,13 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP  := "ap"
 
-#BOARD_USES_HGL := true
-#BOARD_USES_OVERLAY := true
-USE_OPENGL_RENDERER := true
+# Display
 PRESENT_TIME_OFFSET_FROM_VSYNC_NS := 3200000
+TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_ION := true
 TARGET_USES_OVERLAY := true
 TARGET_USES_SF_BYPASS := true
-TARGET_USES_C2D_COMPOSITION := false
+USE_OPENGL_RENDERER := true
 
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
