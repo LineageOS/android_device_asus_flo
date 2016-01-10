@@ -239,11 +239,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
         ro.qc.sensors.wl_dis=true \
         ro.qualcomm.sensors.smd=true
 
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.qualcomm.cabl=1 \
-	hw.cabl.level=Auto \
-	persist.qcom.cabl.video_only=1
-
 # Configure libhwui
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.texture_cache_size=48 \
