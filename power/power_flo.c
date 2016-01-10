@@ -34,6 +34,11 @@
 #define CPUFREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/"
 #define INTERACTIVE_PATH "/sys/devices/system/cpu/cpufreq/interactive/"
 
+#define TIMER_RATE_INTERACTIVE "20000"
+#define TIMER_RATE_SUSPEND "50000"
+
+#define TIMER_RATE_PATH "/sys/devices/system/cpu/cpufreq/interactive/timer_rate"
+
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 static int boostpulse_fd = -1;
 
@@ -128,6 +133,8 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
         sysfs_write_str(INTERACTIVE_PATH "target_loads",
                         profiles[current_power_profile].target_loads_off);
     }
+
+    sysfs_write_str(TIMER_RATE_PATH, on ? TIMER_RATE_INTERACTIVE : TIMER_RATE_SUSPEND);
 }
 
 static void set_power_profile(int profile)
