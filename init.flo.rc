@@ -111,6 +111,9 @@ on boot
     chown system system /sys/kernel/cpufreq_limit/limited_max_freq
     chown system system /sys/kernel/cpufreq_limit/limited_min_freq
 
+    # Interactive parameters handled by PowerHAL
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+
 # NFC: create data/nfc for nv storage
     mkdir /data/nfc 770 nfc nfc
     mkdir /data/nfc/param 770 nfc nfc

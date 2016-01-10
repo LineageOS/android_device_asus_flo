@@ -118,11 +118,15 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
                         profiles[current_power_profile].hispeed_freq);
         sysfs_write_int(INTERACTIVE_PATH "go_hispeed_load",
                         profiles[current_power_profile].go_hispeed_load);
+        sysfs_write_int(INTERACTIVE_PATH "timer_rate",
+                        profiles[current_power_profile].timer_rate);
         sysfs_write_str(INTERACTIVE_PATH "target_loads",
                         profiles[current_power_profile].target_loads);
     } else {
         sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
                         profiles[current_power_profile].hispeed_freq_off);
+        sysfs_write_int(INTERACTIVE_PATH "timer_rate",
+                        profiles[current_power_profile].timer_rate_off);
         sysfs_write_int(INTERACTIVE_PATH "go_hispeed_load",
                         profiles[current_power_profile].go_hispeed_load_off);
         sysfs_write_str(INTERACTIVE_PATH "target_loads",
@@ -155,6 +159,8 @@ static void set_power_profile(int profile)
                     profiles[profile].hispeed_freq);
     sysfs_write_int(INTERACTIVE_PATH "above_hispeed_delay",
                     profiles[profile].above_hispeed_delay);
+    sysfs_write_int(INTERACTIVE_PATH "timer_rate",
+                    profiles[current_power_profile].timer_rate);
     sysfs_write_int(INTERACTIVE_PATH "io_is_busy",
                     profiles[profile].io_is_busy);
     sysfs_write_int(INTERACTIVE_PATH "min_sample_time",
