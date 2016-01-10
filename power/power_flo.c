@@ -49,6 +49,11 @@
 #define MAX_FREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/limited_max_freq"
 #define MIN_FREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/limited_min_freq"
 
+#define TIMER_RATE_INTERACTIVE "20000"
+#define TIMER_RATE_SUSPEND "50000"
+
+#define TIMER_RATE_PATH "/sys/devices/system/cpu/cpufreq/interactive/timer_rate"
+
 static int client_sockfd;
 static struct sockaddr_un client_addr;
 static int last_state = -1;
@@ -192,6 +197,8 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
     if (on) {
         touch_boost();
     }
+
+    sysfs_write(TIMER_RATE_PATH, on ? TIMER_RATE_INTERACTIVE : TIMER_RATE_SUSPEND);
 }
 
 static void set_power_profile(int profile)
