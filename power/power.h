@@ -30,6 +30,7 @@ typedef struct governor_settings {
     int go_hispeed_load_off;
     int hispeed_freq;
     int hispeed_freq_off;
+    int above_hispeed_delay;
     int io_is_busy;
     int min_sample_time;
     int max_freq_hysteresis;
@@ -44,28 +45,30 @@ static power_profile profiles[PROFILE_MAX] = {
         .boost = 0,
         .boostpulse_duration = 0,
         .go_hispeed_load = 90,
-        .go_hispeed_load_off = 90,
+        .go_hispeed_load_off = 110,
         .hispeed_freq = 702000,
         .hispeed_freq_off = 702000,
+        .above_hispeed_delay = 90000
         .io_is_busy = 0,
         .min_sample_time = 60000,
         .max_freq_hysteresis = 100000,
-        .target_loads = "95 1728000:99",
+        .target_loads = "95 1512000:99",
         .target_loads_off = "95 1512000:99",
         .limited_min_freq = 384000,
-        .limited_max_freq = 702000,
+        .limited_max_freq = 1026000,
     },
     [PROFILE_BALANCED] = {
         .boost = 0,
         .boostpulse_duration = 60000,
-        .go_hispeed_load = 80,
-        .go_hispeed_load_off = 90,
+        .go_hispeed_load = 90,
+        .go_hispeed_load_off = 110,
         .hispeed_freq = 918000,
-        .hispeed_freq_off = 702000,
+        .hispeed_freq_off = 918000,
+        .above_hispeed_delay = 90000
         .io_is_busy = 1,
         .min_sample_time = 60000,
         .max_freq_hysteresis = 100000,
-        .target_loads = "80 918000:90 1512000:99",
+        .target_loads = "90 1512000:99",
         .target_loads_off = "95 1512000:99",
         .limited_min_freq = 384000,
         .limited_max_freq = 1512000,
@@ -74,9 +77,10 @@ static power_profile profiles[PROFILE_MAX] = {
         .boost = 1,
         .boostpulse_duration = 0, /* prevent unnecessary write */
         .go_hispeed_load = 50,
-        .go_hispeed_load_off = 50,
+        .go_hispeed_load_off = 110,
         .hispeed_freq = 918000,
         .hispeed_freq_off = 918000,
+        .above_hispeed_delay = 90000
         .io_is_busy = 1,
         .min_sample_time = 60000,
         .max_freq_hysteresis = 100000,
@@ -89,14 +93,15 @@ static power_profile profiles[PROFILE_MAX] = {
         .boost = 0,
         .boostpulse_duration = 0,
         .go_hispeed_load = 90,
-        .go_hispeed_load_off = 90,
-        .hispeed_freq = 787200,
-        .hispeed_freq_off = 787200,
+        .go_hispeed_load_off = 110,
+        .hispeed_freq = 702000,
+        .hispeed_freq_off = 702000,
+        .above_hispeed_delay = 90000
         .io_is_busy = 0,
         .min_sample_time = 60000,
         .max_freq_hysteresis = 100000,
-        .target_loads = "95 1190400:99",
-        .target_loads_off = "95 1190400:99",
+        .target_loads = "95 1512000:99",
+        .target_loads_off = "95 1512000:99",
         .limited_min_freq = 384000,
         .limited_max_freq = 1512000,
     },
