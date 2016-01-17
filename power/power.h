@@ -24,12 +24,10 @@ enum {
 
 typedef struct governor_settings {
     int is_interactive;
-    int boost;
     int boostpulse_duration;
     int go_hispeed_load;
     int go_hispeed_load_off;
     int hispeed_freq;
-    int hispeed_freq_off;
     int timer_rate;
     int timer_rate_off;
     int above_hispeed_delay;
@@ -44,12 +42,10 @@ typedef struct governor_settings {
 
 static power_profile profiles[PROFILE_MAX] = {
     [PROFILE_POWER_SAVE] = {
-        .boost = 0,
         .boostpulse_duration = 0,
         .go_hispeed_load = 90,
-        .go_hispeed_load_off = 110,
+        .go_hispeed_load_off = 101,
         .hispeed_freq = 702000,
-        .hispeed_freq_off = 702000,
         .timer_rate = 20000,
         .timer_rate_off = 50000,
         .above_hispeed_delay = 79000,
@@ -62,12 +58,10 @@ static power_profile profiles[PROFILE_MAX] = {
         .limited_max_freq = 1026000,
     },
     [PROFILE_BALANCED] = {
-        .boost = 0,
         .boostpulse_duration = 60000,
         .go_hispeed_load = 90,
-        .go_hispeed_load_off = 110,
+        .go_hispeed_load_off = 101,
         .hispeed_freq = 918000,
-        .hispeed_freq_off = 918000,
         .timer_rate = 20000,
         .timer_rate_off = 50000,
         .above_hispeed_delay = 79000,
@@ -80,12 +74,10 @@ static power_profile profiles[PROFILE_MAX] = {
         .limited_max_freq = 1512000,
     },
     [PROFILE_HIGH_PERFORMANCE] = {
-        .boost = 1,
         .boostpulse_duration = 0, /* prevent unnecessary write */
-        .go_hispeed_load = 50,
-        .go_hispeed_load_off = 110,
+        .go_hispeed_load = 90,
+        .go_hispeed_load_off = 101,
         .hispeed_freq = 918000,
-        .hispeed_freq_off = 918000,
         .timer_rate = 20000,
         .timer_rate_off = 50000,
         .above_hispeed_delay = 79000,
@@ -94,16 +86,14 @@ static power_profile profiles[PROFILE_MAX] = {
         .max_freq_hysteresis = 100000,
         .target_loads = "80",
         .target_loads_off = "80",
-        .limited_min_freq = 384000,
+        .limited_min_freq = 918000,
         .limited_max_freq = 1512000,
     },
     [PROFILE_BIAS_POWER_SAVE] = {
-        .boost = 0,
         .boostpulse_duration = 0,
         .go_hispeed_load = 90,
-        .go_hispeed_load_off = 110,
+        .go_hispeed_load_off = 101,
         .hispeed_freq = 702000,
-        .hispeed_freq_off = 702000,
         .timer_rate = 20000,
         .timer_rate_off = 50000,
         .above_hispeed_delay = 79000,
