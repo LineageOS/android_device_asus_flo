@@ -21,9 +21,6 @@ on enable-low-power
     write /sys/module/pm_8x60/modes/cpu3/standalone_power_collapse/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu0/power_collapse/idle_enabled 1
 
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis
-    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis
-
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
