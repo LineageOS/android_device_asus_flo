@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,7 @@
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 static int boostpulse_fd = -1;
 
-static int current_power_profile = -1;
-static int requested_power_profile = -1;
+static int current_power_profile = PROFILE_BALANCED;
 
 static int sysfs_write_str(char *path, char *s)
 {
@@ -73,23 +72,12 @@ static int sysfs_write_int(char *path, int value)
     return sysfs_write_str(path, buf);
 }
 
-static bool check_governor(void)
-{
-    struct stat s;
-    int err = stat(INTERACTIVE_PATH, &s);
-    if (err != 0) return false;
-    if (S_ISDIR(s.st_mode)) return true;
-    return false;
-}
-
-static int is_profile_valid(int profile)
-{
-    return profile >= 0 && profile < PROFILE_MAX;
-}
-
 static void power_init(__attribute__((unused)) struct power_module *module)
 {
     ALOGI("%s", __func__);
+
+    sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
+        profiles[current_power_profile].hispeed_freq);
 }
 
 static int boostpulse_open()
@@ -105,17 +93,7 @@ static int boostpulse_open()
 
 static void power_set_interactive(__attribute__((unused)) struct power_module *module, int on)
 {
-    if (!is_profile_valid(current_power_profile)) {
-        ALOGD("%s: no power profile selected yet", __func__);
-        return;
-    }
-
-    // break out early if governor is not interactive
-    if (!check_governor()) return;
-
     if (on) {
-        sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
-                        profiles[current_power_profile].hispeed_freq);
         sysfs_write_int(INTERACTIVE_PATH "go_hispeed_load",
                         profiles[current_power_profile].go_hispeed_load);
         sysfs_write_int(INTERACTIVE_PATH "timer_rate",
@@ -123,12 +101,10 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
         sysfs_write_str(INTERACTIVE_PATH "target_loads",
                         profiles[current_power_profile].target_loads);
     } else {
-        sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
-                        profiles[current_power_profile].hispeed_freq_off);
-        sysfs_write_int(INTERACTIVE_PATH "timer_rate",
-                        profiles[current_power_profile].timer_rate_off);
         sysfs_write_int(INTERACTIVE_PATH "go_hispeed_load",
                         profiles[current_power_profile].go_hispeed_load_off);
+        sysfs_write_int(INTERACTIVE_PATH "timer_rate",
+                        profiles[current_power_profile].timer_rate_off);
         sysfs_write_str(INTERACTIVE_PATH "target_loads",
                         profiles[current_power_profile].target_loads_off);
     }
@@ -136,14 +112,6 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
 
 static void set_power_profile(int profile)
 {
-    if (!is_profile_valid(profile)) {
-        ALOGE("%s: unknown profile: %d", __func__, profile);
-        return;
-    }
-
-    // break out early if governor is not interactive
-    if (!check_governor()) return;
-
     if (profile == current_power_profile)
         return;
 
@@ -160,7 +128,7 @@ static void set_power_profile(int profile)
     sysfs_write_int(INTERACTIVE_PATH "above_hispeed_delay",
                     profiles[profile].above_hispeed_delay);
     sysfs_write_int(INTERACTIVE_PATH "timer_rate",
-                    profiles[current_power_profile].timer_rate);
+                    profiles[profile].timer_rate);
     sysfs_write_int(INTERACTIVE_PATH "io_is_busy",
                     profiles[profile].io_is_busy);
     sysfs_write_int(INTERACTIVE_PATH "min_sample_time",
@@ -186,16 +154,8 @@ static void power_hint(__attribute__((unused)) struct power_module *module,
     switch (hint) {
     case POWER_HINT_LAUNCH_BOOST:
     case POWER_HINT_CPU_BOOST:
-        if (!is_profile_valid(current_power_profile)) {
-            ALOGD("%s: no power profile selected yet", __func__);
-            return;
-        }
-
         if (!profiles[current_power_profile].boostpulse_duration)
             return;
-
-        // break out early if governor is not interactive
-        if (!check_governor()) return;
 
         if (boostpulse_open() >= 0) {
             snprintf(buf, sizeof(buf), "%d", 1);
@@ -215,9 +175,6 @@ static void power_hint(__attribute__((unused)) struct power_module *module,
         pthread_mutex_lock(&lock);
         set_power_profile(*(int32_t *)data);
         pthread_mutex_unlock(&lock);
-        break;
-    case POWER_HINT_LOW_POWER:
-        /* This hint is handled by the framework */
         break;
     default:
         break;
