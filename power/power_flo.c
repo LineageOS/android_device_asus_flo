@@ -86,8 +86,6 @@ static void power_init(__attribute__((unused)) struct power_module *module)
         profiles[current_power_profile].above_hispeed_delay);
     sysfs_write_int(INTERACTIVE_PATH "go_hispeed_load",
         profiles[current_power_profile].go_hispeed_load);
-    sysfs_write_int(INTERACTIVE_PATH "boostpulse_duration",
-        profiles[current_power_profile].boostpulse_duration);
     sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
         profiles[current_power_profile].hispeed_freq);
     sysfs_write_int(INTERACTIVE_PATH "io_is_busy",
@@ -141,8 +139,6 @@ static void set_power_profile(int profile)
 
     ALOGD("%s: setting profile %d", __func__, profile);
 
-    sysfs_write_int(INTERACTIVE_PATH "boostpulse_duration",
-                    profiles[profile].boostpulse_duration);
     sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
                     profiles[profile].hispeed_freq);
     sysfs_write_int(INTERACTIVE_PATH "io_is_busy",
@@ -171,8 +167,13 @@ static void power_hint(__attribute__((unused)) struct power_module *module,
         break;
     case POWER_HINT_LAUNCH_BOOST:
     case POWER_HINT_CPU_BOOST:
-        if (!profiles[current_power_profile].boostpulse_duration)
+        if (current_power_profile != PROFILE_BALANCED)
             return;
+
+        pthread_mutex_lock(&lock);
+        sysfs_write_int(INTERACTIVE_PATH "boostpulse_duration",
+            hint == POWER_HINT_LAUNCH_BOOST ? 2000000 : *(int32_t *) data);
+        pthread_mutex_unlock(&lock);
 
         if (boostpulse_open() >= 0) {
             snprintf(buf, sizeof(buf), "%d", 1);
