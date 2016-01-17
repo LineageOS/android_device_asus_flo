@@ -160,7 +160,7 @@ static void set_power_profile(int profile)
     sysfs_write_int(INTERACTIVE_PATH "above_hispeed_delay",
                     profiles[profile].above_hispeed_delay);
     sysfs_write_int(INTERACTIVE_PATH "timer_rate",
-                    profiles[current_power_profile].timer_rate);
+                    profiles[profile].timer_rate);
     sysfs_write_int(INTERACTIVE_PATH "io_is_busy",
                     profiles[profile].io_is_busy);
     sysfs_write_int(INTERACTIVE_PATH "min_sample_time",
