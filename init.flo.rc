@@ -364,6 +364,7 @@ service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
     class main
     user root
     group root system
+    disabled
 
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start

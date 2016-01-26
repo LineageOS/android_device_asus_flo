@@ -1,4 +1,4 @@
-on post-fs-data
+on enable-low-power
     # Enable Power modes and set the CPU Freq Sampling rates
     write /sys/module/rpm_resources/enable_low_power/L2_cache 1
     write /sys/module/rpm_resources/enable_low_power/pxo 1
@@ -59,3 +59,9 @@ on charger
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 384000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 384000
+
+on boot
+    trigger enable-low-power
+
+on property:dev.bootcomplete=1
+    start mpdecision
