@@ -59,8 +59,10 @@ WIFI_DRIVER_FW_PATH_AP  := "ap"
 # Display
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 PRESENT_TIME_OFFSET_FROM_VSYNC_NS := 3200000
+TARGET_DISPLAY_USE_RETIRE_FENCE := true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_ION := true
+USES_OPENGL_RENDERER := true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
@@ -92,5 +94,8 @@ BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 # CM Hardware
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS += hardware/cyanogen/cmhw
+
+# QCOM display HAL
+$(call project-set-path,qcom-display,hardware/qcom/display-caf/msm8960)
 
 -include vendor/asus/flo/BoardConfigVendor.mk
