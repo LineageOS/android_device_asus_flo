@@ -116,6 +116,10 @@ on boot
     write /proc/sys/net/core/rmem_max  1220608
     write /proc/sys/net/core/wmem_max  1220608
 
+    # CPUFreq limit
+    chown system system /sys/kernel/cpufreq_limit/limited_max_freq
+    chown system system /sys/kernel/cpufreq_limit/limited_min_freq
+
 # msm specific files that need to be created on /data
 on post-fs-data
     chown system system /dev/wcnss_wlan
