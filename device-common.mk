@@ -207,7 +207,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
 	libmmcamera_interface2 \
 	libmmcamera_interface \
-	libqomx_core
+	libqomx_core \
+	Snap
 
 PRODUCT_PACKAGES += \
 	mm-vdec-omx-test \
