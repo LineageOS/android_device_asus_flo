@@ -100,7 +100,6 @@
 /system/lib/libmmcamera_mi1040.so
 /system/lib/libmmcamera_ov5693.so
 /system/lib/libnetmgr.so
-/system/lib/liboemcrypto.so
 /system/lib/libqcci_legacy.so
 /system/lib/libqdi.so
 /system/lib/libqdp.so
