@@ -144,6 +144,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.hwc.mdpcomp.enable=true
 
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.gralloc.cp.level3=true
+
 PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
 PRODUCT_PACKAGES += \
