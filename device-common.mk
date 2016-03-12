@@ -36,11 +36,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     charger_res_images
 
-# Live Wallpapers
-PRODUCT_PACKAGES += \
-        LiveWallpapersPicker \
-        librs_jni
-
 PRODUCT_COPY_FILES += \
 	device/asus/flo/WCNSS_cfg.dat:system/vendor/firmware/wlan/prima/WCNSS_cfg.dat \
 	device/asus/flo/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
@@ -146,14 +141,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
 PRODUCT_PACKAGES += \
-	librs_jni \
-	com.android.future.usb.accessory
-
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-	e2fsck
-
-PRODUCT_PACKAGES += \
 	libgenlock \
 	liboverlay \
 	hwcomposer.msm8960 \
@@ -237,7 +224,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	wifi.interface=wlan0
-	
+
 # Enable AAC 5.1 output
 PRODUCT_PROPERTY_OVERRIDES += \
 	media.aac_51_output_enabled=true
