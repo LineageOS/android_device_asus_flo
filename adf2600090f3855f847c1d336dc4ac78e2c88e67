@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfbec78f_c972517d",
+        "filename": "device-common.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5589
+      },
+      "writtenOn": "2016-03-13T04:56:57Z",
+      "side": 1,
+      "message": "ew",
+      "revId": "adf2600090f3855f847c1d336dc4ac78e2c88e67",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
