@@ -19,7 +19,6 @@ import init.flo.diag.rc
 import init.flo.power.rc
 
 on early-init
-    mount debugfs debugfs /sys/kernel/debug
     chown system system /sys/kernel/debug/kgsl/proc
     symlink /data/tombstones /tombstones
 
