@@ -31,7 +31,6 @@ TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1200
 
 PRODUCT_PACKAGES += \
-    libwpa_client \
     hostapd \
     dhcpcd.conf \
     wpa_supplicant \
@@ -42,11 +41,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     charger_res_images
-
-# Live Wallpapers
-PRODUCT_PACKAGES += \
-        LiveWallpapersPicker \
-        librs_jni
 
 # http://b/15193147
 # TODO(danalbert): Remove this once stlport is dead and gone.
@@ -145,12 +139,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	camera.disable_zsl_mode=1
 
-# Kickstart
-PRODUCT_PACKAGES += \
-	qcks \
-	ks \
-	efsks
-
 #Enable MDP composition by default
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.hwc.mdpcomp.enable=true
@@ -158,17 +146,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
 PRODUCT_PACKAGES += \
-	librs_jni \
-	com.android.future.usb.accessory
-
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-	e2fsck \
-	setup_fs
-
-PRODUCT_PACKAGES += \
 	libgenlock \
-	liboverlay \
 	hwcomposer.msm8960 \
 	gralloc.msm8960 \
 	copybit.msm8960 \
@@ -176,7 +154,6 @@ PRODUCT_PACKAGES += \
 	memtrack.msm8960
 
 PRODUCT_PACKAGES += \
-	alsa.msm8960 \
 	audio.primary.msm8960 \
 	audio.a2dp.default \
 	audio.usb.default \
@@ -197,9 +174,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
 	hci_qcomm_init
 
-PRODUCT_PACKAGES += \
-	power.msm8960
-
 PRODUCT_COPY_FILES += \
 	device/asus/flo/init.flo.bt.sh:system/bin/init.flo.bt.sh
 
@@ -207,34 +181,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.qualcomm.bt.hci_transport=smd
 
 PRODUCT_PACKAGES += \
-	libmmcamera_interface2 \
-	libmmcamera_interface \
-	libqomx_core \
 	Snap
 
 PRODUCT_PACKAGES += \
-	mm-vdec-omx-test \
-	mm-venc-omx-test720p \
-	libdivxdrmdecrypt \
 	libOmxVdec \
 	libOmxVenc \
 	libOmxCore \
-	libstagefrighthw \
-	libc2dcolorconvert
+	libstagefrighthw
 
 # GPS
 PRODUCT_PACKAGES += \
-        libloc_adapter \
-        libloc_eng \
-        libloc_api_v02 \
-        libloc_ds_api \
-        libloc_core \
-        libizat_core \
-        libgeofence \
-        libgps.utils \
         gps.conf \
-        gps.msm8960 \
-        flp.msm8960
+        gps.msm8960
 
 PRODUCT_PACKAGES += \
 	bdAddrLoader \
