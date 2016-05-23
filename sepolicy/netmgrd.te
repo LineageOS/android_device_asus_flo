@@ -11,11 +11,12 @@ allow netmgrd self:capability { setuid setgid net_admin net_raw };
 # Support modprobe??
 dontaudit netmgrd self:capability sys_module;
 
+allowxperm netmgrd self:udp_socket ioctl priv_sock_ioctls;
 allow netmgrd self:udp_socket { create ioctl };
-allow netmgrd self:netlink_socket create_socket_perms;
-allow netmgrd self:netlink_route_socket { create_socket_perms nlmsg_read nlmsg_write };
-allow netmgrd self:packet_socket create_socket_perms;
-allow netmgrd self:rawip_socket create_socket_perms;
+allow netmgrd self:netlink_socket create_socket_perms_no_ioctl;
+allow netmgrd self:netlink_route_socket { create_socket_perms_no_ioctl nlmsg_read nlmsg_write };
+allow netmgrd self:packet_socket create_socket_perms_no_ioctl;
+allow netmgrd self:rawip_socket create_socket_perms_no_ioctl;
 
 # Talk to qmuxd (qmux_radio)
 qmux_socket(netmgrd)
