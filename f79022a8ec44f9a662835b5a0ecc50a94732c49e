@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5faad753_af5e620f",
+        "filename": "setup-makefiles.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1053
+      },
+      "writtenOn": "2016-06-09T15:17:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "5faad753_d8812bfd",
+      "revId": "f79022a8ec44f9a662835b5a0ecc50a94732c49e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5faad753_f8866713",
         "filename": "setup-makefiles.sh",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-06-08T21:16:46Z",
       "side": 0,
       "message": "Hmm, we don\u0027t have such a directory.",
+      "revId": "f79022a8ec44f9a662835b5a0ecc50a94732c49e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_4f9d6eba",
+        "filename": "setup-makefiles.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1053
+      },
+      "writtenOn": "2016-06-09T15:17:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "5faad753_f8866713",
       "revId": "f79022a8ec44f9a662835b5a0ecc50a94732c49e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
