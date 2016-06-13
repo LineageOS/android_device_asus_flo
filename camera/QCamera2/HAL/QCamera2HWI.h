@@ -429,6 +429,8 @@ private:
 
     int mDumpFrmCnt;  // frame dump count
     int mDumpSkipCnt; // frame skip count
+
+    QCameraVideoMemory *mVideoMem;
 };
 
 }; // namespace qcamera
