@@ -490,6 +490,10 @@ void QCamera2HardwareInterface::release_recording_frame(
         return;
     }
     ALOGD("%s: E", __func__);
+
+    //Close and delete duplicated native handle and FD's
+    QCameraVideoMemory::closeNativeHandle(opaque, hw->mStoreMetaDataInFrame > 0);
+
     hw->lockAPI();
     int32_t ret = hw->processAPI(QCAMERA_SM_EVT_RELEASE_RECORIDNG_FRAME, (void *)opaque);
     if (ret == NO_ERROR) {
