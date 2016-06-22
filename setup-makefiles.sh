@@ -4,7 +4,7 @@ VENDOR=asus
 DEVICE=flo
 OUTDIR=vendor/$VENDOR/$DEVICE
 MAKEFILE=../../../$OUTDIR/$DEVICE-vendor-blobs.mk
-YEAR=`date +"%Y"
+YEAR=`date +"%Y"`
 
 (cat << EOF) > $MAKEFILE
 # Copyright (C) $YEAR The CyanogenMod Project
