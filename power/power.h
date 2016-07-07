@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/* Video encode hint optimisations */
+#define VID_ENC_TIMER_RATE 30000
+#define VID_ENC_IO_IS_BUSY 0
+
 enum {
     PROFILE_POWER_SAVE = 0,
     PROFILE_BALANCED,
