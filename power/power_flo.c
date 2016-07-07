@@ -31,6 +31,8 @@
 
 #include "power.h"
 
+#define STATE_ON "state=1"
+
 #define CPUFREQ_LIMIT_PATH "/sys/kernel/cpufreq_limit/"
 #define INTERACTIVE_PATH "/sys/devices/system/cpu/cpufreq/interactive/"
 
@@ -177,6 +179,28 @@ static void set_power_profile(int profile)
     current_power_profile = profile;
 }
 
+static void process_video_encode_hint(void *metadata)
+{
+    int on;
+
+    if (!metadata)
+        return;
+
+    /* Break out early if governor is not interactive */
+    if (!check_governor())
+        return;
+
+    on = !strncmp(metadata, STATE_ON, sizeof(STATE_ON));
+
+    sysfs_write_int(INTERACTIVE_PATH "timer_rate", on ?
+            VID_ENC_TIMER_RATE :
+            profiles[current_power_profile].timer_rate);
+
+    sysfs_write_int(INTERACTIVE_PATH "io_is_busy", on ?
+            VID_ENC_IO_IS_BUSY :
+            profiles[current_power_profile].io_is_busy);
+}
+
 static void power_hint(__attribute__((unused)) struct power_module *module,
                        power_hint_t hint, void *data)
 {
@@ -217,8 +241,10 @@ static void power_hint(__attribute__((unused)) struct power_module *module,
         set_power_profile(*(int32_t *)data);
         pthread_mutex_unlock(&lock);
         break;
-    case POWER_HINT_LOW_POWER:
-        /* This hint is handled by the framework */
+    case POWER_HINT_VIDEO_ENCODE:
+        pthread_mutex_lock(&lock);
+        process_video_encode_hint(data);
+        pthread_mutex_unlock(&lock);
         break;
     default:
         break;
