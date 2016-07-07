@@ -159,7 +159,7 @@ static void set_power_profile(int profile)
                     profiles[profile].go_hispeed_load);
     sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
                     profiles[profile].hispeed_freq);
-    sysfs_write_int(INTERACTIVE_PATH "above_hispeed_delay",
+    sysfs_write_str(INTERACTIVE_PATH "above_hispeed_delay",
                     profiles[profile].above_hispeed_delay);
     sysfs_write_int(INTERACTIVE_PATH "timer_rate",
                     profiles[profile].timer_rate);
