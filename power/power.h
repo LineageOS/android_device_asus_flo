@@ -36,7 +36,7 @@ typedef struct governor_settings {
     int hispeed_freq_off;
     int timer_rate;
     int timer_rate_off;
-    int above_hispeed_delay;
+    char *above_hispeed_delay;
     int io_is_busy;
     int min_sample_time;
     int max_freq_hysteresis;
