@@ -22,6 +22,8 @@ on early-init
     chown system system /sys/kernel/debug/kgsl/proc
     symlink /data/tombstones /tombstones
     write /sys/devices/virtual/graphics/fb0/rgb "32768 32768 32768"
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 512
+    write /sys/block/mmcblk0/queue/scheduler noop
 
 on init
     # Support legacy paths
@@ -136,6 +138,10 @@ on boot
 
     # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
+
+on property:sys.boot_completed=1
+    setprop sys.io.scheduler bfq
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 256
 
 on post-fs
     # Start devices by sysfs trigger
