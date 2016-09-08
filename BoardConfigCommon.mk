@@ -125,3 +125,6 @@ EXTENDED_FONT_FOOTPRINT := true
 # CM Hardware
 BOARD_HARDWARE_CLASS += \
     hardware/cyanogen/cmhw
+
+# Recovery
+TARGET_RECOVERY_DENSITY := hdpi
