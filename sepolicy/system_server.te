@@ -20,3 +20,7 @@ allow system_server sensors_data_file:file r_file_perms;
 
 allow system_server persist_file:dir r_dir_perms;
 allow system_server sensors_device:chr_file rw_file_perms;
+
+# use MSM ipc router ioctls
+allow system_server self:socket ioctl;
+allowxperm system_server self:socket ioctl msm_sock_ipc_ioctls;
