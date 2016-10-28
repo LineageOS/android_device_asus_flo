@@ -49,7 +49,6 @@ etc/firmware/vidc.b03
 etc/firmware/vidc.mdt
 etc/firmware/vidcfw.elf
 etc/firmware/vidc_1080p.fw
-etc/gps.conf
 vendor/lib/egl/eglsubAndroid.so
 vendor/lib/egl/libEGL_adreno.so
 vendor/lib/egl/libGLESv1_CM_adreno.so
@@ -57,7 +56,6 @@ vendor/lib/egl/libGLESv2_adreno.so
 vendor/lib/egl/libplayback_adreno.so
 vendor/lib/egl/libq3dtools_adreno.so
 lib/hw/flp.msm8960.so
-lib/hw/gps.msm8960.so
 lib/hw/sensors.msm8960.so
 lib/libacdbdata.so
 lib/libacdbloader.so
@@ -85,14 +83,11 @@ lib/libdss.so
 lib/libdsucsd.so
 lib/libdsutils.so
 lib/libDxHdcp.so
-lib/libgps.utils.so
 vendor/lib/libgsl.so
 lib/libI420colorconvert.so
 lib/libidl.so
 vendor/lib/libllvm-qcom.so
 vendor/lib/libbccQTI.so
-lib/libloc_core.so
-lib/libloc_eng.so
 lib/libmm-abl.so
 lib/libmm-color-convertor.so
 lib/libmmcamera2_stats_algorithm.so
