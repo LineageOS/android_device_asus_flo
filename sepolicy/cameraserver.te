@@ -1,0 +1,4 @@
+unix_socket_send(cameraserver, camera, camera);
+unix_socket_send(mediaserver, mpdecision, mpdecision);
+
+allow cameraserver sysfs_cameraserver:file r_file_perms;

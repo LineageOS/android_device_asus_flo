@@ -152,3 +152,6 @@
 # Sysfs files used by surfaceflinger
 /sys/devices/virtual/graphics/fb1/format_3d -- u:object_r:sysfs_surfaceflinger:s0
 /sys/devices/virtual/graphics/fb1/hpd       -- u:object_r:sysfs_surfaceflinger:s0
+
+# Sysfs files used by cameraserver
+/sys/devices/system/soc/soc0/id				-- u:object_r:sysfs_cameraserver:s0
