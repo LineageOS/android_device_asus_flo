@@ -362,7 +362,7 @@ service thermald /system/bin/thermald
 service mpdecision /system/bin/mpdecision --avg_comp
     class main
     user root
-    group root system
+    group root readproc system
     disabled
 
 service qcamerasvr /system/bin/mm-qcamera-daemon
