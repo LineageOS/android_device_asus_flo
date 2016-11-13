@@ -32,7 +32,7 @@ LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
 LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include/media
 LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
-LOCAL_C_INCLUDES += $(call project-path-for,qcom-media)/msm8974/mm-core/inc
+LOCAL_C_INCLUDES += $(call project-path-for,qcom-media)/mm-core/inc
 
 LOCAL_CFLAGS += -Wall -Werror
 
