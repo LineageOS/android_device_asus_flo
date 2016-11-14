@@ -1,0 +1,1 @@
+allow hci_attach persist_file:dir search;
