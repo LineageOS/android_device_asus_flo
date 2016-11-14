@@ -49,54 +49,54 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES +=  libstlport
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/WCNSS_cfg.dat:system/vendor/firmware/wlan/prima/WCNSS_cfg.dat \
-	device/asus/flo/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
-	device/asus/flo/WCNSS_qcom_wlan_nv_flo.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_flo.bin \
-	device/asus/flo/WCNSS_qcom_wlan_nv_deb.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_deb.bin \
-	device/asus/flo/init.flo.wifi.sh:system/bin/init.flo.wifi.sh
+	device/asus/flo/wifi/WCNSS_cfg.dat:system/vendor/firmware/wlan/prima/WCNSS_cfg.dat \
+	device/asus/flo/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
+	device/asus/flo/wifi/WCNSS_qcom_wlan_nv_flo.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_flo.bin \
+	device/asus/flo/wifi/WCNSS_qcom_wlan_nv_deb.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_deb.bin \
+	device/asus/flo/wifi/init.flo.wifi.sh:system/bin/init.flo.wifi.sh
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/audio_policy.conf:system/etc/audio_policy.conf
+	device/asus/flo/configs/audio_policy.conf:system/etc/audio_policy.conf
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/mixer_paths.xml:system/etc/mixer_paths.xml \
-	device/asus/flo/sec_config:system/etc/sec_config
+	device/asus/flo/configs/mixer_paths.xml:system/etc/mixer_paths.xml \
+	device/asus/flo/configs/sec_config:system/etc/sec_config
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/thermald-flo.conf:system/etc/thermald.conf
+	device/asus/flo/configs/thermald-flo.conf:system/etc/thermald.conf
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/init.flo.power.rc:root/init.recovery.flo.rc \
-	device/asus/flo/init.flo.power.rc:root/init.flo.power.rc \
-	device/asus/flo/init.flo.usb.rc:root/init.flo.usb.rc \
-	device/asus/flo/ueventd.flo.rc:root/ueventd.flo.rc \
-	device/asus/flo/media_profiles.xml:system/etc/media_profiles.xml \
+	device/asus/flo/rootdir/init.flo.power.rc:root/init.recovery.flo.rc \
+	device/asus/flo/rootdir/init.flo.power.rc:root/init.flo.power.rc \
+	device/asus/flo/rootdir/init.flo.usb.rc:root/init.flo.usb.rc \
+	device/asus/flo/rootdir/ueventd.flo.rc:root/ueventd.flo.rc \
+	device/asus/flo/configs/media_profiles.xml:system/etc/media_profiles.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
-	device/asus/flo/media_codecs.xml:system/etc/media_codecs.xml \
-	device/asus/flo/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
+	device/asus/flo/configs/media_codecs.xml:system/etc/media_codecs.xml \
+	device/asus/flo/configs/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
 
 PRODUCT_COPY_FILES += \
 	device/asus/flo/kickstart_checker.sh:system/bin/kickstart_checker.sh
 
 # Prebuilt kl and kcm keymaps
 PRODUCT_COPY_FILES += \
-	device/asus/flo/apq8064-tabla-snd-card_Button_Jack.kl:system/usr/keylayout/apq8064-tabla-snd-card_Button_Jack.kl \
-	device/asus/flo/hs_detect.kl:system/usr/keylayout/hs_detect.kl \
-	device/asus/flo/pmic8xxx_pwrkey.kl:system/usr/keylayout/pmic8xxx_pwrkey.kl \
-	device/asus/flo/keypad_8064.kl:system/usr/keylayout/keypad_8064.kl \
-	device/asus/flo/apq8064-tabla-snd-card_Button_Jack.kcm:system/usr/keychars/apq8064-tabla-snd-card_Button_Jack.kcm \
-	device/asus/flo/hs_detect.kcm:system/usr/keychars/hs_detect.kcm \
-	device/asus/flo/keypad_8064.kcm:system/usr/keychars/keypad_8064.kcm \
-	device/asus/flo/pmic8xxx_pwrkey.kcm:system/usr/keychars/pmic8xxx_pwrkey.kcm
+	device/asus/flo/configs/keylayout/apq8064-tabla-snd-card_Button_Jack.kl:system/usr/keylayout/apq8064-tabla-snd-card_Button_Jack.kl \
+	device/asus/flo/configs/keylayout/hs_detect.kl:system/usr/keylayout/hs_detect.kl \
+	device/asus/flo/configs/keylayout/pmic8xxx_pwrkey.kl:system/usr/keylayout/pmic8xxx_pwrkey.kl \
+	device/asus/flo/configs/keylayout/keypad_8064.kl:system/usr/keylayout/keypad_8064.kl \
+	device/asus/flo/configs/keylayout/apq8064-tabla-snd-card_Button_Jack.kcm:system/usr/keychars/apq8064-tabla-snd-card_Button_Jack.kcm \
+	device/asus/flo/configs/keylayout/hs_detect.kcm:system/usr/keychars/hs_detect.kcm \
+	device/asus/flo/configs/keylayout/keypad_8064.kcm:system/usr/keychars/keypad_8064.kcm \
+	device/asus/flo/configs/keylayout/pmic8xxx_pwrkey.kcm:system/usr/keychars/pmic8xxx_pwrkey.kcm
 
 # Prebuilt input device calibration files
 PRODUCT_COPY_FILES += \
-	device/asus/flo/touch_dev.idc:system/usr/idc/touch_dev.idc
+	device/asus/flo/configs/touch_dev.idc:system/usr/idc/touch_dev.idc
 
 # TP idc file
 PRODUCT_COPY_FILES += \
-	device/asus/flo/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc
+	device/asus/flo/configs/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -119,10 +119,10 @@ PRODUCT_COPY_FILES += \
 # Modem debugger
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
 PRODUCT_COPY_FILES += \
-    device/asus/flo/init.flo.diag.rc.userdebug:root/init.flo.diag.rc
+    device/asus/flo/rootdir/init.flo.diag.rc.userdebug:root/init.flo.diag.rc
 else
 PRODUCT_COPY_FILES += \
-    device/asus/flo/init.flo.diag.rc.user:root/init.flo.diag.rc
+    device/asus/flo/rootdir/init.flo.diag.rc.user:root/init.flo.diag.rc
 endif
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -171,7 +171,7 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libqcomvoiceprocessingdescriptors
 PRODUCT_COPY_FILES += \
-    device/asus/flo/audio_effects.conf:system/vendor/etc/audio_effects.conf
+    device/asus/flo/configs/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
 # Monitor device rotation for speaker channel swap
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -181,7 +181,7 @@ PRODUCT_PACKAGES += \
 	hci_qcomm_init
 
 PRODUCT_COPY_FILES += \
-	device/asus/flo/init.flo.bt.sh:system/bin/init.flo.bt.sh
+	device/asus/flo/rootdir/init.flo.bt.sh:system/bin/init.flo.bt.sh
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.qualcomm.bt.hci_transport=smd
@@ -257,7 +257,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
-    device/asus/flo/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-    device/asus/flo/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
+    device/asus/flo/configs/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
+    device/asus/flo/configs/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
 
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
