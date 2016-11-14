@@ -16,7 +16,6 @@
 
 import init.flo.power.rc
 import init.flo.usb.rc
-import init.flo.diag.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
