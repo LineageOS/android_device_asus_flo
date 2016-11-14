@@ -14,24 +14,12 @@
 # limitations under the License.
 #
 
-# This file includes all definitions that apply to ALL msm8960 devices, and
-# are also specific to msm8960 devices
-#
-# Everything in this directory will become public
-
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.carrier=wifi-only
 
-PRODUCT_COPY_FILES += \
-    device/asus/flo/fstab.flo:root/fstab.flo \
-    device/asus/flo/init.flo.rc:root/init.flo.rc
-
+# Camera
 PRODUCT_PACKAGES += \
     camera.flo
-
-# NFC
-PRODUCT_PACKAGES += \
-    nfc_nci.bcm2079x.default
 
 # the actual meat of the device-specific product definition
 $(call inherit-product, device/asus/flo/device-common.mk)
