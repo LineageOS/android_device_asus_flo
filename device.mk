@@ -24,8 +24,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.carrier=wifi-only
 
 PRODUCT_COPY_FILES += \
-    device/asus/flo/fstab.flo:root/fstab.flo \
-    device/asus/flo/init.flo.rc:root/init.flo.rc
+    device/asus/flo/rootdir/fstab.flo:root/fstab.flo \
+    device/asus/flo/rootdir/init.flo.rc:root/init.flo.rc
 
 PRODUCT_PACKAGES += \
     camera.flo
