@@ -95,7 +95,6 @@ lib/libmmcamera_image_stab.so
 lib/libmmcamera_mi1040.so
 lib/libmmcamera_ov5693.so
 lib/libnetmgr.so
-lib/liboemcrypto.so
 lib/libqcci_legacy.so
 lib/libqdi.so
 lib/libqdp.so
