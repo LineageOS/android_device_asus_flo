@@ -17,7 +17,8 @@
 set -e
 
 VENDOR=asus
-DEVICE=flo
+DEVICE_COMMON=flo
+DEVICE=${DEVICE:-flo}
 
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -49,8 +50,15 @@ else
 fi
 
 # Initialize the helper
-setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" true
 
 extract "$MY_DIR"/proprietary-blobs.txt "$SRC"
+
+if [ "$DEVICE" '!=' "$DEVICE_COMMON" ]; then
+	# Reinitialize the helper for the device-specific blobs
+	setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
+
+	extract "$MY_DIR"/../$DEVICE/proprietary-blobs.txt "$SRC"
+fi
 
 "$MY_DIR"/setup-makefiles.sh

@@ -18,6 +18,7 @@
 # are also specific to msm8960 devices
 #
 # Everything in this directory will become public
+$(call inherit-product-if-exists, vendor/asus/flo/flo-vendor.mk)
 
 # This device is xhdpi.  However the platform doesn't
 # currently contain all of the bitmaps at xhdpi density so
@@ -262,3 +263,6 @@ PRODUCT_COPY_FILES += \
     device/asus/flo/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
 
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
+
+# inherit from the non-open-source side, if present
+$(call inherit-product-if-exists, vendor/asus/flo/device-vendor.mk)
