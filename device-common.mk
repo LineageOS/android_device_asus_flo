@@ -262,3 +262,6 @@ PRODUCT_COPY_FILES += \
     device/asus/flo/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
 
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
+
+# inherit from the non-open-source side, if present
+$(call inherit-product-if-exists, vendor/asus/flo/device-vendor.mk)
