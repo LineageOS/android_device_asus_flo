@@ -129,3 +129,5 @@ BOARD_HARDWARE_CLASS += \
 
 # Recovery
 TARGET_RECOVERY_DENSITY := hdpi
+
+-include vendor/asus/flo/BoardConfigVendor.mk
