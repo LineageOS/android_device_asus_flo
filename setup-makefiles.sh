@@ -17,7 +17,8 @@
 set -e
 
 VENDOR=asus
-DEVICE=flo
+DEVICE_COMMON=flo
+DEVICE=${DEVICE:-flo}
 
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -33,13 +34,29 @@ fi
 . "$HELPER"
 
 # Initialize the helper
-setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" true
 
 # Copyright headers and guards
-write_headers
+write_headers "flo deb"
 
 # The standard blobs
 write_makefiles "$MY_DIR"/proprietary-blobs.txt
 
 # Done
 write_footers
+
+if [ "$DEVICE" '!=' "$DEVICE_COMMON" ]; then
+	# Reinitialize the helper for the device-specific blobs
+	setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
+
+	# Copyright headers and guards
+	write_headers
+
+	# The device-specific blobs
+	write_makefiles "$MY_DIR"/../$DEVICE/proprietary-blobs.txt
+
+	# Done
+	write_footers
+fi
+
+

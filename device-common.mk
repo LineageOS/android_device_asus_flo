@@ -18,6 +18,7 @@
 # are also specific to msm8960 devices
 #
 # Everything in this directory will become public
+$(call inherit-product-if-exists, vendor/asus/flo/flo-vendor.mk)
 
 # This device is xhdpi.  However the platform doesn't
 # currently contain all of the bitmaps at xhdpi density so
