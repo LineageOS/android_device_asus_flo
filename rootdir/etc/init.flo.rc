@@ -40,11 +40,13 @@ on fs
     mount_all ./fstab.flo
     swapon_all ./fstab.flo
     restorecon_recursive /persist
-    write /sys/kernel/boot_adsp/boot 1
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
+
+    # Busy loop to wait for devices booted by devstart_sh just in case device not ready
+    exec - root root system -- /vendor/bin/init.qcom.devwait.sh
 
 on boot
     #Create QMUX deamon socket area
@@ -126,6 +128,9 @@ on boot
     # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
+on post-fs
+    # Start devices by sysfs trigger
+    start devstart_sh
 
 # msm specific files that need to be created on /data
 on post-fs-data
@@ -342,7 +347,12 @@ service diag_mdlog /vendor/bin/diag_mdlog -s 100
     class late_start
     disabled
 
-
+service devstart_sh /vendor/bin/init.qcom.devstart.sh
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
 
 # on property:gsm.sim.state=READY
 #    start diag_mdlog

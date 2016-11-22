@@ -24,3 +24,6 @@ type persist_wifi_file, file_type;
 type sysfs_rmnet, fs_type, sysfs_type;
 type sysfs_mpdecision, fs_type, sysfs_type;
 type sysfs_surfaceflinger, fs_type, sysfs_type;
+
+#type for devstart
+type sysfs_audio, sysfs_type, fs_type;
