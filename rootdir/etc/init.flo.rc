@@ -22,6 +22,7 @@ on early-init
     mount debugfs debugfs /sys/kernel/debug
     chown system system /sys/kernel/debug/kgsl/proc
     symlink /data/tombstones /tombstones
+    write /sys/devices/virtual/graphics/fb0/rgb "32768 32768 32768"
 
 on init
     # Set permissions for persist partition
