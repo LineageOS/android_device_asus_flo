@@ -179,8 +179,8 @@ PRODUCT_PACKAGES += \
     ueventd.flo.rc
 
 # Sensors
-#PRODUCT_PACKAGES += \
-#    android.hardware.sensors@1.0-impl 
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl
 
 # stlport
 PRODUCT_PACKAGES += \
@@ -197,6 +197,7 @@ PRODUCT_COPY_FILES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0-service \
     conn_init \
     dhcpcd.conf \
     hostapd \
