@@ -120,6 +120,10 @@ on boot
     chown system system /sys/kernel/cpufreq_limit/limited_max_freq
     chown system system /sys/kernel/cpufreq_limit/limited_min_freq
 
+    # Wifi firmware reload path
+    chown wifi wifi /sys/module/wlan/parameters/fwpath
+
+
 # msm specific files that need to be created on /data
 on post-fs-data
     chown system system /dev/wcnss_wlan
