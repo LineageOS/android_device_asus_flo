@@ -55,6 +55,9 @@ on boot
     # Allow QMUX daemon to assign port open wait time
     chown radio radio /sys/devices/virtual/hsicctl/hsicctl0/modem_wait
 
+    # java.io.FileNotFoundException: /proc/cmdline: open failed: EACCES (Permission denied)
+    chmod 0644 /proc/cmdline
+
     #port-bridge
     chmod 0660 /dev/smd0
     chown system system /dev/smd0
@@ -248,17 +251,19 @@ service qmuxd /system/bin/qmuxd
 
 service ks_checker /system/bin/kickstart_checker.sh
     class core
+    group system
     oneshot
 
 service kickstart /system/bin/qcks -i /firmware/image/ -r /data/tombstones/mdm/
     class core
     user system
-    group system
+    group system wakelock
     disabled
     oneshot
 
 on property:gsm.radio.kickstart=on
     start kickstart
+    setprop gsm.radio.kickstart running
 
 on property:gsm.radio.kickstart=off
     stop kickstart
