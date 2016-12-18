@@ -24,4 +24,5 @@ PRODUCT_PACKAGES += \
 # the actual meat of the device-specific product definition
 $(call inherit-product, device/asus/flo/device-common.mk)
 
-DEVICE_PACKAGE_OVERLAYS := device/asus/flo/overlay
+# overlays that are not shared with deb
+DEVICE_PACKAGE_OVERLAYS += device/asus/flo/overlay
