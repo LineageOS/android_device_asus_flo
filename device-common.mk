@@ -132,6 +132,9 @@ PRODUCT_PACKAGES += \
     libOmxCore \
     libstagefrighthw
 
+# Overlays
+DEVICE_PACKAGE_OVERLAYS := device/asus/flo/overlay-common
+
 # Permissions/features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
