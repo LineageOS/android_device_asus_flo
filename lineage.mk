@@ -23,7 +23,7 @@ $(call inherit-product, device/asus/flo/device.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := flo
-PRODUCT_NAME := cm_flo
+PRODUCT_NAME := lineage_flo
 PRODUCT_BRAND := google
 PRODUCT_MODEL := Nexus 7
 PRODUCT_MANUFACTURER := asus
