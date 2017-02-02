@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_7daab971",
+        "filename": "rootdir/etc/init.flo.rc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5774
+      },
+      "writtenOn": "2017-02-02T00:18:13Z",
+      "side": 1,
+      "message": "Should probably do something like this instead\nhttps://review.cyanogenmod.org/#/c/168146/",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "549e73c716d648712fb973eeac5c16b331ac4e7a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
