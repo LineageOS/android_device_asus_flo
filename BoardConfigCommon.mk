@@ -110,6 +110,10 @@ HAVE_ADRENO_SOURCE:= false
 
 BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 
+# Media HAL
+BOARD_GLOBAL_CFLAGS += -DQCOM_BSP_LEGACY
+BOARD_GLOBAL_CPPFLAGS += -DQCOM_BSP_LEGACY
+
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
 
