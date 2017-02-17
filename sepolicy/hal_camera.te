@@ -1,0 +1,7 @@
+unix_socket_send(hal_camera, camera, camera);
+unix_socket_send(hal_camera, mpdecision, mpdecision);
+
+allow hal_camera sysfs:file r_file_perms;
+
+# for libmmjpeg
+allow hal_camera system_file:file execmod;
