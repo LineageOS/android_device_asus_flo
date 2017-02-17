@@ -328,7 +328,7 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
         delete m_pJpegOutputMem;
         m_pJpegOutputMem = NULL;
     }
-    m_pJpegOutputMem = new QCameraStreamMemory(m_parent->mGetMemory,
+    m_pJpegOutputMem = new QCameraStreamMemory(m_parent->mGetMemory, m_parent->mCallbackCookie,
                                                QCAMERA_ION_USE_CACHE);
     if (NULL == m_pJpegOutputMem) {
         ret = NO_MEMORY;
