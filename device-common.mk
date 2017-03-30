@@ -139,6 +139,10 @@ PRODUCT_PACKAGES += \
     libOmxCore \
     libstagefrighthw
 
+# Default OMX service to non-Treble
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.media.treble_omx=false
+
 # Permissions/features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
@@ -175,8 +179,8 @@ PRODUCT_PACKAGES += \
     ueventd.flo.rc
 
 # Sensors
-PRODUCT_PACKAGES += \
-    android.hardware.sensors@1.0-impl 
+#PRODUCT_PACKAGES += \
+#    android.hardware.sensors@1.0-impl 
 
 # stlport
 PRODUCT_PACKAGES += \
