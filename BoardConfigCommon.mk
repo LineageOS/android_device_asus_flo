@@ -130,4 +130,7 @@ BOARD_HARDWARE_CLASS += \
 # Recovery
 TARGET_RECOVERY_DENSITY := hdpi
 
+# Device manifest
+DEVICE_MANIFEST_FILE := device/asus/flo/manifest.xml
+
 -include vendor/asus/flo/BoardConfigVendor.mk

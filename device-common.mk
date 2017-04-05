@@ -93,10 +93,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl
 
-# HIDL
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/manifest.xml:system/vendor/manifest.xml
-
 # IPC router config
 PRODUCT_COPY_FILES += \
     device/asus/flo/configs/sec_config:system/etc/sec_config
@@ -189,7 +185,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.power@1.0-impl \
     power.flo
-
 
 # Ramdisk
 PRODUCT_PACKAGES += \
