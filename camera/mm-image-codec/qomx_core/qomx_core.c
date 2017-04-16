@@ -32,8 +32,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 
 #include "qomx_core.h"
 
-#define BUFF_SIZE 255
-
 static omx_core_t *g_omxcore;
 
 //Map the library name with the component name
@@ -159,7 +157,6 @@ OMX_API OMX_ERRORTYPE OMX_APIENTRY OMX_GetHandle(
 {
   OMX_ERRORTYPE rc = OMX_ErrorNone;
   int comp_idx = 0, inst_idx = 0;
-  char libName[BUFF_SIZE] = {0};
   void *p_obj = NULL;
   OMX_COMPONENTTYPE *p_comp = NULL;
   omx_core_component_t *p_core_comp = NULL;

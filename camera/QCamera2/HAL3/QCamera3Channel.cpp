@@ -50,8 +50,6 @@ using namespace android;
 namespace qcamera {
 static const char ExifAsciiPrefix[] =
     { 0x41, 0x53, 0x43, 0x49, 0x49, 0x0, 0x0, 0x0 };          // "ASCII\0\0\0"
-static const char ExifUndefinedPrefix[] =
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };   // "\0\0\0\0\0\0\0\0"
 
 #define GPS_PROCESSING_METHOD_SIZE       101
 #define EXIF_ASCII_PREFIX_SIZE           8   //(sizeof(ExifAsciiPrefix))
@@ -774,7 +772,7 @@ int32_t QCamera3MetadataChannel::registerBuffers(uint32_t /*num_buffers*/,
 
 void QCamera3MetadataChannel::streamCbRoutine(
                         mm_camera_super_buf_t *super_frame,
-                        QCamera3Stream *stream)
+                        QCamera3Stream *stream __unused)
 {
     uint32_t requestNumber = 0;
     if (super_frame == NULL || super_frame->num_bufs != 1) {
@@ -1648,20 +1646,16 @@ QCamera3Exif *QCamera3PicChannel::getExifData()
                    1,
                    (void *)&(isoSpeed));
 
-    rat_t sensorExpTime, temp;
+    rat_t sensorExpTime;
     rc = getExifExpTimeInfo(&sensorExpTime, (int64_t)mJpegSettings->sensor_exposure_time);
-    if(sensorExpTime.denom <= 0) {// avoid zero-divide problem
-        sensorExpTime.denom  = 0.01668; // expoure time will be 1/60 s
-        uint16_t temp2 = (uint16_t)(sensorExpTime.denom <= 0 * 100000);
-        temp2 = (uint16_t)(100000 / temp2);
-        temp.num = 1;
-        temp.denom = temp2;
-        memcpy(&sensorExpTime, &temp, sizeof(sensorExpTime));
+    if (rc == NO_ERROR) {
+        exif->addEntry(EXIFTAGID_EXPOSURE_TIME,
+                        EXIF_LONG,
+                        1,
+                        (void *) &(sensorExpTime.denom));
+    } else {
+        ALOGE("%s: getExifExpTimeInfo failed", __func__);
     }
-    exif->addEntry(EXIFTAGID_EXPOSURE_TIME,
-                    EXIF_LONG,
-                    1,
-                    (void *) &(sensorExpTime.denom));
 
     if (strlen(mJpegSettings->gps_processing_method) > 0) {
         char gpsProcessingMethod[EXIF_ASCII_PREFIX_SIZE + GPS_PROCESSING_METHOD_SIZE];
@@ -1977,7 +1971,8 @@ QCamera3ReprocessChannel::QCamera3ReprocessChannel() :
  *
  * RETURN     : none
  *==========================================================================*/
-int32_t QCamera3ReprocessChannel::registerBuffers(uint32_t num_buffers, buffer_handle_t **buffers)
+int32_t QCamera3ReprocessChannel::registerBuffers(uint32_t num_buffers __unused,
+                                                  buffer_handle_t **buffers __unused)
 {
    return 0;
 }

@@ -8,7 +8,7 @@ include $(CLEAR_VARS)
 LOCAL_PATH := $(OMX_CORE_PATH)
 LOCAL_MODULE_TAGS := optional
 
-omx_core_defines:= -Werror \
+omx_core_defines:= -Wall -Werror \
                    -g -O0
 
 LOCAL_CFLAGS := $(omx_core_defines)

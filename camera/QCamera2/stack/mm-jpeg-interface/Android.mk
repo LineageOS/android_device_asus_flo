@@ -26,6 +26,8 @@ LOCAL_SRC_FILES := \
     src/mm_jpeg.c \
     src/mm_jpeg_interface.c
 
+LOCAL_CFLAGS += -Wall -Werror
+
 LOCAL_MODULE           := libmmjpeg_interface
 LOCAL_SHARED_LIBRARIES := libdl libcutils liblog libqomx_core
 LOCAL_MODULE_TAGS := optional

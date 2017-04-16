@@ -30,6 +30,7 @@
 #include "mm_jpeg_dbg.h"
 #include "mm_jpeg.h"
 #include <errno.h>
+#include <stdlib.h>
 
 
 #define LOWER(a)               ((a) & 0xFFFF)
