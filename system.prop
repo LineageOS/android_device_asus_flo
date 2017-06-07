@@ -1,6 +1,7 @@
 # Bluetooth
 vendor.qcom.bluetooth.soc=pronto
 ro.qualcomm.bt.hci_transport=smd
+ro.bluetooth.hfp.ver=1.6
 
 # Audio
 # Monitor device rotation for speaker channel swap
