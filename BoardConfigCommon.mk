@@ -81,6 +81,9 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 880803840 # 840M
 #Reduce space taken by the journal
 BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
 
+# Use mke2fs to create ext4 images
+TARGET_USES_MKE2FS := true
+
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
