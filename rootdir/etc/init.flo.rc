@@ -38,7 +38,6 @@ on init
 
 on fs
     mount_all ./fstab.flo
-    swapon_all ./fstab.flo
     restorecon_recursive /persist
 
 on early-boot
@@ -219,6 +218,10 @@ on post-fs-data
 
     # adjust vibrator amplitude
     write /sys/class/timed_output/vibrator/amp 70
+
+on property:sys.boot_completed=1
+    # Enable ZRAM on boot_complete
+    swapon_all ./fstab.flo
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class main
