@@ -20,6 +20,8 @@ VENDOR=asus
 DEVICE_COMMON=flo
 DEVICE=${DEVICE:-flo}
 
+INITIAL_COPYRIGHT_YEAR=2013
+
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
