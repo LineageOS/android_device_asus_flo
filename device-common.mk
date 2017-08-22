@@ -76,6 +76,10 @@ PRODUCT_PACKAGES += \
     gps.conf \
     gps.msm8960
 
+# HIDL
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/manifest.xml:system/vendor/manifest.xml
+
 # IPC router config
 PRODUCT_COPY_FILES += \
     device/asus/flo/configs/sec_config:system/etc/sec_config
