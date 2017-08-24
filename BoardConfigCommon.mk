@@ -28,7 +28,7 @@ TARGET_NO_BOOTLOADER := true
 BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_PAGESIZE := 2048
 # BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=msm8960 maxcpus=2
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=flo user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=flo user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += vmalloc=340M
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 TARGET_KERNEL_SOURCE := kernel/google/msm
@@ -108,7 +108,7 @@ USE_DEVICE_SPECIFIC_CAMERA:= true
 
 HAVE_ADRENO_SOURCE:= false
 
-BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
+#BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 
 # Media HAL
 BOARD_GLOBAL_CFLAGS += -DQCOM_BSP_LEGACY
