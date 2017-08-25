@@ -27,6 +27,8 @@ PRODUCT_AAPT_PREBUILT_DPI := hdpi
 
 # Audio
 PRODUCT_PACKAGES += \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl \
     audio.primary.msm8960 \
     audio.a2dp.default \
     audio.usb.default \
@@ -60,6 +62,9 @@ PRODUCT_PACKAGES += \
 
 # Graphics
 PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.mapper@2.0-impl \
     libgenlock \
     hwcomposer.msm8960 \
     gralloc.msm8960 \
@@ -86,6 +91,10 @@ PRODUCT_COPY_FILES += \
     device/asus/flo/keylayout/keypad_8064.kcm:system/usr/keychars/keypad_8064.kcm \
     device/asus/flo/keylayout/pmic8xxx_pwrkey.kcm:system/usr/keychars/pmic8xxx_pwrkey.kcm
 
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl
+
 # Keystore
 PRODUCT_PACKAGES += \
     keystore.msm8960
@@ -96,6 +105,7 @@ PRODUCT_COPY_FILES += \
 
 # Lights
 PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-impl \
     lights.msm8960
 
 # Media
@@ -111,6 +121,7 @@ PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
 # NFC
 PRODUCT_PACKAGES += \
+    android.hardware.nfc@1.0-impl \
     nfc_nci.bcm2079x.default \
     libnfc-nci \
     libnfc_nci_jni \
@@ -150,6 +161,7 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
+    android.hardware.power@1.0-impl \
     power.flo
 
 # Ramdisk
@@ -161,6 +173,10 @@ PRODUCT_PACKAGES += \
     init.recovery.flo.rc \
     ueventd.rc \
     ueventd.flo.rc
+
+# Sensors
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl 
 
 # stlport
 PRODUCT_PACKAGES += \
@@ -197,7 +213,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libqcomvoiceprocessingdescriptors
-
 
 # Dalvik/HWUI
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
