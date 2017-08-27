@@ -200,6 +200,7 @@ PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
     conn_init \
     dhcpcd.conf \
+    wificond \
     hostapd \
     libwfcu \
     p2p_supplicant_overlay.conf \
