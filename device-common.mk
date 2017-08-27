@@ -188,8 +188,8 @@ PRODUCT_PACKAGES += \
     ueventd.flo.rc
 
 # Sensors
-PRODUCT_PACKAGES += \
-    android.hardware.sensors@1.0-impl
+#PRODUCT_PACKAGES += \
+#    android.hardware.sensors@1.0-impl
 
 # stlport
 PRODUCT_PACKAGES += \
