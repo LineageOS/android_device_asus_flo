@@ -70,6 +70,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.memtrack@1.0-impl \
     libgenlock \
     hwcomposer.msm8960 \
     gralloc.msm8960 \
@@ -80,6 +81,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gps.conf \
     gps.msm8960
+
+# GNSS HAL
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl
 
 # HIDL
 PRODUCT_COPY_FILES += \
@@ -177,6 +182,7 @@ PRODUCT_PACKAGES += \
     android.hardware.power@1.0-impl \
     power.flo
 
+
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.flo \
@@ -203,6 +209,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/asus/flo/configs/touch_dev.idc:system/usr/idc/touch_dev.idc \
     device/asus/flo/configs/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc
+
+# USB HAL
+PRODUCT_PACKAGES += \
+    android.hardware.usb@1.0-service
 
 # Wifi
 PRODUCT_PACKAGES += \
