@@ -56,7 +56,7 @@ vendor/lib/egl/libGLESv2_adreno.so
 vendor/lib/egl/libplayback_adreno.so
 vendor/lib/egl/libq3dtools_adreno.so
 lib/hw/flp.msm8960.so
-lib/hw/sensors.msm8960.so
+lib/hw/sensors.msm8960.so:lib/sensors.flo.so
 lib/libacdbdata.so
 lib/libacdbloader.so
 vendor/lib/libadreno_utils.so
