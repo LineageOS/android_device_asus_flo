@@ -67,6 +67,10 @@ PRODUCT_PACKAGES += \
     charger_res_images \
     charger_touch
 
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-impl \
+
 # Graphics
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
