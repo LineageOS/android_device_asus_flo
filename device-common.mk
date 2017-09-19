@@ -145,8 +145,8 @@ PRODUCT_PACKAGES += \
     Tag
 
 PRODUCT_COPY_FILES += \
-    device/asus/flo/configs/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-    device/asus/flo/configs/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
+    device/asus/flo/configs/nfc/libnfc-brcm.conf:system/vendor/etc/libnfc-brcm.conf \
+    device/asus/flo/configs/nfc/libnfc-brcm-20791b05.conf:system/vendor/etc/libnfc-brcm-20791b05.conf
 
 # OMX
 PRODUCT_PACKAGES += \
