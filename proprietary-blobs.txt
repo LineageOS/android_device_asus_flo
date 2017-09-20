@@ -169,7 +169,6 @@ vendor/firmware/wcnss.b02
 vendor/firmware/wcnss.b04
 vendor/firmware/wcnss.b05
 vendor/firmware/wcnss.mdt
-vendor/lib/drm/libdrmwvmplugin.so
 vendor/lib/libdrmdecrypt.so
 vendor/lib/libgemini.so
 vendor/lib/libgeofence.so
@@ -196,8 +195,5 @@ vendor/lib/libmmqjpeg_codec.so
 vendor/lib/libmmstillomx.so
 vendor/lib/liboemcamera.so
 vendor/lib/libqomx_jpegenc.so
-vendor/lib/libwvdrm_L1.so
-vendor/lib/libwvm.so
-vendor/lib/libWVStreamControlAPI_L1.so
-vendor/lib/mediadrm/libwvdrmengine.so
+vendor/lib/mediadrm/libwvdrmengine.so|66ba66d047044f92eb0eada1faf6a5799ded90ab
 vendor/lib/libstlport.so
