@@ -9,7 +9,7 @@ init_daemon_domain(thermald)
 allow thermald self:capability dac_override;
 auditallow thermald self:capability dac_override;
 
-allow thermald self:socket create_socket_perms;
+allow thermald self:socket create_socket_perms_no_ioctl;
 
 # CPU hotplug uevent
 allow thermald self:netlink_kobject_uevent_socket { create setopt bind read };
