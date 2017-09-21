@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d850f9_1fc77d68",
+        "filename": "device-common.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 17257
+      },
+      "writtenOn": "2017-09-21T15:54:31Z",
+      "side": 1,
+      "message": "Space",
+      "range": {
+        "startLine": 179,
+        "startChar": 37,
+        "endLine": 179,
+        "endChar": 38
+      },
+      "revId": "bf906f16a62081b5a5a2c0752eddaefe6b0bb47e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
