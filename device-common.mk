@@ -208,11 +208,6 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     sensors.msm8960
 
-
-# stlport
-PRODUCT_PACKAGES += \
-    libstlport
-
 # Thermal
 PRODUCT_COPY_FILES += \
     device/asus/flo/configs/thermald-flo.conf:system/etc/thermald.conf
