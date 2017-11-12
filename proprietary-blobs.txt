@@ -107,9 +107,9 @@ lib/libqmi_csi.so
 lib/libqmi_csvt_srvc.so
 lib/libqmi_encdec.so
 lib/libQSEEComAPI.so
-vendor/lib/libRSDriver_adreno.so
-vendor/lib/librs_adreno.so
-vendor/lib/librs_adreno_sha1.so
+vendor/lib/libRSDriver_adreno.so|b7cea69e2fe30185ee9681eaf44c1ab9
+vendor/lib/librs_adreno.so|f5ac8b20525eb3794f11559f4566731a
+vendor/lib/librs_adreno_sha1.so|66862f5cc9fd096840545fc3654f2830
 vendor/lib/libsc-a3xx.so
 lib/libsensor1.so
 lib/libsensor_reg.so
