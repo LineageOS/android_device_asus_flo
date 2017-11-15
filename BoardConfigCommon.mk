@@ -81,6 +81,10 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 880803840 # 840M
 #Reduce space taken by the journal
 BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
 
+BOARD_ROOT_EXTRA_FOLDERS := \
+    firmware \
+    persist
+
 # Use mke2fs to create ext4 images
 TARGET_USES_MKE2FS := true
 
