@@ -99,5 +99,5 @@ on property:recovery.perf.mode=0
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor ondemand
 
 on property:dev.bootcomplete=1
-    setprop sys.io.scheduler bfq
+    setprop sys.io.scheduler cfq
     start mpdecision
