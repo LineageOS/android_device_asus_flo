@@ -97,10 +97,10 @@
 /dev/ks_hsic_bridge                u:object_r:kickstart_device:s0
 /dev/efs_hsic_bridge               u:object_r:kickstart_device:s0
 
-/system/bin/qcks                   u:object_r:kickstart_exec:s0
-/system/bin/efsks                  u:object_r:kickstart_exec:s0
-/system/bin/ks                     u:object_r:kickstart_exec:s0
-/system/bin/kickstart_checker\.sh  u:object_r:kickstart_exec:s0
+/system/vendor/bin/qcks                   u:object_r:kickstart_exec:s0
+/system/vendor/bin/efsks                  u:object_r:kickstart_exec:s0
+/system/vendor/bin/ks                     u:object_r:kickstart_exec:s0
+/system/vendor/bin/kickstart_checker\.sh  u:object_r:kickstart_exec:s0
 
 /data/cam_socket[0-9]              u:object_r:camera_socket:s0
 /data/app/sensor_ctl_socket        u:object_r:sensors_socket:s0
@@ -112,22 +112,22 @@
 /data/misc/playready(/.*)?         u:object_r:drm_data_file:s0
 /data/fdAlbum                      u:object_r:camera_data_file:s0
 
-/system/bin/hci_qcomm_init         u:object_r:hci_attach_exec:s0
+/system/vendor/bin/hci_qcomm_init         u:object_r:hci_attach_exec:s0
 /system/vendor/bin/bdAddrLoader           u:object_r:bluetooth_loader_exec:s0
 # rmt_storage is a qualcomm specific daemon responsible
 # for servicing modem filesystem requests.
-/system/bin/rmt_storage            u:object_r:rmt_exec:s0
-/system/bin/bridgemgrd             u:object_r:bridge_exec:s0
-/system/bin/qmuxd                  u:object_r:qmux_exec:s0
-/system/bin/netmgrd                u:object_r:netmgrd_exec:s0
-/system/bin/thermald               u:object_r:thermald_exec:s0
-/system/bin/mpdecision             u:object_r:mpdecision_exec:s0
-/system/bin/sensors\.qcom           u:object_r:sensors_exec:s0
-/system/bin/mm-qcamera-daemon      u:object_r:camera_exec:s0
-/system/bin/qseecomd               u:object_r:tee_exec:s0
+/system/vendor/bin/rmt_storage            u:object_r:rmt_exec:s0
+/system/vendor/bin/bridgemgrd             u:object_r:bridge_exec:s0
+/system/vendor/bin/qmuxd                  u:object_r:qmux_exec:s0
+/system/vendor/bin/netmgrd                u:object_r:netmgrd_exec:s0
+/system/vendor/bin/thermald               u:object_r:thermald_exec:s0
+/system/vendor/bin/mpdecision             u:object_r:mpdecision_exec:s0
+/system/vendor/bin/sensors\.qcom           u:object_r:sensors_exec:s0
+/system/vendor/bin/mm-qcamera-daemon      u:object_r:camera_exec:s0
+/system/vendor/bin/qseecomd               u:object_r:tee_exec:s0
 /system/vendor/bin/conn_init              u:object_r:conn_init_exec:s0
 /system/vendor/bin/init\.flo\.wifi\.sh    u:object_r:conn_init_exec:s0
-/system/bin/irsc_util              u:object_r:irsc_util_exec:s0
+/system/vendor/bin/irsc_util              u:object_r:irsc_util_exec:s0
 /system/vendor/bin/init\.flo\.bt\.sh      u:object_r:bluetooth_loader_exec:s0
 
 # Persist firmware filesystem
