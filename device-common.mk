@@ -43,8 +43,10 @@ PRODUCT_COPY_FILES += \
 # Bluetooth
 PRODUCT_PACKAGES += \
     bdAddrLoader \
-    hci_qcomm_init \
-    init.flo.bt.sh
+    hci_qcomm_init
+
+PRODUCT_COPY_FILES += \
+    device/asus/flo/rootdir/etc/init.flo.bt.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.flo.bt.sh
 
 # Bluetooth HAL
 PRODUCT_PACKAGES += \
@@ -232,10 +234,10 @@ PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
     wpa_supplicant \
     wpa_supplicant.conf \
-    wpa_supplicant_overlay.conf \
-    init.flo.wifi.sh
+    wpa_supplicant_overlay.conf
 
 PRODUCT_COPY_FILES += \
+    device/asus/flo/rootdir/etc/init.flo.wifi.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.flo.wifi.sh \
     device/asus/flo/wifi/WCNSS_cfg.dat:system/vendor/firmware/wlan/prima/WCNSS_cfg.dat \
     device/asus/flo/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
     device/asus/flo/wifi/WCNSS_qcom_wlan_nv_flo.bin:system/etc/wifi/WCNSS_qcom_wlan_nv_flo.bin \

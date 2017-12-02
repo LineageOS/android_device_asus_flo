@@ -33,6 +33,7 @@ endif
 LOCAL_SHARED_LIBRARIES := libcutils liblog
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_OWNER := qcom
+LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -41,9 +42,9 @@ LOCAL_SHARED_LIBRARIES := libcutils liblog
 LOCAL_SHARED_LIBRARIES += libwfcu
 LOCAL_CFLAGS += -Wall -Werror
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_PATH := $(TARGET_OUT)/bin
 LOCAL_MODULE := conn_init
 LOCAL_MODULE_OWNER := qcom
+LOCAL_PROPRIETARY_MODULE := true
 
 # Make sure the symlinks get created as well.
 LOCAL_POST_INSTALL_CMD := \
