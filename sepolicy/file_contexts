@@ -113,7 +113,7 @@
 /data/fdAlbum                      u:object_r:camera_data_file:s0
 
 /system/bin/hci_qcomm_init         u:object_r:hci_attach_exec:s0
-/system/bin/bdAddrLoader           u:object_r:bluetooth_loader_exec:s0
+/system/vendor/bin/bdAddrLoader           u:object_r:bluetooth_loader_exec:s0
 # rmt_storage is a qualcomm specific daemon responsible
 # for servicing modem filesystem requests.
 /system/bin/rmt_storage            u:object_r:rmt_exec:s0
@@ -125,10 +125,10 @@
 /system/bin/sensors\.qcom           u:object_r:sensors_exec:s0
 /system/bin/mm-qcamera-daemon      u:object_r:camera_exec:s0
 /system/bin/qseecomd               u:object_r:tee_exec:s0
-/system/bin/conn_init              u:object_r:conn_init_exec:s0
-/system/bin/init\.flo\.wifi\.sh    u:object_r:conn_init_exec:s0
+/system/vendor/bin/conn_init              u:object_r:conn_init_exec:s0
+/system/vendor/bin/init\.flo\.wifi\.sh    u:object_r:conn_init_exec:s0
 /system/bin/irsc_util              u:object_r:irsc_util_exec:s0
-/system/bin/init\.flo\.bt\.sh      u:object_r:bluetooth_loader_exec:s0
+/system/vendor/bin/init\.flo\.bt\.sh      u:object_r:bluetooth_loader_exec:s0
 
 # Persist firmware filesystem
 /persist(/.*)?                    u:object_r:persist_file:s0
