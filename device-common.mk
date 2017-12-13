@@ -38,7 +38,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/asus/flo/audio/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
     device/asus/flo/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf \
-    device/asus/flo/audio/mixer_paths.xml:system/etc/mixer_paths.xml
+    device/asus/flo/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml
 
 # Bluetooth
 PRODUCT_PACKAGES += \
