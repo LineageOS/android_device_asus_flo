@@ -212,7 +212,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_COPY_FILES += \
-    device/asus/flo/configs/thermald-flo.conf:system/etc/thermald.conf
+    device/asus/flo/configs/thermald-flo.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermald.conf
 
 # Touchscreen calibration
 PRODUCT_COPY_FILES += \
