@@ -153,5 +153,9 @@
 /sys/devices/virtual/graphics/fb1/format_3d -- u:object_r:sysfs_surfaceflinger:s0
 /sys/devices/virtual/graphics/fb1/hpd       -- u:object_r:sysfs_surfaceflinger:s0
 
+# Sysfs files used wakelock
+/sys/power/wake_lock -- u:object_r:sysfs_wake_lock:s0
+/sys/power/wake_unlock -- u:object_r:sysfs_wake_lock:s0
+
 # WLAN fwpath
 /sys/module/wlan/parameters/fwpath     u:object_r:sysfs_wlan_fwpath:s0
