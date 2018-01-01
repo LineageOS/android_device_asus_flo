@@ -40,6 +40,8 @@
 /dev/block/platform/msm_sdcc\.1/by-name/userdata u:object_r:userdata_block_device:s0
 # encryption metadata
 /dev/block/platform/msm_sdcc\.1/by-name/metadata u:object_r:metadata_block_device:s0
+# zram block labeling
+/dev/block/zram0                       u:object_r:swap_block_device:s0
 
 # CPU governor controls
 /dev/socket/mpdecision(/.*)?           u:object_r:mpdecision_socket:s0
