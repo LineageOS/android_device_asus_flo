@@ -1,0 +1,10 @@
+# sysfs
+genfscon sysfs /class/android_usb/f_rmnet_smd_sdio/transport                     u:object_r:sysfs_rmnet:s0
+genfscon sysfs /devices/virtual/android_usb/android0/f_rmnet_smd_sdio/transport  u:object_r:sysfs_rmnet:s0
+genfscon sysfs /module/rmnet_usb/parameters/rmnet_data_init                      u:object_r:sysfs_rmnet:s0
+genfscon sysfs /module/pm2/modes                                        u:object_r:sysfs_mpdecision:s0
+genfscon sysfs /module/pm_8x60/modes                                    u:object_r:sysfs_mpdecision:s0
+genfscon sysfs /devices/virtual/graphics/fb1/format_3d                  u:object_r:sysfs_surfaceflinger:s0
+genfscon sysfs /devices/virtual/graphics/fb1/hpd                        u:object_r:sysfs_surfaceflinger:s0
+genfscon sysfs /kernel/boot_adsp/boot                                   u:object_r:sysfs_audio:s0
+

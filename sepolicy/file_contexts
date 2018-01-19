@@ -143,19 +143,3 @@
 /persist/playready(/.*)?          u:object_r:persist_drm_file:s0
 /persist/widevine(/.*)?           u:object_r:persist_drm_file:s0
 /persist/wifi(/.*)?               u:object_r:persist_wifi_file:s0
-
-# Sysfs entry for the RmNet function driver
-/sys/class/android_usb/f_rmnet_smd_sdio/transport  --  u:object_r:sysfs_rmnet:s0
-/sys/devices/virtual/android_usb/android0/f_rmnet_smd_sdio/transport  --  u:object_r:sysfs_rmnet:s0
-/sys/module/rmnet_usb/parameters/rmnet_data_init -- u:object_r:sysfs_rmnet:s0
-
-# Sysfs files used by mpdecision
-/sys/module/pm2/modes(/.*)?            u:object_r:sysfs_mpdecision:s0
-/sys/module/pm_8x60/modes(/.*)?        u:object_r:sysfs_mpdecision:s0
-
-# Sysfs files used by surfaceflinger
-/sys/devices/virtual/graphics/fb1/format_3d -- u:object_r:sysfs_surfaceflinger:s0
-/sys/devices/virtual/graphics/fb1/hpd       -- u:object_r:sysfs_surfaceflinger:s0
-
-# Sysfs entry for audio
-/sys/kernel/boot_adsp/boot         u:object_r:sysfs_audio:s0
