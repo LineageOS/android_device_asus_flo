@@ -1,0 +1,7 @@
+allow hal_memtrack_default debugfs_kgsl:dir search;
+allow hal_memtrack_default debugfs_kgsl:file { open read getattr };
+allow hal_memtrack_default surfaceflinger:file read;
+
+# don't audit denials from any process but surfaceflinger
+dontaudit hal_memtrack_default { domain -surfaceflinger}:file r_file_perms;
+dontaudit hal_memtrack_default { domain -surfaceflinger}:dir search;

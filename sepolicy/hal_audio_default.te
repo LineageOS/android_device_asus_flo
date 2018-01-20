@@ -1,0 +1,2 @@
+allow hal_audio_default audio_data_file:file { open write };
+allow hal_audio_default audio_data_file:dir search;

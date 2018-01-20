@@ -9,7 +9,7 @@ init_daemon_domain(camera)
 allow camera camera_device:chr_file rw_file_perms;
 allow camera gpu_device:chr_file rw_file_perms;
 allow camera video_device:chr_file rw_file_perms;
-allow camera { surfaceflinger mediaserver cameraserver }:fd use;
+allow camera { surfaceflinger mediaserver cameraserver hal_camera_default }:fd use;
 hal_client_domain(camera, hal_graphics_allocator)
 
 # Create front and back camera sockets (/data/cam_socket[12])

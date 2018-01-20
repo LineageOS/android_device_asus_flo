@@ -1,0 +1,8 @@
+vndbinder_use(hal_gnss_default)
+
+allow hal_gnss_default sensors_device:chr_file rw_file_perms;
+allow hal_gnss_default sysfs_soc:dir r_dir_perms;
+allow hal_gnss_default sysfs_soc:file r_file_perms;
+
+allow hal_gnss_default self:socket create_socket_perms;
+allowxperm hal_gnss_default self:socket ioctl msm_sock_ipc_ioctls;
