@@ -1,0 +1,13 @@
+unix_socket_connect(hal_sensors_default, sensors, sensors)
+unix_socket_send(hal_sensors_default, sensors, sensors)
+allow hal_sensors_default sensors:unix_stream_socket sendto;
+allow hal_sensors_default sensors_socket:sock_file r_file_perms;
+
+allow hal_sensors_default persist_file:dir r_dir_perms;
+
+# Read /data/misc/sensors or /data/system/sensors.
+allow hal_sensors_default sensors_data_file:dir r_dir_perms;
+allow hal_sensors_default sensors_data_file:file r_file_perms;
+
+allow hal_sensors_default apk_data_file:dir { search read };
+

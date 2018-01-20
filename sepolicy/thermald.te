@@ -34,6 +34,9 @@ allow thermald sysfs_devices_system_cpu:file rw_file_perms;
 # /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
 allow thermald sysfs:file write;
 
+allow thermald sysfs_soc:dir r_dir_perms;
+allow thermald sysfs_soc:file r_file_perms;
+
 # Connect to mpdecision.
 allow thermald mpdecision_socket:dir r_dir_perms;
 unix_socket_connect(thermald, mpdecision, mpdecision)
