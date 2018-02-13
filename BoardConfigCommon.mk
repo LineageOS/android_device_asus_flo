@@ -20,6 +20,9 @@ TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
 
+# QCOM hardware
+BOARD_USES_QCOM_HARDWARE := true
+
 # SDClang
 TARGET_USE_SDCLANG := true
 
