@@ -2609,7 +2609,7 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
            avail_min_frame_durations[pos]   = scalar_formats[j];
            avail_min_frame_durations[pos+1] = gCamCapability[cameraId]->picture_sizes_tbl[i].width;
            avail_min_frame_durations[pos+2] = gCamCapability[cameraId]->picture_sizes_tbl[i].height;
-           avail_min_frame_durations[pos+3] = gCamCapability[cameraId]->jpeg_min_duration[i];
+           avail_min_frame_durations[pos+3] = NSEC_PER_33MSEC;
            pos+=4;
         }
     }
