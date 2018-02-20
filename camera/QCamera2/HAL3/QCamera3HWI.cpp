@@ -910,6 +910,7 @@ void QCamera3HardwareInterface::handleMetadataWithLock(
         result.num_output_buffers = 0;
         result.output_buffers = NULL;
         result.input_buffer = NULL;
+        result.partial_result = 1;
         for (List<RequestedBufferInfo>::iterator j = i->buffers.begin();
                     j != i->buffers.end(); j++) {
             if (j->buffer) {
@@ -1011,6 +1012,7 @@ void QCamera3HardwareInterface::handleBufferWithLock(
         result.num_output_buffers = 1;
         result.output_buffers = buffer;
         result.input_buffer = NULL;
+        result.partial_result = 1;
         ALOGV("%s: result frame_number = %d, buffer = %p",
                 __func__, frame_number, buffer->buffer);
 
@@ -2512,7 +2514,7 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
                       &max_pipeline_depth,
                       1);
 
-    int32_t partial_result_count = 2;
+    int32_t partial_result_count = 0;
     staticInfo.update(ANDROID_REQUEST_PARTIAL_RESULT_COUNT,
                       &partial_result_count,
                        1);
@@ -2627,7 +2629,7 @@ int QCamera3HardwareInterface::initStaticMetadata(int cameraId)
        ANDROID_JPEG_THUMBNAIL_QUALITY, ANDROID_JPEG_THUMBNAIL_SIZE, ANDROID_LENS_APERTURE,
        ANDROID_LENS_FILTER_DENSITY, ANDROID_LENS_FOCAL_LENGTH, ANDROID_LENS_FOCUS_DISTANCE,
        ANDROID_LENS_FOCUS_RANGE, ANDROID_LENS_STATE, ANDROID_LENS_OPTICAL_STABILIZATION_MODE,
-       ANDROID_NOISE_REDUCTION_MODE, ANDROID_QUIRKS_PARTIAL_RESULT, ANDROID_REQUEST_ID,
+       ANDROID_NOISE_REDUCTION_MODE, ANDROID_REQUEST_ID,
        ANDROID_SCALER_CROP_REGION, ANDROID_SHADING_MODE, ANDROID_SENSOR_EXPOSURE_TIME,
        ANDROID_SENSOR_FRAME_DURATION, ANDROID_SENSOR_SENSITIVITY,
        ANDROID_SENSOR_TIMESTAMP, ANDROID_SENSOR_NEUTRAL_COLOR_POINT,
