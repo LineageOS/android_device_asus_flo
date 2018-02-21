@@ -129,7 +129,8 @@ public:
             cam_trigger_t &aeTrigger);
     camera_metadata_t* translateCbMetadataToResultMetadata(metadata_buffer_t *metadata,
                             nsecs_t timestamp, int32_t request_id,
-                            const cam_trigger_t &aeTrigger);
+                            const cam_trigger_t &aeTrigger,
+                            uint8_t pipeline_depth);
     int getJpegSettings(const camera_metadata_t *settings);
     int initParameters();
     void deinitParameters();
@@ -210,6 +211,7 @@ private:
         int blob_request;
         int input_buffer_present;
         cam_trigger_t ae_trigger;
+        uint8_t pipeline_depth;
     } PendingRequestInfo;
     /*Data structure to store metadata information*/
     typedef struct {
@@ -255,6 +257,22 @@ private:
     power_module_t *m_pPowerModule;   // power module
 
     int32_t mPrecaptureId;
+
+    uint8_t mAeMode;
+    uint8_t mAeLock;
+    uint8_t mAfMode;
+    cam_trigger_t mAfTrigger;
+    uint8_t mAwbLock;
+    uint8_t mAwbMode;
+    uint8_t mControlMode;
+    uint8_t mColorCorrectMode;
+    cam_color_correct_gains_t mColorCorrectGains;
+    uint8_t mEdgeMode;
+    int64_t mSensorFrameDuration;
+    uint8_t mEffectMode;
+    uint8_t mNoiseReductionMode;
+    uint8_t mSceneMode;
+    uint8_t mTonemapMode;
 
     static const QCameraMap EFFECT_MODES_MAP[];
     static const QCameraMap WHITE_BALANCE_MODES_MAP[];
