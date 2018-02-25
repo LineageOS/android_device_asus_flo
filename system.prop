@@ -16,6 +16,9 @@ persist.audio.fluence.voicerec=false
 persist.audio.fluence.speaker=true
 qcom.hw.aac.encoder=true
 
+# Media volume steps
+ro.config.media_vol_steps=25
+
 # Camera
 camera.disable_zsl_mode=1
 
