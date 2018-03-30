@@ -32,10 +32,6 @@ on init
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
-    # ZRAM setup
-    write /sys/block/zram0/comp_algorithm lz4
-    write /proc/sys/vm/page-cluster 0
-
 on fs
     mount_all ./fstab.flo --early
     restorecon_recursive /persist
@@ -230,10 +226,6 @@ on post-fs-data
 
     # adjust vibrator amplitude
     write /sys/class/timed_output/vibrator/amp 70
-
-on property:sys.boot_completed=1
-    # Enable ZRAM on boot_complete
-    swapon_all ./fstab.flo
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class main

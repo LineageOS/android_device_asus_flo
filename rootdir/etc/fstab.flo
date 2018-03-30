@@ -24,4 +24,3 @@
 /dev/block/platform/msm_sdcc.1/by-name/rpmb         /rpmb           emmc    defaults                                                                     defaults
 /dev/block/platform/msm_sdcc.1/by-name/abootb       /abootb         emmc    defaults                                                                     defaults
 /devices/platform/msm_hsusb_host/usb*               auto            auto    defaults                                                                     voldmanaged=usb:auto
-/dev/block/zram0                                    none            swap    defaults                                                                     zramsize=533413200,max_comp_streams=4,notrim
