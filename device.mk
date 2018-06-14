@@ -19,7 +19,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
 
 # Camera
 PRODUCT_PACKAGES += \
-    camera.msm8960
+    camera.flo
 
 # the actual meat of the device-specific product definition
 $(call inherit-product, device/asus/flo/device-common.mk)
