@@ -47,3 +47,6 @@ debug.hwui.use_buffer_age=false
 
 # Display
 persist.hwc.mdpcomp.enable=true
+
+# Vendor security patch level
+ro.lineage.build.vendor_security_patch=2016-08-05
