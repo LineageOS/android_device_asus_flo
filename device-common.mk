@@ -98,6 +98,9 @@ PRODUCT_PACKAGES += \
     gps.conf \
     gps.msm8960
 
+PRODUCT_COPY_FILES += \
+    device/asus/flo/configs/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf
+
 # GNSS HAL
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl
