@@ -123,6 +123,8 @@ HAVE_ADRENO_SOURCE:= false
 include device/qcom/sepolicy-legacy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 
+BUILD_BROKEN_DUP_RULES := true
+
 # Media HAL
 BOARD_GLOBAL_CFLAGS += -DQCOM_BSP_LEGACY
 BOARD_GLOBAL_CPPFLAGS += -DQCOM_BSP_LEGACY
