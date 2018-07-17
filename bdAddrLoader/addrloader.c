@@ -30,8 +30,8 @@
 #include <cutils/properties.h>
 
 #define FILE_PATH_MAX   100
-#define BD_ADDR_LEN  6
-#define BD_ADDR_STR_LEN 18
+#define BD_ADDR_LEN       6
+#define BD_ADDR_STR_LEN  18
 
 
 #define ARG_TYPE_PATH_FILE  0x11
@@ -51,12 +51,11 @@ typedef ArgEl InArg;
 
 #define DEFAULT_BDADDR_PROP "persist.service.bdroid.bdaddr"
 
-typedef struct _OutArg
-{
-   ArgEl dest;
-   char  cSeperator;    // a character to be used for sperating like ':' of "XX:XX:XX:XX:XX:XX"
-   char  bPrintOut;     // Print out bd addr in standard out or not
-}OutArg;
+typedef struct _OutArg {
+    ArgEl dest;
+    char  cSeperator;    // a character to be used for sperating like ':' of "XX:XX:XX:XX:XX:XX"
+    char  bPrintOut;     // Print out bd addr in standard out or not
+} OutArg;
 
 typedef struct _LoadedData
 {
@@ -79,7 +78,7 @@ int hexa_to_ascii(const unsigned char* hexa, char* ascii, int nHexLen)
     char hex_table[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'A', 'B', 'C', 'D', 'E', 'F'};
 
-    for (i = 0, j = 0; i <nHexLen; i++, j += 2) {
+    for (i = 0, j = 0; i < nHexLen; i++, j += 2) {
         ascii[j] = hex_table[hexa[i] >> 4];
         ascii[j + 1] = hex_table[hexa[i] & 0x0F];
     }
@@ -114,42 +113,38 @@ int readBDAddrData(const char* szFilePath, unsigned char* addrData, int nDataLen
 
 void formattingBdAddr(char *szBDAddr, const char cSep)
 {
-    int i=1, j=0;
-    int pos=0;
-    for(i=1; i<BD_ADDR_LEN; i++){
-       pos = strlen(szBDAddr);
-       for(j=0; j<(BD_ADDR_LEN*2)-i*2; j++){
-          szBDAddr[pos-j] = szBDAddr[pos-j-1];
-       }
-       szBDAddr[pos-j]=cSep;
+    int i = 1, j = 0;
+    int pos = 0;
+    for (i = 1; i < BD_ADDR_LEN; i++) {
+        pos = strlen(szBDAddr);
+        for (j = 0; j < (BD_ADDR_LEN * 2) - i * 2; j++) {
+            szBDAddr[pos - j] = szBDAddr[pos - j - 1];
+        }
+        szBDAddr[pos-j]=cSep;
     }
 }
 
 int readBDAddr(InArg inArg, LoadedBDAddr *loadedBDAddr)
 {
-    Res res = FAIL;
-    unsigned char addrData[BD_ADDR_LEN] = {0,};
-    int nDataLen = 0;
+    ALOGI("Read From %s by Path type(0x%2x), Data type (0x%2x)",
+            inArg.szSrc, inArg.nPathType, inArg.nDataType);
 
-    ALOGI("Read From %s by Path type(0x%2x), Data type (0x%2x)", inArg.szSrc, inArg.nPathType, inArg.nDataType);
-
-
-    if(inArg.nPathType == ARG_TYPE_PATH_FILE){
-        switch(inArg.nDataType){
-            case ARG_TYPE_DATA_HEX:
-                if(!readBDAddrData(inArg.szSrc, loadedBDAddr->data.bin, BD_ADDR_LEN)){
-                    loadedBDAddr->nDataType = ARG_TYPE_DATA_HEX;
-                    return SUCCESS;
-                }
-                break;
-            case ARG_TYPE_DATA_ASCII:
-               if(!readBDAddrData(inArg.szSrc, (unsigned char *)loadedBDAddr->data.sz, BD_ADDR_STR_LEN)){
-                    loadedBDAddr->nDataType = ARG_TYPE_DATA_ASCII;
-                    return SUCCESS;
-                }
-                break;
-            default:
-                return FAIL;
+    if (inArg.nPathType == ARG_TYPE_PATH_FILE) {
+        switch (inArg.nDataType) {
+        case ARG_TYPE_DATA_HEX:
+            if (!readBDAddrData(inArg.szSrc, loadedBDAddr->data.bin, BD_ADDR_LEN)) {
+                loadedBDAddr->nDataType = ARG_TYPE_DATA_HEX;
+                return SUCCESS;
+            }
+            break;
+        case ARG_TYPE_DATA_ASCII:
+           if (!readBDAddrData(inArg.szSrc, (unsigned char *)loadedBDAddr->data.sz, BD_ADDR_STR_LEN)) {
+                loadedBDAddr->nDataType = ARG_TYPE_DATA_ASCII;
+                return SUCCESS;
+            }
+            break;
+        default:
+            return FAIL;
         }
     }else if(inArg.nPathType == ARG_TYPE_PATH_PROP){
         char prop_value[PROPERTY_VALUE_MAX];
@@ -227,7 +222,6 @@ int writeBDAddr(OutArg outArg, LoadedBDAddr *loadedBDAddr)
 
 int main(int argc, char *argv[])
 {
-    int nFd, nRdCnt;
     int c;
 
     InArg inArg;
