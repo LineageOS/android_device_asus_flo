@@ -270,20 +270,8 @@ static void set_power_profile(int profile) {
 static void power_hint( __attribute__((unused)) struct power_module *module,
                       power_hint_t hint, void *data)
 {
-    if (hint == POWER_HINT_SET_PROFILE) {
-        pthread_mutex_lock(&profile_lock);
-        set_power_profile(*(int32_t *)data);
-        pthread_mutex_unlock(&profile_lock);
-        return;
-    }
-
-    // Skip other hints in powersave mode
-    if (current_power_profile == PROFILE_POWER_SAVE)
-        return;
-
     switch (hint) {
         case POWER_HINT_LAUNCH:
-        case POWER_HINT_CPU_BOOST:
             ALOGV("POWER_HINT_INTERACTION");
             touch_boost();
             break;
@@ -329,8 +317,6 @@ static struct hw_module_methods_t power_module_methods = {
 static int get_feature(__attribute__((unused)) struct power_module *module,
                        feature_t feature)
 {
-    if (feature == POWER_FEATURE_SUPPORTED_PROFILES)
-        return PROFILE_MAX;
 
     return -1;
 }
@@ -349,5 +335,4 @@ struct power_module HAL_MODULE_INFO_SYM = {
     .init = power_init,
     .setInteractive = power_set_interactive,
     .powerHint = power_hint,
-    .getFeature = get_feature
 };
