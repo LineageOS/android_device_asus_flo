@@ -41,10 +41,10 @@ on fs
 
 on late-fs
     # Start services for bootanim
+    start vendor.configstore-hal
     start surfaceflinger
     start bootanim
-    start configstore-hal-1-0
-    start gralloc-2-0
+    start vendor.gralloc-2-0
 
     mount_all ./fstab.flo --late
 
