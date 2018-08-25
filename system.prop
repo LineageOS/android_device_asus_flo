@@ -1,5 +1,5 @@
 # Bluetooth
-qcom.bluetooth.soc=smd
+vendor.qcom.bluetooth.soc=pronto
 ro.qualcomm.bt.hci_transport=smd
 
 # Audio
