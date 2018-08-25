@@ -251,11 +251,11 @@ service hciattach /vendor/bin/init.flo.bt.sh
     disabled
     oneshot
 
-on property:bluetooth.hciattach=true
+on property:vendor.bluetooth.hciattach=true
     start hciattach
 
-on property:bluetooth.hciattach=false
-    setprop bluetooth.status off
+on property:vendor.bluetooth.hciattach=false
+    setprop vendor.bluetooth.status off
 
 service bridgemgrd /vendor/bin/bridgemgrd
     class main
