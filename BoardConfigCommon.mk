@@ -135,6 +135,7 @@ USE_MINIKIN := true
 
 # Fonts
 EXCLUDE_SERIF_FONTS := true
+SMALLER_FONT_FOOTPRINT := true
 
 # Recovery
 TARGET_RECOVERY_DENSITY := hdpi
