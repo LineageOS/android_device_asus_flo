@@ -1,10 +1,10 @@
 unix_socket_connect(hal_sensors_default, sensors, sensors)
 
-# Read /data/app/sensor_ctl_socket
+# Read /dev/socket/sensors/ctl
 allow hal_sensors_default sensors_socket:sock_file read;
 
-# Needed for unknown reasons...
-allow hal_sensors_default apk_data_file:dir { read search };
+# Monitor /dev/socket/sensors
+allow hal_sensors_default sensors_socket:dir { search read };
 
 # Read directories under /data/vendor/sensors
 allow hal_sensors_default sensors_vendor_data_file:dir search;
