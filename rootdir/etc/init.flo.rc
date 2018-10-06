@@ -98,9 +98,6 @@ on boot
 
     chown root system /proc/net/ip_conntrack
 
-    # Enable DEBUG_SUSPEND, DEBUG_EXIT_SUSPEND, and DEBUG_WAKEUP
-    write /sys/module/wakelock/parameters/debug_mask 7
-
     #To allow interfaces to get v6 address when tethering is enabled
     write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet1/accept_ra 2
@@ -118,9 +115,6 @@ on boot
     write /proc/sys/net/ipv6/conf/rmnet_sdio5/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
-
-    #Enable logging of the wake up reasons in the kernel log
-    write /sys/module/msm_show_resume_irq/parameters/debug_mask 1
 
 # NFC: create data/nfc for nv storage
     mkdir /data/nfc 770 nfc nfc
