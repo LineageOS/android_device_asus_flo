@@ -74,6 +74,9 @@ on boot
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
+    # Allow thermald to modify the current LCD brightness
+    chmod 664 /sys/class/leds/lcd-backlight/brightness
+
     # create symlink for fb1 as HDMI
     symlink /dev/graphics/fb1 /dev/graphics/hdmi
 
@@ -328,6 +331,7 @@ service charger /system/bin/charger
 
 service thermald /vendor/bin/thermald
     class main
+    user root
     group radio system
 
 service mpdecision /vendor/bin/mpdecision --avg_comp
