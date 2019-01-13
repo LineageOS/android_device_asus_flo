@@ -137,6 +137,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     lights.msm8960
+    
+# Trust
+PRODUCT_PACKAGES += \
+    vendor.lineage.trust@1.0-service
 
 # Media
 PRODUCT_COPY_FILES += \
