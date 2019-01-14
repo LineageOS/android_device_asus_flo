@@ -13,7 +13,8 @@ LOCAL_SHARED_LIBRARIES := \
     liblog \
     libcutils \
     libgps.utils \
-    libdl
+    libdl \
+    libprocessgroup
 
 LOCAL_SRC_FILES += \
     MsgTask.cpp \
