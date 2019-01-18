@@ -52,6 +52,9 @@ TARGET_BOARD_PLATFORM := msm8960
 
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/flo/bluetooth
 
+# Display
+TARGET_SCREEN_DENSITY := 320
+
 # FIXME: HOSTAPD-derived wifi driver
 BOARD_HAS_QCOM_WLAN := true
 BOARD_WLAN_DEVICE := qcwcn
