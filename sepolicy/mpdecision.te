@@ -1,13 +1,13 @@
 # CPU governor (root process)
-type mpdecision, domain, device_domain_deprecated;
-type mpdecision_exec, exec_type, file_type;
+# type mpdecision, domain, device_domain_deprecated;
+# type mpdecision_exec, exec_type, file_type;
 
 # DAC overrides
 allow mpdecision self:capability dac_override;
 auditallow mpdecision self:capability dac_override;
 
 # Started by init
-init_daemon_domain(mpdecision)
+# init_daemon_domain(mpdecision)
 
 # CPU hotplug uevent to manage cores
 allow mpdecision self:netlink_kobject_uevent_socket { create setopt bind read };
