@@ -1,54 +1,17 @@
-# Used by keystore to access trustzone
-/dev/qseecom        u:object_r:tee_device:s0
-
-# GPS
-/dev/gss               u:object_r:sensors_device:s0
-
-# WLAN
-/dev/wcnss_wlan         u:object_r:wlan_device:s0
-
 ###### GPU device (world r/w)
-/dev/kgsl-3d0       u:object_r:gpu_device:s0
 /dev/kgsl           u:object_r:gpu_device:s0
-
-# Image Rotator Driver
-/dev/msm_rotator    u:object_r:video_device:s0
-
-# Qualcomm MSM Interface (QMI) devices
-/dev/socket/qmux_audio(/.*)?           u:object_r:qmuxd_socket:s0
-/dev/socket/qmux_bluetooth(/.*)?       u:object_r:qmuxd_socket:s0
-/dev/socket/qmux_gps(/.*)?             u:object_r:qmuxd_socket:s0
-/dev/socket/qmux_radio(/.*)?           u:object_r:qmuxd_socket:s0
-
-/dev/bcm2079x-i2c                  u:object_r:nfc_device:s0
-/dev/diag                          u:object_r:diag_device:s0
 
 # efs block labeling
 /dev/block/platform/msm_sdcc\.1/by-name/m9kefs[123c] u:object_r:efs_block_device:s0
-# Root block labeling
-/dev/block/mmcblk0                 u:object_r:root_block_device:s0
-# modemst1, modemst2, fsg, ssd labeling
 /dev/block/platform/msm_sdcc\.1/by-name/modemst[12] u:object_r:modem_block_device:s0
-/dev/block/platform/msm_sdcc\.1/by-name/fsg u:object_r:modem_block_device:s0
-/dev/block/platform/msm_sdcc\.1/by-name/ssd u:object_r:modem_block_device:s0
-# system and recovery labeling
-/dev/block/platform/msm_sdcc\.1/by-name/system u:object_r:system_block_device:s0
-/dev/block/platform/msm_sdcc\.1/by-name/recovery u:object_r:recovery_block_device:s0
-/dev/block/platform/msm_sdcc\.1/by-name/boot u:object_r:boot_block_device:s0
-# cache and userdata labeling
-/dev/block/platform/msm_sdcc\.1/by-name/cache u:object_r:cache_block_device:s0
 /dev/block/platform/msm_sdcc\.1/by-name/userdata u:object_r:userdata_block_device:s0
 # encryption metadata
 /dev/block/platform/msm_sdcc\.1/by-name/metadata u:object_r:metadata_block_device:s0
-# zram block labeling
-/dev/block/zram0                       u:object_r:swap_block_device:s0
 
 # CPU governor controls
 /dev/socket/mpdecision(/.*)?           u:object_r:mpdecision_socket:s0
 
 ## Radio related
-# modem driver
-/dev/mdm                               u:object_r:radio_device:s0
 # high speed inter-chip controls
 /dev/hsicctl[0-3]                      u:object_r:radio_device:s0
 # mux controller
@@ -57,28 +20,21 @@
 /dev/qmi[0-2]                          u:object_r:radio_device:s0
 # shared memory drivers
 /dev/smdcntl[0-7]                      u:object_r:radio_device:s0
-/dev/smd7                              u:object_r:radio_device:s0
 
 # Bluetooth shared memory interfaces
 /dev/smd2                              u:object_r:hci_attach_dev:s0
 /dev/smd3                              u:object_r:hci_attach_dev:s0
 # Default label for shared memory drivers
 /dev/smd([0-9])+                       u:object_r:smd_device:s0
-/dev/smem_log                          u:object_r:shared_log_device:s0
 
 # Serial console
 /dev/ttyHS0                            u:object_r:hci_attach_dev:s0
-/dev/ttyMSM0                           u:object_r:hci_attach_dev:s0
 
 # Serial-to-Usb support
 /dev/ttyUSB0                           u:object_r:radio_device:s0
 
 # Jpeg Engine support
 /dev/gemini.*                          u:object_r:video_device:s0
-# MSM camera related
-/dev/v4l-subdev.*                      u:object_r:video_device:s0
-/dev/msm_camera(/.*)?                  u:object_r:camera_device:s0
-/dev/media([0-9])+                     u:object_r:camera_device:s0
 
 # Qualcomm MSM Audio devices
 /dev/msm_acdb                      u:object_r:audio_device:s0
@@ -90,14 +46,8 @@
 /dev/msm_aac.*                     u:object_r:audio_device:s0
 
 # MSM Dedicated Sensors Processor Subsystem
-/dev/msm_dsps                          u:object_r:sensors_device:s0
 # Sensors shared Memory Packet Interface
 /dev/smd_sns_dsps                      u:object_r:sensors_device:s0
-
-/dev/cpu_dma_latency               u:object_r:power_control_device:s0
-
-/dev/ks_hsic_bridge                u:object_r:kickstart_device:s0
-/dev/efs_hsic_bridge               u:object_r:kickstart_device:s0
 
 /system/vendor/bin/qcks                   u:object_r:kickstart_exec:s0
 /system/vendor/bin/efsks                  u:object_r:kickstart_exec:s0
@@ -107,12 +57,7 @@
 /data/cam_socket[0-9]              u:object_r:camera_socket:s0
 /data/app/sensor_ctl_socket        u:object_r:sensors_socket:s0
 
-/data/nfc(/.*)?                    u:object_r:nfc_data_file:s0
-/data/qcks(/.*)?                   u:object_r:kickstart_data_file:s0
-/data/misc/sensors(/.*)?           u:object_r:sensors_data_file:s0
-/data/system/sensors(/.*)?         u:object_r:sensors_data_file:s0
 /data/misc/playready(/.*)?         u:object_r:drm_data_file:s0
-/data/fdAlbum                      u:object_r:camera_data_file:s0
 
 /system/vendor/bin/hci_qcomm_init         u:object_r:hci_attach_exec:s0
 /system/vendor/bin/bdAddrLoader           u:object_r:bluetooth_loader_exec:s0
@@ -135,11 +80,7 @@
 /system/vendor/bin/init\.qcom\.devwait\.sh             u:object_r:init-qcom-devwait-sh_exec:s0
 
 # Persist firmware filesystem
-/persist(/.*)?                    u:object_r:persist_file:s0
-/persist/bluetooth(/.*)?          u:object_r:persist_bluetooth_file:s0
 /persist/camera_calibration(/.*)? u:object_r:persist_camera_file:s0
-/persist/data(/.*)?               u:object_r:persist_data_file:s0
-/persist/sensors(/.*)?            u:object_r:persist_sensors_file:s0
 /persist/playready(/.*)?          u:object_r:persist_drm_file:s0
 /persist/widevine(/.*)?           u:object_r:persist_drm_file:s0
 /persist/wifi(/.*)?               u:object_r:persist_wifi_file:s0
