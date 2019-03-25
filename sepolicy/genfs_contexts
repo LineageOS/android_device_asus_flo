@@ -10,3 +10,7 @@ genfscon sysfs /kernel/boot_adsp/boot                                   u:object
 genfscon sysfs /devices/platform/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/rev                     u:object_r:sysfs_disk_stat:s0
 genfscon sysfs /devices/platform/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/block/mmcblk0/stat      u:object_r:sysfs_disk_stat:s0
 
+# remote storage
+genfscon sysfs /class/uio                                                        u:object_r:sysfs_rmt_storage:s0
+genfscon sysfs /devices/platform/msm_sharedmem/uio                               u:object_r:sysfs_rmt_storage:s0
+
