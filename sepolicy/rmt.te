@@ -30,3 +30,6 @@ allow rmt uio_device:chr_file rw_file_perms;
 
 # rmt_storage shuts itself down if there is an unknown value of ro.baseband
 set_prop(rmt, ctl_rmt_prop)
+
+# Access to sysfs
+r_dir_file(rmt, sysfs_rmt_storage)
