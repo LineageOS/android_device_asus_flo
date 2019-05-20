@@ -49,6 +49,9 @@ ro.hwui.text_large_cache_height=1024
 # Dalvik/ART
 dalvik.vm.dex2oat-swap=false
 
+#Disable more Codec2.0 components
+debug.stagefright.ccodec=0
+
 # Graphics
 ro.opengles.version=196608
 debug.hwui.use_buffer_age=false
