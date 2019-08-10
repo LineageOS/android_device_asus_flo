@@ -7,4 +7,6 @@ genfscon sysfs /module/pm_8x60/modes                                    u:object
 genfscon sysfs /devices/virtual/graphics/fb1/format_3d                  u:object_r:sysfs_surfaceflinger:s0
 genfscon sysfs /devices/virtual/graphics/fb1/hpd                        u:object_r:sysfs_surfaceflinger:s0
 genfscon sysfs /kernel/boot_adsp/boot                                   u:object_r:sysfs_audio:s0
+genfscon sysfs /devices/platform/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/rev                     u:object_r:sysfs_disk_stat:s0
+genfscon sysfs /devices/platform/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/block/mmcblk0/stat      u:object_r:sysfs_disk_stat:s0
 
