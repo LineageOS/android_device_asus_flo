@@ -8,3 +8,7 @@ genfscon sysfs /devices/virtual/graphics/fb1/format_3d                  u:object
 genfscon sysfs /devices/virtual/graphics/fb1/hpd                        u:object_r:sysfs_surfaceflinger:s0
 genfscon sysfs /kernel/boot_adsp/boot                                   u:object_r:sysfs_audio:s0
 
+genfscon proc /bluetooth/sleep/lpm     u:object_r:proc_bluetooth_writable:s0
+genfscon proc /bluetooth/sleep/btwrite u:object_r:proc_bluetooth_writable:s0
+
+genfscon sysfs /devices/soc0                          u:object_r:sysfs_soc:s0

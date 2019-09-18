@@ -2,6 +2,8 @@ type wlan_device, dev_type;
 
 type diag_device, dev_type;
 
+type ramdump_device, dev_type;
+
 # Kickstart device used by QC qcks
 type kickstart_device, dev_type;
 
@@ -16,3 +18,13 @@ type modem_block_device, dev_type;
 type shared_log_device, dev_type;
 
 type power_control_device, dev_type;
+
+type persist_block_device, dev_type;
+
+# secure software download partition
+type ssd_block_device, dev_type;
+
+type drm_block_device, dev_type;
+
+# Thermal engine
+type thermal_engine_device, dev_type;

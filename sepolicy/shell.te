@@ -1,0 +1,14 @@
+allow shell bootanim_exec:file getattr;
+allow shell clatd_exec:file getattr;
+allow shell dhcp_exec:file getattr;
+allow shell perfprofd_exec:file getattr;
+allow shell vdc_exec:file getattr;
+allow shell vold_exec:file getattr;
+
+# sdcardfs madness
+allow shell media_rw_data_file:dir create_dir_perms;
+allow shell media_rw_data_file:file create_file_perms;
+allow shell sdcard_posix:dir create_dir_perms;
+allow shell sdcard_posix:file create_file_perms;
+allow shell vfat:dir create_dir_perms;
+allow shell vfat:file create_file_perms;

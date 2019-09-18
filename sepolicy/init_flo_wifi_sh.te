@@ -1,0 +1,11 @@
+type init_flo_wifi_sh, domain;
+type init_flo_wifi_sh_exec, exec_type, vendor_file_type, file_type;
+
+# Started by init
+init_daemon_domain(init_flo_wifi_sh)
+
+# shell scripts need to execute /vendor/bin/sh and toolbox
+allow init_flo_wifi_sh vendor_shell_exec:file rx_file_perms;
+allow init_flo_wifi_sh vendor_toolbox_exec:file rx_file_perms;
+
+#get_prop(init_flo_wifi_sh, wlan_prop)

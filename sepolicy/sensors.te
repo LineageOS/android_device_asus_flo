@@ -1,6 +1,6 @@
 # Integrated qualcomm sensor process
 type sensors, domain, device_domain_deprecated;
-type sensors_exec, exec_type, file_type;
+type sensors_exec, exec_type, file_type, vendor_file_type;
 
 # Started by init
 init_daemon_domain(sensors)
@@ -30,15 +30,40 @@ allow sensors sensors_data_file:file create_file_perms;
 # Access sensor nodes (/dev/msm_dsps)
 allow sensors sensors_device:chr_file rw_file_perms;
 
+# /devices/soc0/{hw_platform,soc_id} (sensors.qcom)
+r_dir_file(sensors, sysfs_soc)
+
 # Access power management controls
 allow sensors power_control_device:chr_file w_file_perms;
 
 # Access to /persist/sensors
 allow sensors persist_file:dir r_dir_perms;
-allow sensors persist_sensors_file:dir r_dir_perms;
-allow sensors persist_sensors_file:file rw_file_perms;
+allow sensors persist_sensors_file:dir rw_dir_perms;
+allow sensors persist_sensors_file:file create_file_perms;
 
 # Wake lock access
 wakelock_use(sensors)
 
 allow sensors cgroup:dir { create add_name };
+
+allow sensors self:socket *;
+allowxperm sensors self:socket ioctl msm_sock_ipc_ioctls;
+
+# Access shared memory logger
+allow sensors shared_log_device:chr_file rw_file_perms;
+
+# Talk to qmuxd (qmux_radio)
+qmux_socket(sensors)
+
+allow sensors device:chr_file { getattr ioctl open read write };
+allow sensors system_data_file:dir setattr;
+allow sensors system_data_file:file append;
+allow sensors unlabeled:dir getattr;
+allow sensors unlabeled:file { getattr read write };
+
+allow sensors system_data_file:dir { read write open };
+allow sensors system_data_file:file open;
+allow sensors unlabeled:dir search;
+
+allow sensors unlabeled:dir { read open };
+allow sensors unlabeled:file open;

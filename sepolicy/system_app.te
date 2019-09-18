@@ -1,0 +1,10 @@
+allow system_app proc_pagetypeinfo:file r_file_perms;
+allow system_app shell_data_file:dir search;
+allow system_app sysfs:file { getattr open read };
+allow system_app dalvikcache_data_file:file { open read write };
+
+binder_call(system_app, installd)
+binder_call(system_app, netd)
+binder_call(system_app, perfprofd)
+binder_call(system_app, vold)
+binder_call(system_app, wificond)

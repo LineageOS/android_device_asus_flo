@@ -1,6 +1,6 @@
 # CPU governor (root process)
 type mpdecision, domain, device_domain_deprecated;
-type mpdecision_exec, exec_type, file_type;
+type mpdecision_exec, exec_type, file_type, vendor_file_type;
 
 # DAC overrides
 allow mpdecision self:capability dac_override;
@@ -21,9 +21,13 @@ allow mpdecision mpdecision_socket:sock_file create_file_perms;
 type_transition mpdecision socket_device:sock_file mpdecision_socket;
 allow mpdecision self:capability chown;
 allow mpdecision socket_device:dir w_dir_perms;
+allow mpdecision socket_device:sock_file create_file_perms;
 
 # By-product of setting owner on sock_file (don't allow)
 dontaudit mpdecision self:capability fsetid;
+
+# Allow reading /dev/cpuctl/cpu.notify_on_migrate
+allow mpdecision cgroup:file read;
 
 allow mpdecision sysfs_devices_system_cpu:file rw_file_perms;
 allow mpdecision sysfs_mpdecision:dir r_dir_perms;
@@ -45,3 +49,9 @@ r_dir_file(mpdecision, mediaserver)
 r_dir_file(mpdecision, cameraserver)
 
 allow mpdecision self:capability sys_nice;
+
+allow mpdecision power_control_device:chr_file rw_file_perms;
+allow mpdecision system_data_file:dir rw_dir_perms;
+allow mpdecision system_data_file:file r_file_perms;
+
+r_dir_file(mpdecision, hal_camera_default)

@@ -1,9 +1,13 @@
 # Network utilities (radio process)
 type netmgrd, domain, device_domain_deprecated;
-type netmgrd_exec, exec_type, file_type;
+type netmgrd_exec, exec_type, file_type, vendor_file_type;
 
 # Started by init
 init_daemon_domain(netmgrd)
+
+# Uses network sockets.
+net_domain(netmgrd)
+allowxperm netmgrd self:udp_socket ioctl priv_sock_ioctls;
 
 # Starts as (root,radio) changes to (radio,radio)
 allow netmgrd self:capability { setuid setgid net_admin net_raw };
@@ -27,6 +31,7 @@ allow netmgrd shell_exec:file rx_file_perms;
 
 # Runs /system/bin/ip addr flush dev <device> commands.
 allow netmgrd system_file:file rx_file_perms;
+allow netmgrd vendor_file_type:file rx_file_perms;
 
 # XXX Run toolbox.  Might not be needed.
 allow netmgrd toolbox_exec:file rx_file_perms;
@@ -39,3 +44,7 @@ allow netmgrd proc_net:dir r_dir_perms;
 set_prop(netmgrd, radio_prop)
 auditallow netmgrd radio_prop:property_service set;
 set_prop(netmgrd, net_radio_prop)
+
+# Access to /proc/sys/net/*
+allow netmgrd proc_net:file rw_file_perms;
+allow netmgrd proc_net:dir r_dir_perms;

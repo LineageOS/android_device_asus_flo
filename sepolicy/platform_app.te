@@ -1,0 +1,2 @@
+allow platform_app nfc_service:service_manager find;
+allow platform_app sysfs:file { open read getattr };

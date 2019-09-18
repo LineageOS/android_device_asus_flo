@@ -1,2 +1,9 @@
 allow init diag_device:chr_file unlink;
 allow init tmpfs:lnk_file create_file_perms;
+allow init sysfs_wlan_fwpath:file setattr;
+allow init sysfs:file { setattr write };
+allow init sysfs:file open;
+allow init sysfs_rmnet:file setattr;
+allow init sysfs_surfaceflinger:file setattr;
+allow init sysfs_mpdecision:file { write open };
+allow init sysfs_devices_system_cpu:file write;

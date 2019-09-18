@@ -1,6 +1,6 @@
 # Temperature sensor daemon (root process)
 type thermald, domain, device_domain_deprecated;
-type thermald_exec, exec_type, file_type;
+type thermald_exec, exec_type, file_type, vendor_file_type;
 
 # Started by init
 init_daemon_domain(thermald)
@@ -37,3 +37,6 @@ allow thermald sysfs:file write;
 # Connect to mpdecision.
 allow thermald mpdecision_socket:dir r_dir_perms;
 unix_socket_connect(thermald, mpdecision, mpdecision)
+
+allow thermald device:chr_file { open ioctl };
+allow thermald device:chr_file { read write };

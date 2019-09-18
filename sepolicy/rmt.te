@@ -1,16 +1,19 @@
 # remote storage process (runs as nobody)
 type rmt, domain, device_domain_deprecated;
-type rmt_exec, exec_type, file_type;
+type rmt_exec, exec_type, file_type, vendor_file_type;
 
 # Started by init
 init_daemon_domain(rmt)
 
 # Drop (user, group) to (nobody, nobody)
-allow rmt self:capability { setuid setgid dac_override };
+allow rmt self:capability { setuid setgid };
 
 # opens and reads /dev/block/mmcblk0
 allow rmt root_block_device:blk_file r_file_perms;
 allow rmt block_device:dir r_dir_perms;
+
+# Needed for ioprio_set(IOPRIO_WHO_PROCESS, 0, IOPRIO_CLASS_RT << IOPRIO_CLASS_SHIFT);
+allow rmt self:capability sys_admin;
 
 # Allow reads/writes to modem related block devices
 allow rmt modem_block_device:blk_file rw_file_perms;
@@ -30,3 +33,6 @@ allow rmt uio_device:chr_file rw_file_perms;
 
 # rmt_storage shuts itself down if there is an unknown value of ro.baseband
 set_prop(rmt, ctl_rmt_prop)
+
+allow rmt device:chr_file { open read write ioctl };
+allow rmt ssd_block_device:blk_file { open read write };
