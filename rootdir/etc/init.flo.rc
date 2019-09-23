@@ -323,6 +323,7 @@ service charger /system/bin/charger
     class charger
     user system
     group system graphics input
+    capabilities SYS_BOOT
     critical
     seclabel u:r:charger:s0
 
