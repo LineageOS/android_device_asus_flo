@@ -97,7 +97,6 @@ BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 
 BOARD_USES_SECURE_SERVICES := true
 
-
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000U | 0x02000000U
 
 USE_CAMERA_STUB := false
@@ -145,6 +144,5 @@ TARGET_RECOVERY_DENSITY := hdpi
 
 # Device manifest
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
-DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 
 -include vendor/asus/flo/BoardConfigVendor.mk
