@@ -60,7 +60,7 @@ static loc_param_s_type loc_parameter_table[] =
   {"DEBUG_LEVEL",                    &DEBUG_LEVEL, NULL,                   'n'},
   {"TIMESTAMP",                      &TIMESTAMP,   NULL,                   'n'},
 };
-int loc_param_num = sizeof(loc_parameter_table) / sizeof(loc_param_s_type);
+static const int loc_param_num = sizeof(loc_parameter_table) / sizeof(loc_param_s_type);
 
 /*===========================================================================
 FUNCTION trim_space

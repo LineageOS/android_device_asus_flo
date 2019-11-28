@@ -135,7 +135,7 @@ RETURN VALUE
 const char *loc_get_target_name(unsigned int target)
 {
     int index = 0;
-    char ret[BUFFER_SIZE];
+    static char ret[BUFFER_SIZE];
 
     index =  getTargetGnssType(target);
     if( index >= target_name_num || index < 0)
