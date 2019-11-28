@@ -98,6 +98,7 @@ struct LocSsrMsg : public LocMsg {
     inline void locallog() {
         LOC_LOGV("LocSsrMsg");
     }
+    using LocMsg::log;
     inline virtual void log() {
         locallog();
     }
