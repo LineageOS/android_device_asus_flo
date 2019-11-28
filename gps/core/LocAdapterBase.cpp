@@ -51,6 +51,7 @@ struct LocOpenMsg : public LocMsg {
     inline void locallog() {
         LOC_LOGV("LocOpen");
     }
+    using LocMsg::log;
     inline virtual void log() {
         locallog();
     }
