@@ -22,12 +22,12 @@ PRODUCT_PACKAGES += \
     camera.flo
 
 # the actual meat of the device-specific product definition
-$(call inherit-product, device/asus/flo/device-common.mk)
+$(call inherit-product, $(LOCAL_PATH)/device-common.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    device/asus/flo/overlay \
-    device/asus/flo/overlay-lineage
+    $(LOCAL_PATH)/overlay \
+    $(LOCAL_PATH)/overlay-lineage
 
 PRODUCT_ENFORCE_RRO_TARGETS := \
     framework-res

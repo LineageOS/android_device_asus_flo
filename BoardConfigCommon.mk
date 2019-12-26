@@ -51,7 +51,7 @@ BLUETOOTH_HCI_USE_MCT := true
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := msm8960
 
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/flo/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Display
 TARGET_SCREEN_DENSITY := 320
@@ -129,7 +129,7 @@ HAVE_ADRENO_SOURCE:= false
 
 # SELinux
 include device/qcom/sepolicy-legacy/sepolicy.mk
-BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
+BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 BUILD_BROKEN_DUP_RULES := true
 
@@ -148,7 +148,7 @@ SMALLER_FONT_FOOTPRINT := true
 TARGET_RECOVERY_DENSITY := hdpi
 
 # Device manifest
-DEVICE_MANIFEST_FILE := device/asus/flo/manifest.xml
-DEVICE_MATRIX_FILE := device/asus/flo/compatibility_matrix.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
+DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 
 -include vendor/asus/flo/BoardConfigVendor.mk

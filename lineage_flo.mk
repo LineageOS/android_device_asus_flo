@@ -19,7 +19,7 @@ $(call inherit-product, vendor/lineage/config/common_mini_tablet_wifionly.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
 # Inherit from hardware-specific part of the product configuration
-$(call inherit-product, device/asus/flo/device.mk)
+$(call inherit-product, $(LOCAL_PATH)/device.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := flo
