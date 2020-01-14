@@ -213,6 +213,13 @@ PRODUCT_COPY_FILES += \
     device/asus/flo/rootdir/etc/init.qcom.devwait.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qcom.devwait.sh \
     device/asus/flo/rootdir/etc/init.qcom.devstart.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qcom.devstart.sh
 
+# Wrapper to provide libcore.util.TimeZoneFinder for gapps SUW
+PRODUCT_PACKAGES += \
+    libcore-util-TimeZoneFinder
+
+PRODUCT_BOOT_JARS += \
+    libcore-util-TimeZoneFinder
+
 # Recorder
 PRODUCT_PACKAGES += \
     Recorder
