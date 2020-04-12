@@ -31,3 +31,7 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 PRODUCT_ENFORCE_RRO_TARGETS := \
     framework-res
+
+# RemoveDialer
+PRODUCT_PACKAGES += \
+    RemoveDialer
