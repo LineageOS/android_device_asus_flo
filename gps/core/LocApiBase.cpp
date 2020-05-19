@@ -197,6 +197,11 @@ void LocApiBase::reportPosition(UlpLocation &location,
                                 enum loc_sess_status status,
                                 LocPosTechMask loc_technology_mask)
 {
+    if (location.gpsLocation.timestamp > 0 && location.gpsLocation.timestamp <1580000000000) {
+       location.gpsLocation.timestamp = location.gpsLocation.timestamp + 619315200000;
+       LOC_LOGV("week rollover fixed, timestamp: %lld.", location.gpsLocation.timestamp);
+    }
+
     // loop through adapters, and deliver to all adapters.
     TO_ALL_LOCADAPTERS(
         mLocAdapters[i]->reportPosition(location,
