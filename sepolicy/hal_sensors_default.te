@@ -1,0 +1,13 @@
+unix_socket_connect(hal_sensors_default, sensors, sensors)
+
+# Read /data/app/sensor_ctl_socket
+allow hal_sensors_default sensors_socket:sock_file read;
+
+# Needed for unknown reasons...
+allow hal_sensors_default apk_data_file:dir { read search };
+
+# Read directories under /data/vendor/sensors
+allow hal_sensors_default sensors_vendor_data_file:dir search;
+
+# Read sensor nodes (/dev/msm_dsps)
+allow hal_sensors_default sensors_device:chr_file read;
