@@ -80,6 +80,9 @@ on boot
     # Create sensors daemon socket area
     mkdir /dev/socket/sensors 2770 system system
 
+    # Create QCamera daemon socket area
+    mkdir /dev/socket/qcamera 2770 camera camera
+
     # Remove write permissions to video related nodes
     chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
     chmod 0664 /sys/devices/virtual/graphics/fb1/video_mode
