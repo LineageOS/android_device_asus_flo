@@ -12,18 +12,16 @@ allow camera video_device:chr_file rw_file_perms;
 allow camera { surfaceflinger mediaserver cameraserver }:fd use;
 hal_client_domain(camera, hal_graphics_allocator)
 
-# Create front and back camera sockets (/data/cam_socket[12])
-type_transition camera system_data_file:sock_file camera_socket "cam_socket1";
-type_transition camera system_data_file:sock_file camera_socket "cam_socket2";
-allow camera camera_socket:sock_file { create unlink };
-allow camera system_data_file:dir w_dir_perms;
-allow camera system_data_file:sock_file unlink;
+# Create camera sockets
+allow camera camera_socket:dir w_dir_perms;
+allow camera camera_socket:sock_file create_file_perms;
 
 type_transition camera system_data_file:file camera_data_file "fdAlbum";
 allow camera camera_data_file:file create_file_perms;
 
 # Connect to sensor socket
 unix_socket_connect(camera, sensors, sensors)
+allow camera sensors_socket:dir search;
 allow camera sensors_socket:sock_file read;
 
 # Read camera files from persist filesystem
