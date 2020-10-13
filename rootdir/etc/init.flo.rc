@@ -178,18 +178,15 @@ on post-fs-data
     mkdir /data/system 0775 system system
     #symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
 
-    #Create directory used by sensor subsystem(dsps)
-    mkdir /data/system/sensors
-    chmod 775 /data/system/sensors
-    write /data/system/sensors/settings 1
-    chmod 660 /data/system/sensors/settings
+    # Setup sensors-related directories and permissions
+    mkdir /persist/sensors 0775 root system
+    write /persist/sensors/settings 1
+    chown root system /persist/sensors/settings
+    chmod 664 /persist/sensors/settings
+    chown root system /persist/sensors/sns.reg
+    chmod 664 /persist/sensors/sns.reg
 
-    # AKM setting data
-    mkdir /data/misc/sensors
-    chmod 775 /data/misc/sensors
-
-    mkdir /persist/sensors
-    chmod 775 /persist/sensors
+    mkdir /data/vendor/sensors 0770 system system
 
     # Modify from 777 (for camera calibration) to 775
     chmod 775 /persist/camera_calibration
@@ -294,8 +291,8 @@ service netmgrd /vendor/bin/netmgrd
 
 service sensors /vendor/bin/sensors.qcom
     class late_start
-    user root
-    group root wakelock
+    user system
+    group system wakelock
 
 service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     -O/data/vendor/wifi/wpa/sockets -puse_p2p_group_interface=1 \
