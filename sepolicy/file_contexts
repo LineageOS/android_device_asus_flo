@@ -54,7 +54,7 @@
 /system/vendor/bin/ks                     u:object_r:kickstart_exec:s0
 /system/vendor/bin/kickstart_checker\.sh  u:object_r:kickstart_exec:s0
 
-/data/cam_socket[0-9]                  u:object_r:camera_socket:s0
+/dev/socket/qcamera(/.*)?              u:object_r:camera_socket:s0
 /dev/socket/sensors(/.*)?              u:object_r:sensors_socket:s0
 
 /data/vendor/sensors(/.*)?             u:object_r:sensors_vendor_data_file:s0
