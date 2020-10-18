@@ -14,6 +14,7 @@ allow rmt block_device:dir r_dir_perms;
 
 # Allow reads/writes to modem related block devices
 allow rmt modem_block_device:blk_file rw_file_perms;
+allow rmt smem_log_device:chr_file rw_file_perms;
 
 # Allow shared memory logging access
 allow rmt shared_log_device:chr_file rw_file_perms;
@@ -28,8 +29,15 @@ wakelock_use(rmt)
 # Allow access to /dev/uio0.
 allow rmt uio_device:chr_file rw_file_perms;
 
+allow rmt smem_log_device:chr_file rw_file_perms;
+allow rmt sysfs_uio:dir r_dir_perms;
+
+allow rmt modem_efs_partition_device:blk_file rw_file_perms;
+allow rmt ssd_device:blk_file rw_file_perms;
+
 # rmt_storage shuts itself down if there is an unknown value of ro.baseband
 set_prop(rmt, ctl_rmt_prop)
 
 # Access to sysfs
 r_dir_file(rmt, sysfs_rmt_storage)
+r_dir_file(rmt, sysfs_uio)
