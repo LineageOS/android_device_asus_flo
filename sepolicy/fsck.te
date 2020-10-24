@@ -1,0 +1,2 @@
+allow fsck self:capability dac_override;
+allow fsck tmpfs:blk_file getattr;
