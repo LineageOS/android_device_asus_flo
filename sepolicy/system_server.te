@@ -7,6 +7,10 @@ unix_socket_connect(system_server, sensors, sensors)
 unix_socket_send(system_server, sensors, sensors)
 allow system_server sensors:unix_stream_socket sendto;
 allow system_server sensors_socket:sock_file r_file_perms;
+allow system_server sensors_socket:dir r_dir_perms;
+
+allow system_server persist_file:dir r_dir_perms;
+allow system_server sensors_device:chr_file rw_file_perms;
 
 # mpdecision socket access
 unix_socket_connect(system_server, mpdecision, mpdecision)
@@ -14,13 +18,13 @@ unix_socket_send(system_server, mpdecision, mpdecision)
 allow system_server mpdecision:unix_stream_socket sendto;
 allow system_server mpdecision_socket:dir search;
 
-# Read /data/misc/sensors or /data/system/sensors.
-allow system_server sensors_data_file:dir r_dir_perms;
-allow system_server sensors_data_file:file r_file_perms;
-
-allow system_server persist_file:dir r_dir_perms;
-allow system_server sensors_device:chr_file rw_file_perms;
-
 # use MSM ipc router ioctls
 allow system_server self:socket ioctl;
 allowxperm system_server self:socket ioctl msm_sock_ipc_ioctls;
+
+allow system_server sensors_data_file:dir search;
+allow system_server sensors_data_file:dir r_file_perms;
+
+allow system_server sensors_socket:sock_file getattr;
+
+allow system_server thermal_service:service_manager find;
