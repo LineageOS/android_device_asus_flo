@@ -10,5 +10,5 @@ type persist_wifi_file, file_type;
 
 type sysfs_rmnet, fs_type, sysfs_type;
 type sysfs_surfaceflinger, fs_type, sysfs_type;
-
+type sysfs_msm_subsys, fs_type, sysfs_type;
 type sensors_vendor_data_file, file_type, data_file_type;
