@@ -13,3 +13,4 @@ set_prop(init-qcom-devstart-sh, system_prop)
 
 # Set boot_adsp and boot_slpi to 1
 allow init-qcom-devstart-sh sysfs_audio:file w_file_perms;
+allow init-qcom-devstart-sh sysfs_boot_adsp:file w_file_perms;
