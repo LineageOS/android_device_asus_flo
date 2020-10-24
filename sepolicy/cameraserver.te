@@ -1,1 +1,9 @@
+unix_socket_send(cameraserver, camera, camera);
+unix_socket_send(cameraserver, mpdecision, mpdecision);
+
+# for libmmjpeg
 allow cameraserver vendor_file:file execmod;
+
+# Allow reading /dev/graphics
+allow cameraserver graphics_device:dir r_dir_perms;
+allow cameraserver camera_socket:dir r_dir_perms;
