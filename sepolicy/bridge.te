@@ -14,3 +14,5 @@ qmux_socket(bridge)
 # Alert the RmNet SMD & SDIO function driver of the correct transport.
 # (/sys/class/android_usb/f_rmnet_smd_sdio/transport)
 allow bridge sysfs_rmnet:file { open read write getattr };
+
+allow bridge sysfs_android_usb:dir r_dir_perms;
