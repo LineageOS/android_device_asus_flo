@@ -5,4 +5,5 @@ allow hci_attach kernel:system module_request;
 allow hci_attach hci_attach_dev:chr_file rw_file_perms;
 allow hci_attach bluetooth_efs_file:dir r_dir_perms;
 allow hci_attach bluetooth_efs_file:file r_file_perms;
+r_dir_file(hci_attach, bluetooth_prop)
 
