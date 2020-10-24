@@ -1,38 +1,43 @@
 # Temperature sensor daemon (root process)
-type thermald, domain, device_domain_deprecated;
+type thermald, domain;
 type thermald_exec, exec_type, file_type;
 
 # Started by init
 init_daemon_domain(thermald)
 
-# DAC overrides
-allow thermald self:capability dac_override;
-auditallow thermald self:capability dac_override;
-
 allow thermald self:socket create_socket_perms;
 allowxperm thermald self:socket ioctl msm_sock_ipc_ioctls;
 
 # CPU hotplug uevent
-allow thermald self:netlink_kobject_uevent_socket { create setopt bind read };
+allow thermald self:netlink_kobject_uevent_socket { create getopt setopt bind read };
 allow thermald self:capability net_admin;
 
 # Talk to qmuxd (/dev/socket/qmux_radio)
 qmux_socket(thermald)
 
 # Access shared logger (/dev/smem_log)
-allow thermald shared_log_device:chr_file rw_file_perms;
+allow thermald smem_log_device:chr_file rw_file_perms;
 
-# Access /sys/devices/system/cpu/
-allow thermald sysfs_devices_system_cpu:file rw_file_perms;
+# Allow writing in /sys/devices/system/cpu
+allow thermald sysfs_devices_system_cpu:file w_file_perms;
 
-# Some files in /sys/devices/system/cpu may pop in and out of existance,
-# defeating our attempt to label them. As a result, they could have the
-# sysfs label, not the sysfs_devices_system_cpu label.
-# Allow write access for now until we figure out a better solution.
-# For example, the following files pop in and out of existance:
-# /sys/devices/system/cpu/cpu1/cpufreq/cpuinfo_min_freq
-# /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
-allow thermald sysfs:file write;
+# Access leds
+allow thermald sysfs_leds:file rw_file_perms;
+allow thermald sysfs_leds:dir r_dir_perms;
+
+# Allow accessing thermal related sysfs nodes
+allow thermald sysfs_thermal:file rw_file_perms;
+allow thermald sysfs_thermal:dir r_dir_perms;
+
+# Read the /sys/devices/virtual folder
+allow thermald sysfs:dir r_dir_perms;
+allow thermald sysfs:file r_file_perms;
+
+# Access graphics related sysfs nodes
+allow thermald sysfs_graphics:file rw_file_perms;
+
+# Access /sys/devices/system/soc/soc0
+r_dir_file(thermald, sysfs_socinfo)
 
 # Connect to mpdecision.
 allow thermald mpdecision_socket:dir r_dir_perms;
