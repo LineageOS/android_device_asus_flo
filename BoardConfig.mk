@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := $(DEVICE_PATH)
+DEVICE_PATH := device/asus/flo
 
 TARGET_BOOTLOADER_BOARD_NAME := flo
 TARGET_BOOTLOADER_NAME := flo
