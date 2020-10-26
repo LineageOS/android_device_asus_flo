@@ -204,7 +204,6 @@ PRODUCT_PACKAGES += \
     init.flo.rc \
     init.flo.power.rc \
     init.flo.usb.rc \
-    init.recovery.flo.rc \
     ueventd.rc \
     ueventd.flo.rc
 
