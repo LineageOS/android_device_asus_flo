@@ -7,6 +7,7 @@
             <name>ICameraProvider</name>
             <instance>legacy/0</instance>
         </interface>
+    </hal>
     <hal format="hidl">
         <name>android.hardware.graphics.allocator</name>
         <transport>hwbinder</transport>
@@ -79,7 +80,7 @@
             <instance>default</instance>
         </interface>
     </hal>
-    </hal>
+    <hal>
         <hal format="hidl">
         <name>vendor.lineage.trust</name>
         <transport>hwbinder</transport>
