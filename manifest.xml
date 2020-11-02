@@ -26,7 +26,7 @@
             <instance>default</instance>
         </interface>
     </hal>
-    </hal>
+    <hal>
         <hal format="hidl">
         <name>vendor.lineage.trust</name>
         <transport>hwbinder</transport>
