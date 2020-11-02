@@ -89,9 +89,6 @@ BOARD_ROOT_EXTRA_FOLDERS := \
     firmware \
     persist
 
-# Use mke2fs to create ext4 images
-TARGET_USES_MKE2FS := true
-
 # Dexpreopt
 WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
 
